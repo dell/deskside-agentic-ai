@@ -1,0 +1,156 @@
+{
+ "provenance": {
+  "source": "gb300-nemotron-3.5-lightning.html (generated sweep-plot page on the measurement host)",
+  "sha256": "99f93995ee12a656b5c8c788bb5bb6882ffb6541bd5b65fbe6e403b54210a7a1",
+  "source_mtime": "2026-10-13 19:24",
+  "note": "Extracted from the generated plot page; raw aiperf exports live on the measured node, not in this repo. per_session = aggregate / C."
+ },
+ "shapes": {
+  "w200": {
+   "isl": 200,
+   "osl": 200
+  },
+  "w6400": {
+   "isl": 6400,
+   "osl": 100
+  }
+ },
+ "ladders": {
+  "w200": {
+   "platform": "gb300",
+   "model": "Nemotron 3.5 Lightning",
+   "isl": 200,
+   "osl": 200,
+   "points": [
+    {
+     "c": 1,
+     "aggregate_tok_s": 365.91,
+     "per_session_tok_s": 365.91
+    },
+    {
+     "c": 2,
+     "aggregate_tok_s": 463.86,
+     "per_session_tok_s": 231.93
+    },
+    {
+     "c": 3,
+     "aggregate_tok_s": 847.44,
+     "per_session_tok_s": 282.48
+    },
+    {
+     "c": 4,
+     "aggregate_tok_s": 974.71,
+     "per_session_tok_s": 243.68
+    },
+    {
+     "c": 8,
+     "aggregate_tok_s": 1816.74,
+     "per_session_tok_s": 227.09
+    },
+    {
+     "c": 16,
+     "aggregate_tok_s": 3193.65,
+     "per_session_tok_s": 199.6
+    },
+    {
+     "c": 32,
+     "aggregate_tok_s": 4990.15,
+     "per_session_tok_s": 155.94
+    },
+    {
+     "c": 64,
+     "aggregate_tok_s": 6788.21,
+     "per_session_tok_s": 106.07
+    },
+    {
+     "c": 128,
+     "aggregate_tok_s": 8957.48,
+     "per_session_tok_s": 69.98
+    },
+    {
+     "c": 256,
+     "aggregate_tok_s": 11955.11,
+     "per_session_tok_s": 46.7
+    },
+    {
+     "c": 512,
+     "aggregate_tok_s": 13535.31,
+     "per_session_tok_s": 26.44
+    },
+    {
+     "c": 1024,
+     "aggregate_tok_s": 14029.51,
+     "per_session_tok_s": 13.7
+    }
+   ]
+  },
+  "w6400": {
+   "platform": "gb300",
+   "model": "Nemotron 3.5 Lightning",
+   "isl": 6400,
+   "osl": 100,
+   "points": [
+    {
+     "c": 1,
+     "aggregate_tok_s": 268.99,
+     "per_session_tok_s": 268.99
+    },
+    {
+     "c": 2,
+     "aggregate_tok_s": 374.93,
+     "per_session_tok_s": 187.47
+    },
+    {
+     "c": 3,
+     "aggregate_tok_s": 525.82,
+     "per_session_tok_s": 175.27
+    },
+    {
+     "c": 4,
+     "aggregate_tok_s": 658.45,
+     "per_session_tok_s": 164.61
+    },
+    {
+     "c": 8,
+     "aggregate_tok_s": 949.72,
+     "per_session_tok_s": 118.72
+    },
+    {
+     "c": 16,
+     "aggregate_tok_s": 1248.14,
+     "per_session_tok_s": 78.01
+    },
+    {
+     "c": 32,
+     "aggregate_tok_s": 1458.2,
+     "per_session_tok_s": 45.57
+    },
+    {
+     "c": 64,
+     "aggregate_tok_s": 1604.17,
+     "per_session_tok_s": 25.07
+    },
+    {
+     "c": 128,
+     "aggregate_tok_s": 1663.95,
+     "per_session_tok_s": 13.0
+    },
+    {
+     "c": 256,
+     "aggregate_tok_s": 1768.94,
+     "per_session_tok_s": 6.91
+    },
+    {
+     "c": 512,
+     "aggregate_tok_s": 1803.02,
+     "per_session_tok_s": 3.52
+    },
+    {
+     "c": 1024,
+     "aggregate_tok_s": 1820.31,
+     "per_session_tok_s": 1.78
+    }
+   ]
+  }
+ }
+}

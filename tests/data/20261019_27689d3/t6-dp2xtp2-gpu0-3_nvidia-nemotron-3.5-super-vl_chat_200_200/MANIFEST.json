@@ -1,0 +1,27 @@
+{
+ "date": "2026-10-19T15:22:51-0500",
+ "git_sha": "27689d3",
+ "host": "lab host",
+ "platform": "t6-dp2xtp2-gpu0-3",
+ "model": "nvidia/nemotron-3.5-super-vl",
+ "tokenizer": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+ "url": "http://localhost:8100",
+ "shape": "chat_200_200",
+ "isl": 200,
+ "osl": 200,
+ "request_count": 64,
+ "ladder": [
+  1,
+  2,
+  4,
+  8,
+  16,
+  32,
+  64
+ ],
+ "aiperf": "0.7.0",
+ "gpus": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition x4 (2 replicas x TP=2)",
+ "container": "",
+ "image": "",
+ "container_args": ""
+}

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deployment Recipes — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/" class="active">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / recipes</div>
+    <article class="article">
+<h1 id="deployment-recipes">Deployment Recipes</h1>
+<p>Self-contained, runnable shell scripts that serve a model behind an
+OpenAI-compatible API on NVIDIA hardware. Recipes are the deployment layer for
+the reference architectures and solution templates in this repo.</p>
+<h2 id="layout">Layout</h2>
+<pre><code>recipes/&lt;platform&gt;/&lt;server&gt;/docker-&lt;model-slug&gt;.sh   # Docker recipe (vLLM or NIM)
+recipes/&lt;platform&gt;/&lt;server&gt;/serve-&lt;model-slug&gt;.sh    # llama.cpp native recipe
+</code></pre>
+<p>Platforms: <code>gb10</code>, <code>precision</code>, <code>gb300</code> · Servers: <code>vllm</code>.</p>
+<h2 id="conventions">Conventions</h2>
+<ul>
+<li><code>#!/usr/bin/env bash</code> + <code>set -euo pipefail</code>.</li>
+<li><code>--port PORT</code> (or <code>-p</code>) CLI override, env-var fallback declared at top.</li>
+<li><code>docker pull</code> then <code>docker run -d --restart unless-stopped</code> (pre-clean the old
+  container with <code>docker rm -f</code>); print the verify curl at the end.</li>
+<li>GB10 (DGX Spark, aarch64): <code>--gpus all --ipc=host --ulimit memlock=-1
+  --ulimit stack=67108864</code>, mount <code>~/.cache/huggingface</code>.</li>
+</ul>
+<h2 id="readiness-contract-health-checks-monitoring-all-recipes">Readiness contract, health checks, monitoring (all recipes)</h2>
+<p>Every <code>docker-*.sh</code> now <strong>builds, monitors and waits</strong> before returning (shared code:
+<code>lib/common.sh</code>, <code>lib/monitoring.sh</code>):</p>
+<ol>
+<li>pull image, replace the old container, <code>docker run -d --restart unless-stopped</code>;</li>
+<li>start/refresh the shared <strong>tokenomics Prometheus + Grafana</strong> (see <a href="../monitoring/"><code>../monitoring/</code></a>);</li>
+<li><strong>block until ready</strong> — container running, <code>/health</code> 200, served name in <code>/v1/models</code>, and a tiny
+   completion succeeds — then print one machine-readable line:</li>
+</ol>
+<pre><code>READY {&quot;ready&quot;:true,&quot;container&quot;:&quot;lightning-3.5-gb10&quot;,&quot;port&quot;:8000,&quot;base_url&quot;:&quot;http://localhost:8000/v1&quot;,
+       &quot;served_name&quot;:&quot;nvidia/nemotron-3.5-lightning&quot;,&quot;models&quot;:[...],&quot;seconds_to_ready&quot;:212,
+       &quot;max_model_len&quot;:200000,&quot;client_max_output_tokens&quot;:16384,&quot;client_prompt_budget_tokens&quot;:182592,
+       &quot;prometheus&quot;:&quot;http://127.0.0.1:9090&quot;,&quot;grafana&quot;:&quot;http://127.0.0.1:3000/d/deskside-tokenomics&quot;}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Exit</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td>ready</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td>container died / crash-looping (last logs + known-cause hints are printed)</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>wait timeout (default 1800 s; <code>--wait-timeout SEC</code>)</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>usage error</td>
+</tr>
+</tbody>
+</table>
+<p>Common flags on every recipe: <code>--no-wait</code>, <code>--wait-timeout SEC</code>, <code>--no-monitoring</code>, <code>--dry-run</code>
+(prints the exact <code>docker</code> commands, tokens redacted, changes nothing — also the safe way for an agent to
+preview a rollout). Env equivalents: <code>DESKSIDE_WAIT</code>, <code>DESKSIDE_WAIT_TIMEOUT</code>, <code>DESKSIDE_MONITORING</code>, <code>DESKSIDE_DRY_RUN</code>.</p>
+<p><strong>Per-recipe health assessment</strong> (field debugging; read-only except one tiny completion): each recipe has a
+sibling <code>health-&lt;model&gt;.sh</code> — host/driver/runtime/memory/disk → container (state, restarts, OOM, restart policy) →
+endpoint (<code>/health</code>, <code>/v1/models</code>, smoke completion, optional <code>--tool-test</code> structured tool call) → load/KV-cache →
+log-signature scan with fixes → monitoring. Exit 1 on any FAIL; <code>--json</code> for automation; <code>--bundle [DIR]</code> writes
+a token-redacted debug tarball.</p>
+<pre><code class="language-bash">recipes/gb10/vllm/health-nemotron-3.5-lightning-nvfp4.sh --tool-test
+recipes/precision/vllm/health-qwen3.8-flash-next-nvfp4.sh --json
+recipes/lib/health.sh --container NAME --port PORT --served MODEL      # any vLLM container
+recipes/lib/client-config.sh --port 8000 --served nvidia/nemotron-3.5-lightning   # window-aligned client configs
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Health wrapper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gb10/…lightning</code></td>
+<td><code>gb10/vllm/health-nemotron-3.5-lightning-nvfp4.sh</code> (+ unified-memory squatter check)</td>
+</tr>
+<tr>
+<td><code>gb10/…qwen3.8-27b</code></td>
+<td><code>gb10/vllm/health-qwen3.8-27b-nvfp4.sh</code></td>
+</tr>
+<tr>
+<td><code>precision/…lightning</code></td>
+<td><code>precision/vllm/health-nemotron-3.5-lightning-nvfp4.sh</code> (+ TP / PCIe all-reduce check)</td>
+</tr>
+<tr>
+<td><code>precision/…flash-next</code></td>
+<td><code>precision/vllm/health-qwen3.8-flash-next-nvfp4.sh</code> (+ ≥128 GB host-RAM check)</td>
+</tr>
+<tr>
+<td><code>gb300/…lightning</code></td>
+<td><code>gb300/vllm/health-nemotron-3.5-lightning-nvfp4.sh</code></td>
+</tr>
+<tr>
+<td><code>gb300/…glm-5.3-flash</code></td>
+<td><code>gb300/vllm/health-glm-5.3-flash-nvfp4.sh</code> (+ arm64 image check)</td>
+</tr>
+</tbody>
+</table>
+<p>Container names, default ports and served names are unchanged (precision Lightning: <code>lightning-3.5-precision-&lt;port&gt;</code>;
+that recipe now also re-derives the name when <code>--port</code> is given). Tested by <code>tests/test_recipe_contract.sh</code> (mock server,
+ready/died/timeout/<code>--no-wait</code> paths) and <code>tests/test_consistency.py</code> (dry-run of all recipes); the health script was run
+against live containers (Lightning and Super VL on T6, Super VL on GB300, <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> on GB300).</p>
+<h2 id="models">Models</h2>
+<p>Each model carries its size designation — where a solution designates it.
+<strong>Agentic</strong> = the S/M/L designation in the Agentic Coding solution; further
+solution columns get added as other templates designate models.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Quant</th>
+<th>Agentic Coding</th>
+<th>Recipes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> 30B-A3B</strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code>)</td>
+<td>NVFP4</td>
+<td><strong>S — default</strong> (measured fallback on M/L)</td>
+<td><code>gb10</code> · <code>precision</code> · <code>gb300</code></td>
+</tr>
+<tr>
+<td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a></strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4</code>, ~62 GB)</td>
+<td>NVFP4</td>
+<td><strong>M/L — default</strong></td>
+<td><code>precision</code> · <code>gb300</code></td>
+</tr>
+<tr>
+<td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a></strong> (<code>nvidia/Qwen3.8-27B-NVFP4</code>)</td>
+<td>NVFP4 (MTP head kept BF16)</td>
+<td><strong>S — alternative</strong></td>
+<td><code>gb10</code></td>
+</tr>
+<tr>
+<td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></strong> (<code>nvidia/Qwen3.8-Flash-Next-NVFP4</code>)</td>
+<td>NVFP4 (MTP ×3 + engram CPU offload)</td>
+<td><strong>M — alternative</strong></td>
+<td><code>precision</code></td>
+</tr>
+<tr>
+<td><strong><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></strong> (<code>RedHatAI/GLM-5.3-Flash-NVFP4</code>)</td>
+<td>NVFP4</td>
+<td><strong>L — alternative</strong></td>
+<td><code>gb300</code></td>
+</tr>
+</tbody>
+</table>
+<p>There is <strong>no Nemotron L-class designation right now</strong> — 3.5 Super replaces
+3 Ultra — so Super VL, the M/L default, also serves the L tier; Lightning
+multi-instance / DP is the measured fallback and GLM-5.3-Flash is the L
+alternative.</p>
+<h2 id="agentic-coding-model-platform">Agentic Coding — model × platform</h2>
+<p>Support rule: <strong>S-class models run on S/M/L hardware, M-class on M/L, L-class
+on L.</strong> Cells give quick perf numbers where measured (see notes); ✓ = in
+designation range, no published number yet; — = outside the designation range.
+Tests are run in-designation only.</p>
+<table>
+<thead>
+<tr>
+<th>Platform (tier)</th>
+<th>Lightning · S default</th>
+<th>Qwen3.8-27B · S alt</th>
+<th>Super VL · M default¹</th>
+<th>Flash-Next · M alt</th>
+<th>GLM-5.3-Flash · L alt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GB10</strong> · S (128 GB unified)</td>
+<td>~66 out tok/s @ c20 (agent shape)²</td>
+<td>~62–65 out tok/s 1-stream (MTP)³</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Precision T2</strong> · S (96 GB)</td>
+<td>5,352 chat / 399 agent tok/s²</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Precision T4</strong> · M (192 GB)</td>
+<td>✓</td>
+<td>✓</td>
+<td>168 agent / 1,814 chat tok/s @ c32 / c64 (TP=2)⁴</td>
+<td>✓</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Precision T6</strong> · L (480 GB)</td>
+<td>✓</td>
+<td>✓</td>
+<td>252 agent / 2,020 chat tok/s @ c32 / c64 (2 × TP=2)⁴</td>
+<td>✓</td>
+<td>✓ (recipe targets GB300)</td>
+</tr>
+<tr>
+<td><strong>GB300</strong> · L (252 GB HBM3e)</td>
+<td>~335 out tok/s @ c20; ≥20 tok/s/session to C≈17²</td>
+<td>✓</td>
+<td>225 agent / 3,694 chat tok/s @ c32 / c64⁴</td>
+<td>~310 out tok/s 1-stream (spot)</td>
+<td>~111 out tok/s 1-stream (spot)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Super VL is the M/L default (flags from the model card plus multi-user settings from the Nemotron-3-Super recipes);
+   measured results are in note 4; Lightning remains the S-tier default. No Nemotron L class exists beyond it
+   (3.5 Super replaces 3 Ultra).</li>
+<li>Aggregate output tok/s on the agent-workflow shape (ISL 60k / OSL 1k) at
+   concurrency 20 unless annotated otherwise; "chat" cells are aggregate
+   chat-sweep peaks; GB300 per-session concurrency from the re-measured agent
+   ladder in the solution README. Routed (multi-instance) figures are taken behind a
+   LiteLLM router with <code>--num_workers</code> matched to the host's core allocation;
+   launch-era figures taken through a single-worker router (which capped the
+   endpoint near 2.4k tok/s) are retired as measurement artifacts, so those
+   cells carry no published number yet.</li>
+<li>Measured with the predecessor <code>unsloth/</code> NVFP4 checkpoint on locked-clock
+   GB10; the current <code>nvidia/</code> ModelOpt pin keeps the same architecture
+   (MTP preserved).</li>
+<li>Super VL, aiperf 0.7.0, 64 requests per level: agent = ISL 60k / OSL 1k aggregate output tok/s at concurrency 32; chat = ISL 200 / OSL 200 at concurrency 64 (the ladder ended before the chat peak). T4 numbers are one TP=2 instance on two RTX PRO 6000 Max-Q GPUs of a T6; T6 numbers are two TP=2 replicas behind LiteLLM on four of its five GPUs. Raw ladders: <code>tests/data/</code>.</li>
+</ol>
+<h2 id="recommended-deployments">Recommended deployments</h2>
+<p>Exactly <strong>one</strong> recommended recipe per model × platform × use-case set,
+chosen by best measured performance (ties broken by fewer moving parts).
+Use-cases: <strong>chat</strong> = aggregate throughput at high concurrency (200-in /
+200-out sweep); <strong>agent</strong> = agentic long-context shape (ISL 60k / OSL 1k)
+at concurrency 20. Routed variants always run LiteLLM with
+<code>--num_workers</code> matched to the host's core allocation.</p>
+<table>
+<thead>
+<tr>
+<th>Model · Platform</th>
+<th>Use-case</th>
+<th>Recommended recipe</th>
+<th>Topology</th>
+<th>Measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lightning · GB10</td>
+<td>chat + agent</td>
+<td><code>gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>1 instance</td>
+<td>~66 tok/s agent-c20</td>
+</tr>
+<tr>
+<td>Qwen3.8-27B · GB10</td>
+<td>chat + agent</td>
+<td><code>gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code></td>
+<td>1 instance (MTP)</td>
+<td>62–65 tok/s 1-stream</td>
+</tr>
+<tr>
+<td>Lightning · T2</td>
+<td>chat + agent</td>
+<td><code>precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>1 instance</td>
+<td>5,352 chat / 399 agent tok/s</td>
+</tr>
+<tr>
+<td>Lightning · T4</td>
+<td>chat + agent</td>
+<td><code>precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>topology chosen per workload by measurement (<a href="../topology/">docs/topology.md</a>); DP = <code>lib/launch-replicas.sh</code> (2×TP=1 + LiteLLM), TP = single instance</td>
+<td>in designation (see matrix above)</td>
+</tr>
+<tr>
+<td>Lightning · T6</td>
+<td>chat + agent</td>
+<td><code>precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>topology chosen per workload by measurement (<a href="../topology/">docs/topology.md</a>); DP = 5×TP=1 + LiteLLM, TP = TP=4 (snapped)</td>
+<td>in designation (see matrix above)</td>
+</tr>
+<tr>
+<td>Lightning · GB300</td>
+<td>chat + agent</td>
+<td><code>gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>1 instance</td>
+<td>~335 tok/s agent-c20</td>
+</tr>
+<tr>
+<td>Flash-Next · GB300</td>
+<td>chat</td>
+<td><code>precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh</code></td>
+<td>1 instance (TP=1, pin <code>FLASHNEXT_GPUS</code> on shared hosts)</td>
+<td>310 tok/s 1-stream</td>
+</tr>
+<tr>
+<td>Flash-Next · T4</td>
+<td>chat</td>
+<td><code>precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh</code></td>
+<td>TP=2 across the pair</td>
+<td>in designation (see matrix above)</td>
+</tr>
+<tr>
+<td>GLM-5.3-Flash · GB300</td>
+<td>chat</td>
+<td><code>gb300/vllm/docker-glm-5.3-flash-nvfp4.sh</code></td>
+<td>1 instance (≤252 GB HBM3e)</td>
+<td>111 tok/s 1-stream</td>
+</tr>
+<tr>
+<td>Qwen3.8-27B · T6</td>
+<td>chat</td>
+<td><code>gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code></td>
+<td>topology chosen per workload by measurement (<a href="../topology/">docs/topology.md</a>); DP = 5×TP=1 + LiteLLM, TP = TP=4 (snapped)</td>
+<td>in designation (see matrix above)</td>
+</tr>
+<tr>
+<td>Qwen3.8-27B · GB300</td>
+<td>chat</td>
+<td><code>gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code> (<code>QWEN38_27B_GPUS=device=&lt;index-or-UUID&gt;</code>, <code>QWEN38_27B_DIR=&lt;HF-cache snapshot&gt;</code>)</td>
+<td>1 instance</td>
+<td>in designation (see matrix above)</td>
+</tr>
+</tbody>
+</table>
+<p>Multi-instance topologies require the multi-GPU <code>*_GPUS</code> device pin
+(<code>precision</code> recipes; <code>gb10</code> qwen recipe's <code>QWEN38_27B_GPUS</code>). TP &gt; 1 on
+PCIe RTX PRO towers needs <code>NEMOTRON_LIGHTNING_DISABLE_CUSTOM_AR=1</code> (see
+the recipe headers).</p>
+<p>Add new recipes and models here and keep these tables in sync.</p>
+<h2 id="sizing">Sizing</h2>
+<p>Use the sizing rules in <a href="../sizing/">S/M/L Sizing</a> to choose a
+model + quant that fits the target platform's memory budget.</p>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

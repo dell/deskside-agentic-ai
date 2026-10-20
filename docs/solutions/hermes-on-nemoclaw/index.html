@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes on NemoClaw — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../index.html">
+    <img src="../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../">Overview</a>
+<a href="../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../solutions/hermes-on-nemoclaw/" class="active">Hermes on NemoClaw</a>
+<a class="sub active" href="../../solutions/hermes-on-nemoclaw/">Overview</a>
+<a class="sub" href="../../solutions/hermes-on-nemoclaw/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../solutions/hermes-on-nemoclaw/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../solutions/hermes-on-nemoclaw/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../recipes/">Deployment Recipes</a>
+<a href="../../sizing/">S/M/L Sizing</a>
+<a href="../../stack/">Inference Stack &amp; Models</a>
+<a href="../../stack-composition/">Stack Composition</a>
+<a href="../../personas/">Personas</a>
+<a href="../../glossary/">Glossary</a>
+<a href="../../architecture-builder.html">Architecture Builder</a>
+<a href="../../scope/">Scope &amp; Backlog</a>
+<a href="../../operations/">Operations</a>
+<a href="../../topology/">Topology (TP vs DP)</a>
+<a href="../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../index.html">Home</a> / solutions / hermes-on-nemoclaw</div>
+    <article class="article">
+<h1 id="hermes-on-nemoclaw">Hermes on NemoClaw</h1>
+<p><strong>Tool-using AI agents as a product, running fully on-premise on Dell workstations — policy-bounded agent sessions, sandboxed tools, and private inference on a single deskside system.</strong></p>
+<h2 id="summary">Summary</h2>
+<p><a href="https://hermes-agent.nousresearch.com/">Hermes Agent</a>, built by
+<a href="https://nousresearch.com/">Nous Research</a>, is the tool-using agent harness this
+solution deploys: a policy-bounded autonomous agent that reasons with a
+locally-served LLM (<a href="https://github.com/vllm-project/vllm">vLLM</a>,
+OpenAI-compatible), calls external tools through the
+<a href="https://modelcontextprotocol.io/">Model Context Protocol</a> (MCP), and keeps
+skills and memory across sessions. It runs <strong>on the
+<a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a> runtime</strong> — <a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a> supplies
+policy, lifecycle, and the gateway; the <a href="https://github.com/NVIDIA/OpenShell">OpenShell</a>
+sandbox supplies filesystem landlock and L7 egress boundaries. Everything runs
+on one Dell deskside system; no cloud dependency for the model path.</p>
+<p>This solution is the deployment path for <a href="https://hermes-agent.nousresearch.com/">Hermes</a> on Dell S / M /
+L tiers: validated sizing, one-command serving recipes, and an IT-Admin fleet
+guide. The same local endpoint (<code>http://localhost:8000/v1</code>) also serves the
+<a href="../agentic-coding">Agentic Coding</a> solution on the same box. For the base
+runtime with its default <a href="https://openclaw.ai/">OpenClaw</a> agent, see <a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a>.</p>
+<p><strong>What this is <em>not</em>:</strong> an IDE autocomplete solution (that is
+<a href="../agentic-coding">Agentic Coding</a>), nor an unrestricted internet agent
+— policy and egress boundaries are the point.</p>
+<h2 id="personas">Personas</h2>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>What this solution gives them</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT Admin</strong></td>
+<td>Two-plane install (serving + agent), policy tiers, identity and monitoring hooks — <a href="it-admin-guide/">IT-Admin Guide</a>.</td>
+</tr>
+<tr>
+<td><strong>Functional SME</strong></td>
+<td>"How many analysts can share this box?" — the S/M/L table below with measured concurrent-agent envelopes.</td>
+</tr>
+<tr>
+<td><strong>AI Engineer</strong></td>
+<td>Tool-calling model lineup, <a href="https://github.com/vllm-project/vllm">vLLM</a> flags, MCP tool wiring, smoke tests — <a href="deploy-guide-dev/">Developer Deploy Guide</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Terms: <a href="../../glossary/">Glossary</a>.</p>
+<h2 id="reference-nvidia-playbooks">Reference NVIDIA playbooks</h2>
+<table>
+<thead>
+<tr>
+<th>Playbook</th>
+<th>Platform</th>
+<th>What Dell adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://build.nvidia.com/spark/hermes-agent">Run Hermes Agent with a Local LLM</a></td>
+<td>DGX Spark (GB10)</td>
+<td>Dell S/M/L sizing, vLLM recipes, validated agent concurrency envelopes, fleet guide</td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/rtx">RTX Local AI hub</a></td>
+<td>RTX PRO discrete GPUs (Dell Pro Precision 9 T2 / T4 / T6 towers)</td>
+<td>Tower-tier serving recipes + validation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-cases">Use cases</h2>
+<p>Use cases this solution enables (NVIDIA NemoClaw / Hermes positioning, mapped
+onto Dell tiers with local vLLM):</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>What it looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Controlled agent rollout</strong></td>
+<td>Try agent behavior behind explicit filesystem and network boundaries before widening access.</td>
+</tr>
+<tr>
+<td><strong>Managed tool / MCP access</strong></td>
+<td>Connect authenticated tools (docs, tickets, repos) without leaving raw credentials in the sandbox.</td>
+</tr>
+<tr>
+<td><strong>Headless / remote Linux deploy</strong></td>
+<td>Always-on agent on a deskside or lab host.</td>
+</tr>
+<tr>
+<td><strong>Sales / product research</strong></td>
+<td>Mix internal mail, chat, and docs with approved external research under egress lock.</td>
+</tr>
+<tr>
+<td><strong>Engineering triage</strong></td>
+<td>GitHub, CI, and log investigation with a sandboxed shell and repo tools.</td>
+</tr>
+<tr>
+<td><strong>Support desk / knowledge discovery</strong></td>
+<td>Draft answers from internal knowledge plus approved connectors; PII stays on site.</td>
+</tr>
+<tr>
+<td><strong>Multi-agent / team workflows</strong></td>
+<td>Specialized agents collaborating under one governed runtime.</td>
+</tr>
+</tbody>
+</table>
+<p>Deskside pitch: you feel the agent on <strong>your own</strong> GPU, not a shared
+cloud tenant.</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="Hermes on NemoClaw solution architecture" src="../../assets/diagrams/hermes-on-nemoclaw-architecture.svg" /></p>
+<p>The agent loop, end to end:</p>
+<pre><code>        User / channel / CLI
+                │
+                ▼
+        Hermes agent   ── harness: reasoning loop,
+                │          tool-calling, skills, memory
+                ▼
+        NemoClaw runtime ── policy, lifecycle, gateway
+                │
+    ┌───────────┴────────────────┐
+    ▼                            ▼
+ OpenShell sandbox         Local LLM — vLLM :8000 (/v1)
+ (landlock + L7 egress)         │
+    │                           ▼
+    ▼                    Nemotron 3.5 Lightning (NVFP4)
+ MCP tool servers
+ (files, git, tickets, APIs)
+
+        Dell deskside workstation (S / M / L tier)
+_Commands in this guide run from the repository root (`git clone` this repo and `cd` into it)._
+
+</code></pre>
+<h3 id="two-plane-deployment">Two-plane deployment</h3>
+<table>
+<thead>
+<tr>
+<th>Plane</th>
+<th>Contents</th>
+<th>Install path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 — Inference + observability</strong></td>
+<td>vLLM (Nemotron) + <a href="https://prometheus.io/">Prometheus</a> + <a href="https://grafana.com/">Grafana</a></td>
+<td>Recipe under <a href="../../recipes"><code>recipes/</code></a> + <a href="https://www.docker.com/">Docker</a> Compose</td>
+</tr>
+<tr>
+<td><strong>2 — Agent</strong></td>
+<td>NemoClaw installer → <a href="https://github.com/NVIDIA/OpenShell">OpenShell</a> + Hermes sandbox</td>
+<td>NVIDIA installer, then <code>nemohermes</code> (inline steps in the guides)</td>
+</tr>
+</tbody>
+</table>
+<p>Plane 1 is reusable across solutions — the same <code>http://localhost:8000/v1</code>
+endpoint serves Hermes, coding assistants, and <a href="../agentic-vss">Agentic Video Search &amp; Summarization</a>
+on one box.</p>
+<h3 id="key-components">Key components</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hermes</strong></td>
+<td>Tool-using agent harness — tool-calling loop, policy execution, self-improving skills / memory (runs on NemoClaw)</td>
+</tr>
+<tr>
+<td><strong>NemoClaw</strong></td>
+<td>Agent runtime and lifecycle manager — the base plane (<a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a>)</td>
+</tr>
+<tr>
+<td><strong>OpenShell</strong></td>
+<td>Secure sandbox — long-running agent session isolation</td>
+</tr>
+<tr>
+<td><strong>vLLM</strong></td>
+<td>Local inference server — OpenAI-compatible API (<a href="https://docs.vllm.ai/">docs.vllm.ai</a>)</td>
+</tr>
+<tr>
+<td><strong>MCP server(s)</strong></td>
+<td>Tool orchestration via <a href="https://modelcontextprotocol.io/">Model Context Protocol</a></td>
+</tr>
+<tr>
+<td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning NVFP4</a></strong></td>
+<td>Default agent LLM — tool-calling capable, MoE, 30 B total / ~3 B active</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s-m-l-sizing">S / M / L sizing</h2>
+<p>Agent workloads have <strong>variable, stateful resource consumption</strong> — these are
+conservative baselines from measured tool-using agent ladders. One Hermes task
+≈ several sequential LLM calls plus tool executions, so <strong>serving concurrency ≠
+agent concurrency</strong>; size from the agent column, not raw tokens/sec. Sizing
+framework: <a href="../../sizing/">S/M/L Sizing</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Dell system</th>
+<th>GPU / memory</th>
+<th>Model (default · alt)</th>
+<th>Concurrent Hermes agents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Dell Pro Precision with GB10</strong></td>
+<td>GB10 Grace-Blackwell · 128 GB unified · aarch64</td>
+<td>Nemotron-3.5-Lightning-30B-A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a></td>
+<td><strong>1 – 2</strong> interactive (4 pass, p50 ≤ ~23 s)</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><strong>Dell Pro Precision 9 T4 with RTX PRO 6000</strong> · multi-instance or TP</td>
+<td>1–2× RTX PRO 6000 (96 / 192 GB)</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> · alt <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></td>
+<td><strong>1 – 4</strong> (1× card: fastest measured wall-time)</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Dell Pro Precision with GB300</strong></td>
+<td>GB300 252 GB HBM3e · aarch64</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td><strong>1 – 4+</strong> (flat p50)</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Dell Pro Precision 9 T6</strong></td>
+<td>up to 5× RTX PRO 6000 (480 GB)</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td><strong>1 – 4</strong> per GPU</td>
+</tr>
+</tbody>
+</table>
+<h2 id="model-recommendation">Model recommendation</h2>
+<ul>
+<li><strong>Default: Nemotron family, scaled per tier.</strong>
+  <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4"><code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code></a>
+  — tool-calling capable MoE (30 B total / ~3 B active), NVFP4; runs on every
+  tier, so a mixed fleet shares one default. <strong>M / L</strong> target pick is
+  <strong>Nemotron 3.5 Super VL</strong> (<code>recipes/{precision,gb300}/vllm/</code>); Lightning is the S-tier default.</li>
+<li><strong>Tier alternatives (same OpenAI-compatible API, tool-calling verified):</strong></li>
+<li><strong>S</strong> — <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4"><code>nvidia/Qwen3.8-27B-NVFP4</code></a>
+    (+ MTP) · <code>recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code></li>
+<li><strong>M</strong> — <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4"><code>nvidia/Qwen3.8-Flash-Next-NVFP4</code></a>
+    (MTP ×3, engram CPU offload) · <code>recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh</code></li>
+<li><strong>L</strong> — <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4"><code>RedHatAI/GLM-5.3-Flash-NVFP4</code></a>
+    (320 B/18 B-active MoE, 262 K ctx) · <code>recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh</code></li>
+</ul>
+<p><strong>Agentic tool-calling quality drives model choice</strong> — validated
+function-calling is a <strong>hard requirement</strong> for Hermes. The shipping recipes
+bake the default model's flags (<code>--tool-call-parser qwen3_coder</code> +
+<code>--reasoning-parser nemotron_v3</code>); parser semantics:
+<a href="https://docs.vllm.ai/en/stable/features/tool_calling.html">vLLM tool-calling docs</a>.
+Validate any alternate model with the smoke test in
+<a href="deploy-guide-dev/">Developer Deploy Guide</a> before adopting.</p>
+<h2 id="inference-stack">Inference stack</h2>
+<p><strong>vLLM (preferred).</strong> OpenAI-compatible, production-grade. Hermes connects to
+<code>http://localhost:8000/v1</code> — the shared endpoint across this repository's
+solutions; models are shared across workloads on one box. Alternative stacks
+(<code>ollama</code>, <code>llama.cpp</code>, NIM): <a href="../../stack/">Inference Stack &amp; Models</a>.</p>
+<h2 id="deployment-recipes">Deployment recipes</h2>
+<p>Two-step quick start (for a fleet, <code>scripts/landscape/deploy-solution.sh</code> runs both steps):</p>
+<pre><code class="language-bash"># 1. Serve the local LLM (shipping default = Nemotron 3.5 Lightning)
+recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000      # Dell Pro Precision with GB10
+# recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000  # Dell Pro Precision 9 T4 (RTX PRO 6000)
+# recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000       # Dell Pro Precision with GB300
+
+curl -s http://localhost:8000/v1/models
+
+# 2. NemoClaw installer + Hermes onboarding
+curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash
+nemoclaw onboard             # choose Hermes / nemohermes when prompted
+nemohermes agents list       # expect: openclaw | hermes | ...
+</code></pre>
+<p>Full per-plane steps: <a href="deploy-guide-dev/">Developer Deploy Guide</a>
+(developers) · <a href="it-admin-guide/">IT-Admin Guide</a> (fleet). Recipe
+catalog: <a href="../../recipes/">Deployment Recipes</a>.</p>
+<h2 id="benchmarks-performance-validation">Benchmarks &amp; performance (validation)</h2>
+<p>Agent capacity is stated in <strong>concurrent agents and per-turn wall-time</strong>, not
+raw tokens/sec. Same tool-using workload, same MCP tool set, same
+shipping-default model (Nemotron 3.5 Lightning NVFP4) on every line — only the
+Dell system changes. <strong>All tiers pass at concurrency 1 / 2 / 4 with 100 % task
+success.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Measured platform</th>
+<th style="text-align: right;">c=1 p50</th>
+<th style="text-align: right;">c=2 p50</th>
+<th style="text-align: right;">c=4 p50</th>
+<th>Plan for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10</td>
+<td style="text-align: right;">~11 s</td>
+<td style="text-align: right;">~15 s</td>
+<td style="text-align: right;">~23 s</td>
+<td>1 – 2 interactive</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T2 · 1× RTX PRO 6000</td>
+<td style="text-align: right;">~3 s</td>
+<td style="text-align: right;">~3 s</td>
+<td style="text-align: right;">~4 s</td>
+<td>1 – 4 interactive (fastest measured wall-time)</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T4 · 2× RTX PRO 6000</td>
+<td style="text-align: right;">~9 s</td>
+<td style="text-align: right;">~11 s</td>
+<td style="text-align: right;">~12 s</td>
+<td>1 – 4; clean scaling with tool-heavy work</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T6 · 5× RTX PRO 6000 (1 GPU active)</td>
+<td style="text-align: right;">~10 s</td>
+<td style="text-align: right;">~10 s</td>
+<td style="text-align: right;">~12 s</td>
+<td>1 – 4 per GPU; one vLLM instance per GPU behind a small router</td>
+</tr>
+<tr>
+<td>Dell Pro Precision with GB300</td>
+<td style="text-align: right;">~8 s</td>
+<td style="text-align: right;">~8 s</td>
+<td style="text-align: right;">~8 s</td>
+<td>1 – 4+; flat wall-time, headroom above tested range</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Serving-layer context (not the agent envelope):</strong> the default model on a
+single RTX PRO 6000 sustains <strong>32 – 64 concurrent serving requests at p99 TTFT
+≤ 264 ms</strong> — for sizing a multi-agent gateway fanning into one Plane 1
+endpoint, not for "how many analysts share this box?" (use the agent table).</p>
+<h2 id="management-environment">Management environment</h2>
+<ul>
+<li><strong>Identity:</strong> Hermes inherits the host's identity by default; on multi-user
+  M / L deployments, front vLLM with an AD/LDAP-backed reverse proxy.</li>
+<li><strong>Monitoring:</strong> vLLM <code>/metrics</code> scraped by Prometheus, Grafana (:3000);
+  NemoClaw exposes agent telemetry (task success, agent turns, tool-call
+  counts).</li>
+<li><strong>Agent policies:</strong> standard / strict / permissive tiers ship with NemoClaw —
+  ship <strong>standard</strong> in production; apply at sandbox creation (IT-Admin guide).</li>
+<li><strong>Fleet:</strong> containerized deploy (Docker / Podman); scale by adding agent
+  instances behind a shared gateway on M / L tiers.</li>
+</ul>
+<h2 id="dependencies-risk-factors">Dependencies &amp; Risk factors</h2>
+<ul>
+<li><strong>Dependencies:</strong> NemoClaw installer + Hermes agent from NVIDIA; vLLM on
+  GB10 / RTX PRO / GB300; NVFP4 model availability; validated tool-calling in
+  the served model (hard requirement).</li>
+<li><strong>Risk factors:</strong> agent resource use is variable and stateful — envelopes are
+  conservative; NVFP4 serving needs the recipe-pinned backend/parser flags;
+  model recommendations evolve with the Nemotron family.</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="deploy-guide-dev/">Developer Deploy Guide</a> — developer quick-start ·
+  <a href="it-admin-guide/">IT-Admin Guide</a> — IT-admin fleet guide.</li>
+<li><a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a> — the same runtime with the default OpenClaw agent, no Hermes.</li>
+<li><a href="../agentic-coding">Agentic Coding</a> — coding-assistant companion
+  sharing the same vLLM serving layer.</li>
+<li><a href="../../personas/">Personas</a> — persona definitions.</li>
+<li>NVIDIA entry point: <a href="https://build.nvidia.com/spark/nemoclaw">NemoClaw playbook</a>.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../assets/highlight.js" defer></script>
+<script src="../../assets/anchors.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<svg width="1400" height="660" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="660" fill="#ffffff"/>
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Dell Deskside Agentic AI - OpenClaw on NemoClaw Architecture</text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">Two independent planes wired by one command - inference + observability, and the agent runtime</text>
+
+  <!-- agent -->
+  <rect x="450" y="115" width="500" height="90" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="700" y="150" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#1a237e">OpenClaw assistant - your agent logic</text>
+  <text x="700" y="178" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">channels · tools · sessions</text>
+
+  <!-- Plane 2 -->
+  <rect x="60" y="270" width="620" height="300" rx="10" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="370" y="302" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#bf360c">Plane 2 - Agent runtime</text>
+  <rect x="95" y="325" width="550" height="66" rx="8" fill="#ffffff" stroke="#e65100" stroke-width="2"/>
+  <text x="370" y="352" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#bf360c">NemoClaw runtime - policy engine + gateway</text>
+  <text x="370" y="376" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">tool policy · lifecycle · per-agent credentials</text>
+  <rect x="95" y="410" width="550" height="66" rx="8" fill="#ffffff" stroke="#e65100" stroke-width="2"/>
+  <text x="370" y="437" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#bf360c">OpenShell sandboxes (k3s)</text>
+  <text x="370" y="461" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">landlock filesystem + L7 egress control per agent</text>
+  <text x="370" y="530" font-family="Arial" font-size="13" text-anchor="middle" fill="#5d4037">NVIDIA installer · scripted for fleets by scripts/landscape/deploy-solution.sh</text>
+
+  <!-- Plane 1 -->
+  <rect x="720" y="270" width="620" height="300" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1030" y="302" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#1b5e20">Plane 1 - Inference + observability</text>
+  <rect x="755" y="325" width="550" height="66" rx="8" fill="#ffffff" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1030" y="352" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1b5e20">vLLM - locally served LLM (/v1)</text>
+  <text x="1030" y="376" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">tier-pinned models (S/M/L) · docker recipes per platform</text>
+  <rect x="755" y="410" width="550" height="66" rx="8" fill="#ffffff" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1030" y="437" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1b5e20">Prometheus + Grafana - tokenomics</text>
+  <text x="1030" y="461" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">per-session throughput · cost views · alerts</text>
+  <text x="1030" y="530" font-family="Arial" font-size="13" text-anchor="middle" fill="#33691e">Public images only - recipes pull and configure at deploy time</text>
+
+  <path d="M620 205 v65" stroke="#e65100" stroke-width="3" marker-end="url(#o)"/>
+  <path d="M780 205 v65" stroke="#2e7d32" stroke-width="3" marker-end="url(#g)"/>
+  <path d="M680 570 v-20 M680 560 h60 M740 560 v-280" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="700" y="600" font-family="Arial" font-size="13" text-anchor="middle" fill="#616161">wired together by one gateway command (policy-checked model calls)</text>
+  <defs>
+    <marker id="o" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#e65100"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2e7d32"/></marker>
+  </defs>
+</svg>

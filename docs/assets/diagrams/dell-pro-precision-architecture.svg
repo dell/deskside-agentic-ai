@@ -1,0 +1,361 @@
+<svg width="1400" height="1100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1400" height="1100" fill="#ffffff"/>
+
+  <!-- Title Section -->
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">
+    Dell Pro Precision with GB10 - Technical Architecture
+  </text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">
+    Common vs. Usage-Specific Components Across Layers &amp; Usage Modes
+  </text>
+
+  <!-- Legend -->
+  <rect x="50" y="90" width="280" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <rect x="60" y="105" width="20" height="20" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="90" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Common Blocks</text>
+  <text x="90" y="140" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Present across all/most usage modes</text>
+
+  <rect x="350" y="90" width="280" height="70" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <rect x="360" y="105" width="20" height="20" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="390" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ef6c00">Usage-Specific Blocks</text>
+  <text x="390" y="140" font-family="Arial, sans-serif" font-size="10" fill="#ef6c00">Present in specific usage modes only</text>
+
+  <rect x="650" y="90" width="300" height="70" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" rx="5"/>
+  <rect x="660" y="105" width="20" height="20" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="690" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1565c0">Hybrid Blocks</text>
+  <text x="690" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1565c0">Common core + usage-specific extensions</text>
+
+  <rect x="970" y="90" width="380" height="70" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <rect x="980" y="105" width="20" height="20" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="1010" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#7b1fa2">Platform Services</text>
+  <text x="1010" y="140" font-family="Arial, sans-serif" font-size="10" fill="#7b1fa2">Cross-cutting services (security, monitoring, etc.)</text>
+
+  <!-- Layer Labels -->
+  <text x="30" y="976" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 976)">HARDWARE</text>
+  <text x="30" y="856" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 856)">OS LAYER</text>
+  <text x="30" y="713" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 713)">NVIDIA</text>
+  <text x="30" y="619" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 619)">CONTAINER</text>
+  <text x="30" y="507" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 507)">MANAGEMENT</text>
+  <text x="30" y="379" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 379)">APPLICATION</text>
+  <text x="30" y="259" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 259)">INTEGRATION</text>
+
+  <!-- Hardware Layer (BOTTOM) -->
+  <rect x="60" y="890" width="1320" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="915" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Hardware Layer - Dell Pro Precision with GB10 Platform</text>
+
+  <!-- Common Hardware Components -->
+  <rect x="80" y="930" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="140" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">GPU (NVIDIA)</text>
+
+  <rect x="210" y="930" width="100" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="260" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">CPU</text>
+
+  <rect x="320" y="930" width="100" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="370" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Memory</text>
+
+  <rect x="430" y="930" width="100" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="480" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Storage</text>
+
+  <rect x="540" y="930" width="100" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="590" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Networking</text>
+
+  <!-- Usage-Specific Hardware -->
+  <rect x="650" y="930" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="710" y="948" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Industrial</text>
+  <text x="710" y="962" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Interfaces</text>
+
+  <rect x="780" y="930" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="840" y="948" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Sensor/Robotics</text>
+  <text x="840" y="962" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Interfaces</text>
+
+  <rect x="910" y="930" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="970" y="948" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Edge I/O</text>
+  <text x="970" y="962" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Modules</text>
+
+  <rect x="1040" y="930" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1100" y="948" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Healthcare</text>
+  <text x="1100" y="962" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Device I/O</text>
+
+  <rect x="1170" y="930" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1230" y="955" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Power Mgmt</text>
+
+  <!-- OS Layer -->
+  <rect x="60" y="770" width="1320" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="795" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">OS Layer - DGX OS (Ubuntu-based Linux)</text>
+
+  <!-- Common OS Components -->
+  <rect x="80" y="810" width="140" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="150" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Linux Kernel</text>
+
+  <rect x="230" y="810" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="290" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">System Libs</text>
+
+  <rect x="360" y="810" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="420" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Security</text>
+
+  <rect x="490" y="810" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="550" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">File System</text>
+
+  <rect x="620" y="810" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="680" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Networking</text>
+
+  <!-- Usage-Specific OS Extensions -->
+  <rect x="750" y="810" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="810" y="828" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Real-time</text>
+  <text x="810" y="842" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Extensions</text>
+
+  <rect x="880" y="810" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="940" y="828" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Industrial</text>
+  <text x="940" y="842" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Drivers</text>
+
+  <rect x="1010" y="810" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1070" y="828" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Medical</text>
+  <text x="1070" y="842" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Device Drivers</text>
+
+  <rect x="1140" y="810" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1200" y="835" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Package Mgr</text>
+
+  <!-- NVIDIA Stack Layer -->
+  <rect x="60" y="650" width="1320" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="675" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">NVIDIA Software Stack</text>
+
+  <!-- Common NVIDIA Components -->
+  <rect x="80" y="690" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="140" y="715" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">GPU Drivers</text>
+
+  <rect x="210" y="690" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="270" y="715" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">CUDA Toolkit</text>
+
+  <rect x="340" y="690" width="100" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="390" y="715" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">cuDNN</text>
+
+  <rect x="450" y="690" width="130" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="515" y="715" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">AI Frameworks</text>
+
+  <!-- Hybrid NVIDIA Components -->
+  <rect x="590" y="690" width="120" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="650" y="708" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0d47a1">MIG Support</text>
+  <text x="650" y="722" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0d47a1">(Multi-Instance)</text>
+
+  <rect x="720" y="690" width="140" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="790" y="708" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0d47a1">NGC Container</text>
+  <text x="790" y="722" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0d47a1">Registry</text>
+
+  <!-- Usage-Specific NVIDIA Components -->
+  <rect x="870" y="690" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="930" y="708" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">JetPack</text>
+  <text x="930" y="722" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Compatibility</text>
+
+  <rect x="1000" y="690" width="140" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1070" y="708" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Medical Imaging</text>
+  <text x="1070" y="722" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Containers</text>
+
+  <rect x="1150" y="690" width="120" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1210" y="715" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">NCCL</text>
+
+  <!-- Container Runtime Layer -->
+  <rect x="60" y="530" width="1320" height="100" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" rx="5"/>
+  <text x="720" y="555" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Container Runtime Layer</text>
+
+  <!-- Common Container Components -->
+  <rect x="80" y="570" width="120" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="140" y="595" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Docker Engine</text>
+
+  <rect x="210" y="570" width="120" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="270" y="595" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Containerd</text>
+
+  <rect x="340" y="570" width="100" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="390" y="595" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Podman</text>
+
+  <!-- Usage-Specific Container Components -->
+  <rect x="450" y="570" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="510" y="588" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Singularity</text>
+  <text x="510" y="602" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(HPC)</text>
+
+  <rect x="580" y="570" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="640" y="588" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Kubernetes</text>
+  <text x="640" y="602" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Kubelet)</text>
+
+  <rect x="710" y="570" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="770" y="588" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">IoT Edge</text>
+  <text x="770" y="602" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Runtime</text>
+
+  <rect x="840" y="570" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="900" y="588" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Service Mesh</text>
+  <text x="900" y="602" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Istio/Linkerd)</text>
+
+  <rect x="970" y="570" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1030" y="588" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Serverless</text>
+  <text x="1030" y="602" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Knative)</text>
+
+  <rect x="1100" y="570" width="120" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="1160" y="595" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Registry</text>
+
+  <!-- Management Layer -->
+  <rect x="60" y="410" width="1320" height="100" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="720" y="435" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7b1fa2">Management &amp; Orchestration Layer</text>
+
+  <!-- Common Management Components -->
+  <rect x="80" y="450" width="100" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="130" y="475" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Monitoring</text>
+
+  <rect x="190" y="450" width="100" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="240" y="475" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Security</text>
+
+  <rect x="300" y="450" width="100" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="350" y="475" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Updates</text>
+
+  <rect x="410" y="450" width="100" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="460" y="475" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Identity</text>
+
+  <rect x="520" y="450" width="100" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="570" y="475" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Logging</text>
+
+  <!-- Usage-Specific Management Components -->
+  <rect x="630" y="450" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="690" y="468" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">K8s</text>
+  <text x="690" y="482" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Orchestration</text>
+
+  <rect x="760" y="450" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="820" y="468" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">IoT Platform</text>
+  <text x="820" y="482" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Integration</text>
+
+  <rect x="890" y="450" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="950" y="468" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Fleet</text>
+  <text x="950" y="482" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Management</text>
+
+  <rect x="1020" y="450" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1080" y="468" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Compliance</text>
+  <text x="1080" y="482" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Logging</text>
+
+  <rect x="1150" y="450" width="120" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1210" y="468" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Hybrid Cloud</text>
+  <text x="1210" y="482" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Connect</text>
+
+  <!-- Application Layer -->
+  <rect x="60" y="290" width="1320" height="100" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <text x="720" y="315" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef6c00">Application Layer - Usage-Specific Workloads</text>
+
+  <!-- Usage-Specific Applications -->
+  <rect x="80" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="130" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Dev Tools</text>
+  <text x="130" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(IDE, Jupyter)</text>
+
+  <rect x="190" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="240" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">MLOps</text>
+  <text x="240" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Kubeflow)</text>
+
+  <rect x="300" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="350" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Assistant</text>
+  <text x="350" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(NemoClaw)</text>
+
+  <rect x="410" y="330" width="110" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="465" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Industrial AI</text>
+  <text x="465" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(CV, Predictive)</text>
+
+  <rect x="530" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="580" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Robotics</text>
+  <text x="580" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(ROS 2)</text>
+
+  <rect x="640" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="690" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Healthcare</text>
+  <text x="690" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Imaging AI)</text>
+
+  <rect x="750" y="330" width="110" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="805" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">IT Inference</text>
+  <text x="805" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Serving APIs)</text>
+
+  <rect x="870" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="920" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Edge AI</text>
+  <text x="920" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Inference)</text>
+
+  <rect x="980" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1030" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Cluster</text>
+  <text x="1030" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Distributed)</text>
+
+  <rect x="1090" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1140" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Hybrid</text>
+  <text x="1140" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Cloud/Edge)</text>
+
+  <rect x="1200" y="330" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1250" y="348" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Microservices</text>
+  <text x="1250" y="362" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(APIs)</text>
+
+  <!-- Integration Layer (TOP) -->
+  <rect x="60" y="170" width="1320" height="100" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <text x="720" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef6c00">Integration Layer - External System Connectivity</text>
+
+  <!-- Usage-Specific Integrations -->
+  <rect x="80" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="130" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Git/MLflow</text>
+  <text x="130" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Versioning)</text>
+
+  <rect x="190" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="240" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Cloud APIs</text>
+  <text x="240" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(AWS/Azure)</text>
+
+  <rect x="300" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="350" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Productivity</text>
+  <text x="350" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(M365/Google)</text>
+
+  <rect x="410" y="210" width="110" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="465" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Industrial</text>
+  <text x="465" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(OPC-UA/Modbus)</text>
+
+  <rect x="530" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="580" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">ROS 2</text>
+  <text x="580" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Middleware)</text>
+
+  <rect x="640" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="690" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">EHR/PACS</text>
+  <text x="690" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Healthcare)</text>
+
+  <rect x="750" y="210" width="110" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="805" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Enterprise</text>
+  <text x="805" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(AD/LDAP)</text>
+
+  <rect x="870" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="920" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">IoT Platform</text>
+  <text x="920" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Greengrass)</text>
+
+  <rect x="980" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1030" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Service Mesh</text>
+  <text x="1030" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(East/West)</text>
+
+  <rect x="1090" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1140" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">Cloud</text>
+  <text x="1140" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(Arc/Outposts)</text>
+
+  <rect x="1200" y="210" width="100" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1250" y="228" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">API Gateway</text>
+  <text x="1250" y="242" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#e65100">(North/South)</text>
+
+  <!-- Usage Mode Summary -->
+  <rect x="60" y="1010" width="1320" height="60" fill="#f5f5f5" stroke="#999" stroke-width="1" rx="3"/>
+  <text x="720" y="1035" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">
+    Usage Modes: Workstation (Standalone/Connected) | Personal Assistant | Industrial Edge | Robotics | Healthcare | IT Inference | Single Node Edge | Paired Cluster | Hybrid Cloud
+  </text>
+  <text x="720" y="1055" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#666">
+    Hardware foundation provides base for all modes • Upper layers enable domain-specific optimization • Platform services provide cross-cutting capabilities
+  </text>
+
+  <!-- Vertical Connectors (reversed direction) -->
+  <line x1="720" y1="890" x2="720" y2="870" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="770" x2="720" y2="750" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="650" x2="720" y2="630" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="530" x2="720" y2="510" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="410" x2="720" y2="390" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="290" x2="720" y2="270" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- Side Labels (reversed positions) -->
+  <text x="1390" y="912" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 912)">ALL MODES</text>
+  <text x="1390" y="792" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 792)">ALL MODES</text>
+  <text x="1390" y="672" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 672)">ALL MODES</text>
+  <text x="1390" y="552" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 552)">MOST MODES</text>
+  <text x="1390" y="447" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 447)">VARIES</text>
+  <text x="1390" y="293" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 293)">MODE-SPECIFIC</text>
+  <text x="1390" y="173" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 173)">MODE-SPECIFIC</text>
+
+</svg>

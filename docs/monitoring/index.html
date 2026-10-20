@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokenomics monitoring — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / monitoring</div>
+    <article class="article">
+<h1 id="deskside-tokenomics-monitoring">Deskside tokenomics monitoring</h1>
+<p>Every serving recipe starts (idempotently) a shared <strong>Prometheus + Grafana</strong> pair
+that tracks the <em>economics</em> of the platform, not its payload: tokens served,
+cloud-API-equivalent spend vs amortised on-prem cost, $ per 1M output tokens,
+platform utilisation, per-session tok/s vs the responsiveness floor, prefix-cache
+hit rate. No prompts or completions are collected -- only vLLM <code>/metrics</code>
+counters/gauges.</p>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wiring (called by every recipe)</td>
+<td><code>recipes/lib/monitoring.sh</code></td>
+</tr>
+<tr>
+<td>Prometheus config (file-based discovery)</td>
+<td><code>monitoring/prometheus.yml</code></td>
+</tr>
+<tr>
+<td>Dashboard template (placeholders <code>__CLOUD_IN__</code> etc. are rendered at deploy)</td>
+<td><code>monitoring/tokenomics.dashboard.template.json</code></td>
+</tr>
+<tr>
+<td>Runtime state</td>
+<td><code>~/.deskside/monitoring/</code> (targets, rendered config, Grafana admin password <code>0600</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Containers: <code>deskside-prometheus</code>, <code>deskside-grafana</code> (pinned images, <code>--network host</code>,
+<code>--restart unless-stopped</code>, bound to <code>127.0.0.1</code> by default). Ports start at 9090 /
+3000 and move up automatically if taken (the chosen URLs are printed by the recipe and
+by <code>recipes/lib/health.sh</code>).</p>
+<h2 id="cost-assumptions-edit-in-the-dashboard-header-or-set-env-before-running-a-recipe">Cost assumptions (edit in the dashboard header or set env before running a recipe)</h2>
+<table>
+<thead>
+<tr>
+<th>Env</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DESKSIDE_CLOUD_IN_PER_M</code></td>
+<td>3.00</td>
+<td>cloud $/1M input tokens -- becomes the <strong>Custom (from deploy env)</strong> picker option</td>
+</tr>
+<tr>
+<td><code>DESKSIDE_CLOUD_OUT_PER_M</code></td>
+<td>15.00</td>
+<td>cloud $/1M output tokens -- <strong>Custom (from deploy env)</strong> option</td>
+</tr>
+<tr>
+<td><code>DESKSIDE_SYSTEM_PRICE</code></td>
+<td>20000</td>
+<td>system price USD (planning default: T2-class list ~$20K; set your own quote)</td>
+</tr>
+<tr>
+<td><code>DESKSIDE_AMORT_MONTHS</code></td>
+<td>24</td>
+<td>amortisation horizon (planning default: 2 years)</td>
+</tr>
+<tr>
+<td><code>DESKSIDE_WATTS</code></td>
+<td>600</td>
+<td>average system draw</td>
+</tr>
+<tr>
+<td><code>DESKSIDE_KWH_PRICE</code></td>
+<td>0.15</td>
+<td>$/kWh</td>
+</tr>
+</tbody>
+</table>
+<p>The dashboard's <strong>compare against</strong> picker (top of the page) drives the
+cloud-equivalent spend and savings panels at published list prices for
+frontier models -- static assumption series in
+<code>model-prices.yml</code>, captured 2026-10-20. To refresh
+prices, edit that file and re-run any recipe (the monitoring stack re-renders
+its config at start); to compare against your contracted rate, pick
+<strong>Custom (from deploy env)</strong>. The remaining defaults are planning
+placeholders; the dashboard labels every cost panel as assumption-driven.</p>
+<h2 id="other-knobs">Other knobs</h2>
+<p><code>DESKSIDE_MONITORING=0</code> or <code>--no-monitoring</code> skips it; <code>DESKSIDE_MON_BIND</code> (default
+<code>127.0.0.1</code>; set <code>0.0.0.0</code> to share the dashboard on the LAN -- put an
+authenticating proxy in front); <code>DESKSIDE_PROM_PORT</code>, <code>DESKSIDE_GRAFANA_PORT</code>,
+<code>DESKSIDE_PROM_RETENTION</code> (30d). Teardown: <code>recipes/lib/monitoring.sh down</code>.</p>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<svg width="1400" height="680" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="680" fill="#ffffff"/>
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Dell Deskside Agentic AI - Hermes on NemoClaw Architecture</text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">The Hermes agent harness served and sandboxed fully on Dell deskside hardware</text>
+
+  <rect x="480" y="110" width="440" height="76" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="700" y="142" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">User · channel · CLI</text>
+  <text x="700" y="166" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">chat apps · terminal · API</text>
+
+  <rect x="480" y="230" width="440" height="88" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="700" y="262" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">Hermes agent harness</text>
+  <text x="700" y="286" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">reasoning loop · tool calling</text>
+  <text x="700" y="304" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">skills · memory</text>
+
+  <rect x="480" y="362" width="440" height="76" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="700" y="394" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#bf360c">NemoClaw runtime</text>
+  <text x="700" y="418" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">policy · lifecycle · gateway</text>
+
+  <rect x="150" y="492" width="440" height="88" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="370" y="524" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#bf360c">OpenShell sandbox</text>
+  <text x="370" y="548" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">landlock filesystem + L7 egress control</text>
+  <text x="370" y="566" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">tools run here, off the host</text>
+
+  <rect x="810" y="492" width="440" height="88" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1030" y="524" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1b5e20">Local LLM - vLLM :8000 (/v1)</text>
+  <text x="1030" y="548" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">tier-pinned model per platform (S/M/L recipes)</text>
+  <text x="1030" y="566" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">Prometheus + Grafana tokenomics alongside</text>
+
+  <path d="M700 186 v44" stroke="#1a237e" stroke-width="3" marker-end="url(#b)"/>
+  <path d="M700 318 v44" stroke="#1a237e" stroke-width="3" marker-end="url(#b)"/>
+  <path d="M620 438 v32 q0 14 -14 14 H384 q-14 0 -14 14 v4" stroke="#e65100" stroke-width="3" fill="none" marker-end="url(#o)"/>
+  <path d="M780 438 v32 q0 14 14 14 H1016 q14 0 14 14 v4" stroke="#2e7d32" stroke-width="3" fill="none" marker-end="url(#g)"/>
+  <text x="700" y="646" font-family="Arial" font-size="13" text-anchor="middle" fill="#616161">agent loop end to end on one deskside system - model calls are policy-checked by the gateway before they reach vLLM</text>
+  <defs>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#1a237e"/></marker>
+    <marker id="o" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#e65100"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2e7d32"/></marker>
+  </defs>
+</svg>

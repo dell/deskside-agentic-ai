@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higher Education AI Lab — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../index.html">
+    <img src="../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../">Overview</a>
+<a href="../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../solutions/higher-ed-ai-lab/" class="active">Higher Education AI Lab</a>
+<a class="sub active" href="../../solutions/higher-ed-ai-lab/">Overview</a>
+<a class="sub" href="../../solutions/higher-ed-ai-lab/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../solutions/higher-ed-ai-lab/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../solutions/higher-ed-ai-lab/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../recipes/">Deployment Recipes</a>
+<a href="../../sizing/">S/M/L Sizing</a>
+<a href="../../stack/">Inference Stack &amp; Models</a>
+<a href="../../stack-composition/">Stack Composition</a>
+<a href="../../personas/">Personas</a>
+<a href="../../glossary/">Glossary</a>
+<a href="../../architecture-builder.html">Architecture Builder</a>
+<a href="../../scope/">Scope &amp; Backlog</a>
+<a href="../../operations/">Operations</a>
+<a href="../../topology/">Topology (TP vs DP)</a>
+<a href="../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../index.html">Home</a> / solutions / higher-ed-ai-lab</div>
+    <article class="article">
+<h1 id="higher-education-ai-lab">Higher Education AI Lab</h1>
+<p><strong>A repeatable design for university AI teaching labs on Dell deskside
+hardware — multi-cohort teaching: coding agents, video search &amp;
+summarization, and agent runtimes.</strong></p>
+<h2 id="summary">Summary</h2>
+<p>Universities need AI compute close to the classroom, manageable by campus IT,
+and strong enough for modern coursework. This template serves models in <a href="https://github.com/vllm-project/vllm">vLLM</a>
+containers on Dell deskside workstations; students connect over the lab LAN
+with OpenAI-compatible clients, and course lifecycle is a fleet operation —
+one managed fleet serves many courses (N×M scheduling) with fast state reset
+between classes. It wraps three NVIDIA playbooks and cross-links the sibling
+solutions supplying the course modules:
+<a href="../agentic-coding">Agentic Coding</a> (coding agents),
+<a href="../agentic-vss">Agentic Video Search &amp; Summarization</a> (video search &amp; summarization), and
+<a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a> (agent runtimes; advanced modules via
+<a href="../hermes-on-nemoclaw">Hermes on NemoClaw</a>).</p>
+<p><strong>Reference design.</strong> Pool sizing comes from measured ladders on the same hardware
+(<a href="#benchmarks-performance-validation">Benchmarks &amp; performance</a>); your pilot observations tune it.</p>
+<h2 id="personas">Personas</h2>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>What this solution gives them</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT Admin</strong></td>
+<td>Lab architecture, fleet management (<a href="https://ubuntu.com/landscape">Landscape</a> ), imaging, NAS, identity, semester playbook — <a href="it-admin-guide/">IT-Admin Guide</a>.</td>
+</tr>
+<tr>
+<td><strong>Faculty / department</strong></td>
+<td>Course profiles, N×M scheduling, app stack, curriculum progression by tier.</td>
+</tr>
+<tr>
+<td><strong>AI engineer / lab admin</strong></td>
+<td>Model serving, <a href="https://www.litellm.ai/">LiteLLM</a> routing, GB10 pooling — <a href="deploy-guide-dev/">Developer Deploy Guide</a>.</td>
+</tr>
+<tr>
+<td><strong>Institutional leadership</strong></td>
+<td>Sizing comparison, TCO framework, phased roadmap.</td>
+</tr>
+</tbody>
+</table>
+<p>More: <a href="../../personas/">Personas</a>.</p>
+<h2 id="reference-nvidia-playbooks">Reference NVIDIA playbooks</h2>
+<table>
+<thead>
+<tr>
+<th>Playbook</th>
+<th>Platform</th>
+<th>What Dell adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://build.nvidia.com/spark/cli-coding-agent">CLI Coding Agent</a></td>
+<td>DGX Spark (GB10)</td>
+<td>Multi-seat serving, course profiles, sizing — module in <a href="../agentic-coding">Agentic Coding</a></td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/spark/nemoclaw">Run NemoClaw with a Local LLM</a></td>
+<td>DGX Spark (GB10)</td>
+<td>Per-student agent runtime + sandbox, reset between classes — module in <a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization">Video Search &amp; Summarization blueprint</a></td>
+<td>Spark / RTX PRO / GB300</td>
+<td>Classroom-scale VSS module, public images, VLM + LLM local — module in <a href="../agentic-vss">Agentic Video Search &amp; Summarization</a></td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://build.nvidia.com/rtx">RTX Local AI hub</a> covers the discrete
+RTX PRO options used by the M-tier shared amplifier.</p>
+<h2 id="use-cases">Use cases</h2>
+<p>Teaching scenarios on a 30-seat reference lab:</p>
+<table>
+<thead>
+<tr>
+<th>Teaching scenario</th>
+<th>Tier</th>
+<th>Cohort / sizing</th>
+<th>What it looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intro AI / ML coursework</td>
+<td>S</td>
+<td>30 students, 10–15 serving GB10s (2–3:1)</td>
+<td>JupyterHub notebooks on a shared vLLM endpoint; prompt engineering, RAG, light fine-tuning.</td>
+</tr>
+<tr>
+<td>Dedicated AI teaching lab</td>
+<td>M</td>
+<td>30 seats, 1:1</td>
+<td>Each seat is a Dell Pro Precision with GB10 (128 GB unified); local development, zero contention.</td>
+</tr>
+<tr>
+<td>Coding-agent / multi-agent coursework</td>
+<td>M</td>
+<td>1:1 seats</td>
+<td>Per-student CLI coding agents  (Agentic Coding) or agent runtime + sandbox  (<a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a>).</td>
+</tr>
+<tr>
+<td>Graduate research / fine-tuning</td>
+<td>L</td>
+<td>30 seats + shared pool (~1:10)</td>
+<td>Frontier pool for fine-tuning and dense-model assignments.</td>
+</tr>
+<tr>
+<td>Video-understanding coursework</td>
+<td>L</td>
+<td>shared pool</td>
+<td>VSS teaching module on the shared compute  (Agentic Video Search &amp; Summarization).</td>
+</tr>
+<tr>
+<td>Cross-departmental + remote</td>
+<td>S</td>
+<td>N courses × M seats, one fleet</td>
+<td>CS one hour, digital humanities the next; reset between classes. Remote cohorts join via reverse proxy or campus VDI broker.</td>
+</tr>
+</tbody>
+</table>
+<p>Course profiles cover: notebook + local LLM · multi-model comparison (via
+LiteLLM) · fine-tuning (Unsloth Studio) · RAG (<code>nomic-embed-text</code>) · creative
+(ComfyUI + FLUX.1-dev / SDXL) · multimedia (Whisper large-v3).</p>
+<p>What this template is <em>not</em>: hardware procurement; a curriculum (faculty pick
+content); a research-cluster substitute (L shared compute is classroom-scale).</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="Higher Education AI Lab reference architecture" src="../../assets/diagrams/higher-ed-ai-lab-architecture.svg" /></p>
+<p>Usage and connectivity — students and devices reach the lab only through campus
+identity and one HTTPS entry point (view as published in the launch brochure):</p>
+<p><img alt="Higher Education AI Lab usage and connectivity architecture" src="../../assets/diagrams/higher-ed-campus-connectivity.svg" /></p>
+<p>Lab topology — workstations serve models over the lab LAN (doc-example range
+203.0.113.0/24; real deployments use the campus address plan):</p>
+<pre><code> Students: thin clients (S) · GB10 seats (M/L — the seat is the workstation)
+        │  lab LAN 203.0.113.0/24 (doc example)
+        ▼
+ Management node — reverse proxy · LiteLLM router · JupyterHub
+ (campus SSO/IdP · Landscape · Prometheus + Grafana :3000)
+        │
+ ┌──────┴──────────────────────────────┐
+ ▼                                     ▼
+ Model-serving workstations           Shared frontier pool (L only)
+ GB10 pool / seats · optional         Dell Pro Precision with GB300 (~1:10)
+ Precision 9 T4/T6 RTX PRO 6000             vLLM · public images
+ (multi-instance or TP)
+        │
+        ▼
+ NAS / NFS — weights · datasets · course profiles · home dirs
+ (model proxy/cache · snapshots for between-class reset)
+</code></pre>
+<p>Shared infra (all tiers): NAS/NFS + model proxy/cache · Landscape 
+fleet management · campus SSO/IdP (LDAP/AD) · optional remote access (proxy /
+jump host / VDI broker).</p>
+<h2 id="s-m-l-sizing">S / M / L sizing</h2>
+<p>Tiers differ by <strong>seat ratio and serving topology</strong>, not by stack
+(<a href="../../sizing/">S/M/L Sizing</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Lab model</th>
+<th>Dell systems</th>
+<th>Model (default · alt)</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td>Shared serving pool + thin clients</td>
+<td><strong>Dell Pro Precision with GB10</strong> (128 GB unified) ×N, 2–3 students per node</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> 30B A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a> (+ MTP)</td>
+<td>1 vLLM per GB10 behind LiteLLM; interactive at 2–3 students/node (measured GB10 ladders below)</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td>1:1 seats</td>
+<td><strong>Dell Pro Precision with GB10</strong> per seat — the workstation <strong>is</strong> the endpoint; optional <strong>Dell Pro Precision 9 T4</strong> (RTX PRO 6000, multi-instance or TP) shared amplifier</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> · alt <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></td>
+<td>per-seat local serving; optional shared T4/T6 amplifier</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td>1:1 seats + shared frontier pool</td>
+<td>GB10 seats + <strong>Dell Pro Precision with GB300</strong> (252 GB HBM3e, aarch64), ~1 per 10 students</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td>shared frontier pool (GB300 session envelope at a 20 tok/s/session floor — <a href="../agentic-coding">Agentic Coding</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>All NVFP4. Rule of thumb (inherited from the measured Agentic Coding S-tier
+baseline): one GB10 comfortably serves 2–3 concurrent notebook students at
+interactive latency — a 30-seat lab wants 10–15 GB10s in the pool. App
+stack: JupyterHub, OpenWebUI, vLLM/Ollama on all tiers; Unsloth Studio,
+ComfyUI, <a href="https://opencode.ai/">OpenCode</a> on M/L seats; LiteLLM routing on S/L pools.</p>
+<h2 id="model-recommendation">Model recommendation</h2>
+<p>Per-course model choice, not one model for every course; pin the default and
+route alternatives through LiteLLM (one endpoint per student, routing by API
+key / course group).</p>
+<ul>
+<li><strong>Default (S, all coursework):</strong> <strong>Nemotron 3.5 Lightning 30B A3B NVFP4</strong>
+  (<a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">card</a>)
+  — instruction, coding, RAG; runs on every tier. Reasoning model: clients
+  need <code>max_tokens &gt;= 512</code>. M/L shared serving default:
+  <strong>Nemotron 3.5 Super VL</strong>; Lightning is the measured alternative.</li>
+<li><strong>Alts, same API:</strong> S / coding-heavy CS — <strong>Qwen3.8 27B NVFP4</strong>
+  (<a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">card</a>); M / shared
+  amplifier — <strong>Qwen3.8-Flash-Next NVFP4</strong>
+  (<a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">card</a>); L /
+  frontier coursework — <strong>GLM-5.3-Flash NVFP4</strong>
+  (<a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">card</a>), a 320B-total
+  MoE on one 252 GB GB300.</li>
+<li><strong>Comparison labs:</strong> <a href="https://huggingface.co/google/gemma-4-26B-A4B-it">Gemma 4 26B A4B</a> <strong>and</strong> <a href="https://huggingface.co/google/gemma-4-31B-it">Gemma 4 31B</a> (dense), side by
+  side via LiteLLM. <strong>RAG:</strong> <code>nomic-embed-text</code> + the default chat model.</li>
+<li><strong>VSS teaching module:</strong> <a href="https://huggingface.co/nvidia/nemotron-3-nano-omni-30b-a3b">Nemotron 3 Nano Omni</a> (VLM) + Lightning (LLM), both
+  local on public <code>vllm/vllm-openai</code> images — <a href="../agentic-vss">Agentic Video Search &amp; Summarization</a>.</li>
+<li><strong>Creative / multimedia:</strong> FLUX.1-dev / SDXL (ComfyUI), Whisper large-v3.</li>
+</ul>
+<h2 id="inference-stack">Inference stack</h2>
+<p><strong>vLLM (preferred)</strong> — OpenAI-compatible, public <code>vllm/vllm-openai</code> images
+(<a href="https://docs.vllm.ai/">docs.vllm.ai</a>). Ollama is the per-seat developer
+quick-start; LiteLLM fronts shared pools for multi-model routing. Reference:
+<a href="../../stack/">Inference Stack &amp; Models</a>.</p>
+<h2 id="deployment-recipes">Deployment recipes</h2>
+<p>Catalog: <code>docs/recipes/</code> ·
+<a href="../../">Dell Deskside Agentic AI Solutions</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Recipe (under <code>recipes/</code>)</th>
+<th>Lab role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GB10</td>
+<td><code>gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>S pool · M/L seats</td>
+</tr>
+<tr>
+<td>GB10</td>
+<td><code>gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code></td>
+<td>coding-heavy courses (S alt)</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td><code>precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>shared amplifier, multi-instance or TP</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td><code>precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh</code></td>
+<td>M-tier alt</td>
+</tr>
+<tr>
+<td>GB300</td>
+<td><code>gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+<td>L shared pool (measured fallback)</td>
+</tr>
+<tr>
+<td>GB300</td>
+<td><code>gb300/vllm/docker-glm-5.3-flash-nvfp4.sh</code></td>
+<td>L-tier alt (frontier)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Commands in this guide run from the repository root (<code>git clone</code> this repo and <code>cd</code> into it).</em></p>
+<pre><code class="language-bash">recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+curl -s http://localhost:8000/v1/models
+</code></pre>
+<p>JupyterHub / OpenWebUI / VSS classroom profiles run as inline Compose in the
+dev guide. Guides — pilot:
+<a href="deploy-guide-dev/">Developer Deploy Guide</a> · semester rollout:
+<a href="it-admin-guide/">IT-Admin Guide</a>.</p>
+<h2 id="management-environment">Management environment</h2>
+<ul>
+<li><strong>Fleet:</strong> Canonical Landscape — golden image, patching,
+  per-course profile push; rollouts run without SSH.</li>
+<li><strong>Identity:</strong> campus SSO / IdP (AD, Entra ID, LDAP) with per-course group
+  scoping; students never see a raw serving port.</li>
+<li><strong>Monitoring:</strong> <a href="https://prometheus.io/">Prometheus</a> + <a href="https://grafana.com/">Grafana</a> (<code>:3000</code>) + DCGM — GPU use, vLLM queue
+  depth, storage growth, fleet health.</li>
+<li><strong>Course lifecycle (N×M):</strong> container reset ~2 s (profile / model swap) ·
+  LVM snapshot restore ~30 s (home dirs) · autoinstall re-image 3–5 min
+  (end of term).</li>
+</ul>
+<h2 id="benchmarks-performance-validation">Benchmarks &amp; performance (validation)</h2>
+<p>Classroom sizing is derived from measured ladders on the same hardware rather than a replay of a 30-seat class:
+the S pool from the GB10 ladders (Lightning chat: ~44 tok/s per session alone, ~31 at four concurrent sessions), the L
+pool from the GB300 ladders (Super VL chat: ~74 tok/s per session at 32 concurrent). Reset times depend on your storage
+(a container reset takes seconds; see the <a href="it-admin-guide/">IT-Admin Guide</a> for snapshot restore and re-image). The
+measured Agentic Coding S-tier baseline (GB10, 200/200 chat, prior reference model;
+<a href="../agentic-coding">Agentic Coding</a>) is kept below for pool sizing:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Concurrent students</th>
+<th style="text-align: right;">TTFT p50</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">~113 ms</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">~267 ms</td>
+<td>Good — interactive coding</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">~348 ms</td>
+<td>Acceptable — light lag on first token</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">~583 ms</td>
+<td>Marginal — add a second GB10 to the pool</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cost-tco">Cost &amp; TCO</h2>
+<p>Indicative BOM cost ratios for a 30-seat lab (order-of-magnitude planning,
+not quotes):</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>S</th>
+<th>M</th>
+<th>L</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute</td>
+<td>1.0×</td>
+<td>3.0×</td>
+<td>4.5×</td>
+</tr>
+<tr>
+<td>Storage + network</td>
+<td>0.3×</td>
+<td>0.3×</td>
+<td>0.5×</td>
+</tr>
+<tr>
+<td>Ops / management</td>
+<td>0.5×</td>
+<td>0.3×</td>
+<td>0.5×</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>~1.8×</td>
+<td>~3.6×</td>
+<td>~5.5×</td>
+</tr>
+</tbody>
+</table>
+<p>Storage planning (30 seats, one term, indicative): weights 200–500 GB on NAS
+· datasets 100–200 GB/course · home dirs 20–40 GB × 30 · +25 % snapshot
+overhead → <strong>~2–3 TB usable NAS</strong>. S is cheapest at the cost of contention;
+M removes contention at ~2× S compute; L adds fine-tuning and frontier
+coursework at ~1.5× M compute.</p>
+<h2 id="dependencies-risk-factors">Dependencies &amp; risk factors</h2>
+<ul>
+<li><strong>Dependencies:</strong> the three upstream playbooks; vLLM public images on
+  GB10 / Precision / GB300; <a href="https://huggingface.co/">Hugging Face</a> access (or a pre-seeded model proxy)
+  for first weight pull; campus IdP; Landscape.</li>
+<li><strong>Risk factors:</strong> model lineup refreshes with the
+  open-weights cadence; undersized S pools degrade TTFT under concurrent use
+  — plan from the inherited ladder and pilot observations.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../assets/highlight.js" defer></script>
+<script src="../../assets/anchors.js" defer></script>
+</body>
+</html>

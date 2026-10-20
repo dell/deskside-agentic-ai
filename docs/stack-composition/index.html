@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack Composition — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/" class="active">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / stack-composition</div>
+    <article class="article">
+<h1 id="stack-composition-standard">Stack Composition Standard</h1>
+<p>Every solution template and reference architecture in this repo is
+described as a composition of two layers. This standard makes solutions
+comparable, repeatable, and easy to author consistently.</p>
+<h2 id="the-two-layers">The two layers</h2>
+<h3 id="1-dell-hardware">1. Dell Hardware</h3>
+<p>The solutions in this repo run on, and only on, these Dell deskside
+systems:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Tier</th>
+<th>Role in solutions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dell Pro Precision with GB10</strong> (DGX Spark class device)</td>
+<td>S</td>
+<td>Deskside AI appliance — 128 GB unified memory, single-GPU inference, DGX OS</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision 9 T2</strong></td>
+<td>S</td>
+<td>Workstation tower, 1× RTX PRO 6000 Blackwell Workstation Edition (96 GB)</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision 9 T4</strong></td>
+<td>M</td>
+<td>Tower, 2× RTX PRO 6000 Blackwell Max-Q (192 GB) — small team, multi-instance or TP serving</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision 9 T6</strong></td>
+<td>L</td>
+<td>Tower, 5× RTX PRO 6000 Blackwell Max-Q (480 GB) — high-capacity multi-instance inference</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision with GB300</strong> (DGX Station class device)</td>
+<td>L</td>
+<td>Deskside AI appliance — 252 GB HBM3e + 496 GB LPDDR5X, aarch64, multi-user / app host</td>
+</tr>
+</tbody>
+</table>
+<p>No other Dell platforms (PowerEdge, laptops, storage) are in scope for
+these solution templates. See <a href="../sizing/">S/M/L Sizing</a> for memory budgets
+and model fit per tier.</p>
+<h3 id="2-open-nvidia-ecosystem-software">2. Open / NVIDIA / Ecosystem Software</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.nvidia.com/en-us/data-center/products/ai-enterprise/">NVIDIA AI Enterprise</a> (CUDA, cuDNN, TensorRT)</td>
+<td>Accelerated runtime &amp; libraries</td>
+</tr>
+<tr>
+<td>NVIDIA NIM</td>
+<td>Inference microservices for production model serving</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vllm-project/vllm">vLLM</a> / llama.cpp / whisper.cpp</td>
+<td>OpenAI-compatible inference servers (see <code>recipes/</code>)</td>
+</tr>
+<tr>
+<td>PyTorch, <a href="https://huggingface.co/">Hugging Face</a>, LangChain, LlamaIndex</td>
+<td>Frameworks for building AI apps</td>
+</tr>
+<tr>
+<td>MLflow, Kubeflow, <a href="https://prometheus.io/">Prometheus</a>, <a href="https://grafana.com/">Grafana</a></td>
+<td>MLOps &amp; observability</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-express-composition-in-a-solution">How to express composition in a solution</h2>
+<p>Each solution README includes a <strong>Stack Composition</strong> table that names the
+specific choice for each layer, for example:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Choice for this solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware</td>
+<td>Dell Pro Precision with GB10 (128 GB unified)</td>
+</tr>
+<tr>
+<td>Software</td>
+<td>vLLM + NVIDIA AI Enterprise; model served via <code>recipes/gb10/vllm/...</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="deployment-tiers">Deployment tiers</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Where it runs</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Deskside</strong></td>
+<td>Precision / Dell Pro Precision</td>
+<td>Dev, test, low-latency local inference</td>
+</tr>
+<tr>
+<td><strong>AI Factory</strong></td>
+<td>PowerEdge + NVIDIA DGX</td>
+<td>Training, large-scale inference, model mgmt</td>
+</tr>
+<tr>
+<td><strong>Hybrid (Edge + Core)</strong></td>
+<td>Both, orchestrated</td>
+<td>Distributed inference, federated learning, hybrid RAG</td>
+</tr>
+</tbody>
+</table>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

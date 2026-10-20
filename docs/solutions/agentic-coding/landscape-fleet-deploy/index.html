@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Coding — IT-Admin Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/" class="active">Agentic Coding</a>
+<a class="sub" href="../../../solutions/agentic-coding/">Overview</a>
+<a class="sub" href="../../../solutions/agentic-coding/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../../solutions/agentic-coding/ide-integration/">IDE Integration</a>
+<a class="sub active" href="../../../solutions/agentic-coding/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / agentic-coding / it-admin-guide</div>
+    <article class="article" data-picker>
+<h1 id="fleet-deployment-via-canonical-landscape-agentic-coding-solution">Fleet deployment via Canonical Landscape (Agentic Coding solution)</h1>
+<blockquote>
+<p><strong>Who this is for:</strong> IT admins managing a fleet of enrolled Ubuntu
+workstations (DGX Spark / Precision / DGX Station) who want serving-recipe
+rollouts <strong>without SSH</strong> — launched from <a href="https://ubuntu.com/landscape">Canonical Landscape</a>, logged in the
+Landscape activity feed, repeatable from CI.</p>
+<p><strong>Companion docs:</strong> <a href="../it-admin-guide/">IT-Admin Guide</a> (single-node
+setup), <a href="../">Solution overview</a> (sizing + recipes),
+<code>scripts/landscape/</code> (the tooling).</p>
+</blockquote>
+<h2 id="how-the-pieces-fit">How the pieces fit</h2>
+<pre><code>control host                       enrolled device (per fleet member)
+─────────────                      ─────────────────────────────────
+landscape_client.py  ──HTTPS────►  landscape-client
+  runscript (CreateScript            ScriptExecution plugin runs the
+  + ExecuteScript, Bearer JWT)        payload as root/user, returns
+  pollscript ◄── activity result     stdout as the activity result
+</code></pre>
+<ul>
+<li><strong>Landscape picks <em>who</em></strong> (the fleet inventory), <em>the script says </em><em>how</em>**
+  (it just runs this repo's recipe). One execution authority per box at a
+  time — don't layer a second config manager onto the same ports/compose.</li>
+<li>The payloads in <code>scripts/landscape/</code> are plain
+  bash; you can run the identical script by hand over SSH during bring-up —
+  the converged state is observationally the same.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Command (on the device)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enrolled + <strong>Accepted</strong></td>
+<td><code>landscape_client.py computers</code> lists it</td>
+<td>Newly registered machines may sit <strong>Pending</strong>; acceptance is UI-only on SaaS. Re-running <code>landscape-config</code> on a registered machine <strong>re-registers</strong> it (new id).</td>
+</tr>
+<tr>
+<td>ScriptExecution on</td>
+<td>see §Step 1</td>
+<td>One-time, needs sudo (console or existing root).</td>
+</tr>
+<tr>
+<td>Disk ≥ ~60 GB free</td>
+<td><code>df -h /</code></td>
+<td>image (~35 GB) + weights (~21 GB) + slack.</td>
+</tr>
+<tr>
+<td><a href="https://www.docker.com/">Docker</a> nvidia runtime</td>
+<td><code>docker info \| grep -iA1 Runtimes</code></td>
+<td>Stock DGX Spark lacks it — §Step 2 self-heals.</td>
+</tr>
+<tr>
+<td>Internet to HF + Docker Hub (or pre-seeded cache)</td>
+<td><code>curl -I https://huggingface.co</code></td>
+<td>Air-gapped: pre-seed <code>~/.cache/huggingface</code> per the IT-Admin guide.</td>
+</tr>
+<tr>
+<td>GB10 memory headroom</td>
+<td><code>nvidia-smi</code> process list</td>
+<td>Unified memory: local ollama/benchmark strays shrink the pool; on GB10 <code>--query-gpu=memory.used</code> reports <em>N/A</em>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-1-enable-remote-script-execution-once-per-device">Step 1 — Enable remote script execution (once per device)</h2>
+<p>Run <code>scripts/landscape/enable-script-execution.sh</code>
+on the device with sudo (<code>&lt;your-account&gt;</code> = Landscape account name). Allow one
+client exchange (~4 min). Two traps, both in the script header:
+<code>--silent</code> is required without a TTY, and already-registered machines come
+back with a <strong>new computer id</strong>, possibly <strong>Pending</strong> approval.</p>
+<p>Prove it with a trivial payload before fleet-running anything:</p>
+<pre><code class="language-bash">ID=$(python3 scripts/landscape/landscape_client.py computers | awk '/&lt;device&gt;/{print $1}')
+printf '#!/bin/bash\nhostname\nid -un\n' &gt; /tmp/exec-check.sh
+python3 scripts/landscape/landscape_client.py runscript --file /tmp/exec-check.sh --ids &quot;$ID&quot; --user root --limit 60
+python3 scripts/landscape/landscape_client.py pollscript --group &lt;group-id&gt; --timeout 240
+</code></pre>
+<p><code>"plugin which should handle it isn't available"</code> ⇒ ScriptExecution is off
+(or the registration is still Pending — on the device,
+<code>/var/log/landscape/broker.log</code> showing accepted types <code>test</code> only = Pending).</p>
+<h2 id="step-2-deploy-per-device-or-by-query">Step 2 — Deploy (per device or by query)</h2>
+<p>Staging (once per device — file transfer only): sync this repo to
+<code>/opt/deskside-agentic-ai-solutions-for-nvidia</code> and, if the fleet serves under
+a non-root user, ensure the HF cache + <code>token</code> live where the payload points
+<code>HF_HOME</code> (root-context scripts do <strong>not</strong> see <code>/home/&lt;user&gt;</code>).</p>
+<pre><code class="language-bash">python3 scripts/landscape/landscape_client.py runscript \
+  --file scripts/landscape/deploy-serving-recipe.sh --ids &quot;$ID&quot; --user root --limit 1800
+python3 scripts/landscape/landscape_client.py pollscript --group &lt;group-id&gt; --timeout 2400
+</code></pre>
+<p>The payload: self-heals the docker nvidia runtime → pre-pulls the image (the
+recipes cap their own pull at 60 s) → runs the recipe → <strong>hard gate</strong>: exits 1
+unless the container is up. Configure per fleet by editing the env block at
+the top (<code>RECIPE</code>, <code>IMAGE</code>, <code>CONTAINER</code>, <code>HF_HOME</code>) — e.g. Precision tiers:
+<code>RECIPE=$REPO_DIR/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh
+CONTAINER=lightning-3.5-precision-8000</code> (Precision names carry the port; ports count up from 8000). The payload now fails (exit 1) unless the recipe's own readiness contract passes, and the container gate matches the exact name.</p>
+<h2 id="step-3-verify-one-exchange-cycle">Step 3 — Verify (one exchange cycle)</h2>
+<pre><code class="language-bash">python3 scripts/landscape/landscape_client.py runscript \
+  --file scripts/landscape/verify-serving.sh --ids &quot;$ID&quot; --user root --limit 3000
+</code></pre>
+<p>It loops internally (<code>VERIFY_ITERS</code> × 30 s, default ~40 min: first boot
+downloads ~21 GB of weights — raise it on slow links),
+then checks <code>/health</code>, lists served model aliases, and runs one smoke chat
+completion (<code>max_tokens 512</code> — reasoning models spend small budgets entirely
+on thinking). Prints <code>READY</code> + <code>smoke: FLEET DEPLOY OK</code> on success,
+<code>DIED</code> + logs on failure.</p>
+<h2 id="step-4-close-root-script-execution-deploy-time-only">Step 4 — Close root script execution (deploy-time only)</h2>
+<p>Root is needed only while the rollout runs. Once Step 3 reports healthy, remove the plugin and the script users so the
+device keeps reporting and patching but can no longer be told to run scripts:</p>
+<pre><code class="language-bash">python3 scripts/landscape/landscape_client.py runscript \
+  --file scripts/landscape/disable-script-execution.sh --ids &quot;$ID&quot; --user root --limit 120
+</code></pre>
+<p>The script edits <code>/etc/landscape/client.conf</code> in place (backup kept), drops <code>ScriptExecution</code> from
+<code>include_manager_plugins</code>, clears <code>script_users</code>, and restarts <code>landscape-client</code>; it does not re-register the machine. This is the
+last script the fleet runs. For the next rollout window re-run Step 1 (<code>enable-script-execution.sh</code>), deploy, verify, then close it
+again. If a script must stay possible between rollouts, set <code>script_users</code> to a dedicated non-root account instead of root.</p>
+<h2 id="operating-expectations-gotchas">Operating expectations &amp; gotchas</h2>
+<ol>
+<li>
+<p><strong>Result lag is normal.</strong> Busy/slow clients report script results 15–30
+   min after execution; <code>delivered</code> ≠ done — only <code>succeeded</code>/<code>failed</code> resolve
+   an activity. Poll patiently; the self-loop payloads exist precisely because
+   each round-trip is expensive.</p>
+</li>
+<li>
+<p><strong>Unified memory (GB10):</strong> if <code>--gpu-memory-utilization 0.7</code> fails with
+   <em>"Free memory … less than desired"</em>, free the squatters or lower the
+   utilization env var the recipe exposes.</p>
+</li>
+<li>
+<p><strong>Slow links:</strong> cold-cache pulls can overrun the script <code>--limit</code> before
+    anything reports. Stage the image (<code>docker pull</code>) and weights
+    (<code>docker run --rm --entrypoint hf &lt;image&gt; download &lt;model-id&gt;</code>) over
+    ssh first — staging only, the daemon dedupes concurrent pulls. And if a
+    group stays <code>delivered</code> forever, treat ssh-visible device state as ground
+    truth: short completed scripts report reliably, killed long ones often
+    don't.</p>
+</li>
+</ol>
+<h2 id="teardown-rollback">Teardown / rollback</h2>
+<ul>
+<li>Rollback = rerun Step 2 with the previous image tag (<code>IMAGE=&lt;old-tag&gt;</code> —
+  the recipe removes the old container automatically).</li>
+<li>Teardown = <code>docker rm -f &lt;container&gt;</code> + optional <code>sudo rm -rf</code> of the
+  model cache (see IT-Admin guide §9) — dispatchable as a one-line script.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

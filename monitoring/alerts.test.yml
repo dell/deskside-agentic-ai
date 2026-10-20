@@ -1,0 +1,14 @@
+rule_files: [alerts.yml]
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - {series: 'vllm:num_requests_waiting{instance_name="a"}', values: '0 0 3 3 3 3 3 3 3 3'}
+      - {series: 'vllm:kv_cache_usage_perc{instance_name="a"}', values: '0.5 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95'}
+      - {series: 'up{job="deskside-vllm",instance_name="a",instance="x:1"}', values: '1 1 1 0 0 0 0 0 0 0'}
+      - {series: 'vllm:num_requests_running{instance_name="a"}', values: '40 40 40 40 40 40 40 40 40 40'}
+    alert_rule_test:
+      - {eval_time: 9m, alertname: DesksideQueueBuilding, exp_alerts: [{exp_labels: {severity: warning, instance_name: a}, exp_annotations: {summary: "a has waiting requests for 5m", description: "Sustained queue = capacity exceeded: add replicas / next tier / lower concurrency."}}]}
+      - {eval_time: 3m, alertname: DesksideQueueBuilding, exp_alerts: []}
+      - {eval_time: 9m, alertname: DesksideKVCacheHigh, exp_alerts: [{exp_labels: {severity: warning, instance_name: a}, exp_annotations: {summary: "a KV cache > 90%", description: "Shorten context or reduce --max-num-seqs; preemptions follow."}}]}
+      - {eval_time: 8m, alertname: DesksideTargetDown, exp_alerts: [{exp_labels: {severity: critical, job: deskside-vllm, instance_name: a, instance: "x:1"}, exp_annotations: {summary: "a metrics endpoint down", description: "Scrape of x:1 failing; check the container (recipes/*/vllm/health-*.sh)."}}]}

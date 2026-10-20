@@ -1,0 +1,185 @@
+# Consolidated sizing facts -- the single machine-readable source for every
+# capacity/performance number quoted in this repo's docs.
+# as_of 2026-10-19, refreshed 2026-10-20. Regenerate with tests when numbers change.
+#
+# status:  measured-imported  raw ladder is in this folder (traceable)
+#          doc-reported       number appears in docs/recipe headers; raw aiperf export NOT in repo
+#          spot-check         single-stream/one-off check, not a ladder
+#          retired-model      measured on a model/build that no longer ships
+#          pending            in designation -- docs show no published number yet
+# unit conventions: aggregate = total output tok/s; per_session = aggregate / C
+schema_version: 1
+as_of: "2026-10-19"
+commit: "dbb74c8"
+facts:
+  - id: gb10.lightning.agent_c20.aggregate_tok_s
+    platform: gb10
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    shape: agent_60k_1k
+    concurrency: 20
+    metric: aggregate_output_tok_s
+    status: doc-reported
+    values: {published: 66}
+    derived_per_session_tok_s: 3.3
+    note: "Launch-era figure. The in-repo GB10 agent ladder (../20261019_295d430) is a quick sweep (C 1-4), so the C=20 point stays doc-reported; full ladder is on the measurement plan."
+    doc_refs:
+      - {file: recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh, text: "~66 out tok/s @ c20"}
+      - {file: solutions/agentic-coding/README.md, text: "~66 out tok/s @ c20"}
+      - {file: docs/stack.md, text: "~66 tok/s"}
+      - {file: recipes/README.md, text: "~66 out tok/s @ c20"}
+  - id: gb300.lightning.agent_c20.aggregate_tok_s
+    platform: gb300
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    shape: agent_60k_1k
+    concurrency: 20
+    metric: aggregate_output_tok_s
+    status: measured-imported
+    values: {published: 335}
+    derived_per_session_tok_s: 16.7
+    data_file: ../20261020_bb8ae93/gb300_nvidia-nemotron-3.5-lightning_agent_60k_1k/ladder.json
+    note: "Raw ladder in repo (C 1-64, 40 requests/level). Ladder value at C=20 is 334.6 aggregate out tok/s; docs quote ~335."
+    doc_refs:
+      - {file: recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh, text: "~335 out tok/s @ c20"}
+      - {file: recipes/README.md, text: "~335 out tok/s @ c20"}
+      - {file: recipes/README.md, text: "~335 tok/s agent-c20"}
+      - {file: docs/stack.md, text: "agent-workflow load ~335 @ c20"}
+  - id: t2.lightning.tok_s
+    platform: t2
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    metric: aggregate_output_tok_s
+    status: doc-reported
+    values: {chat_peak: 5352, agent_c20: 399}
+    doc_refs:
+      - {file: recipes/README.md, text: "5,352 chat / 399 agent tok/s"}
+      - {file: docs/stack.md, text: "5,352 / 399"}
+  - id: gb300.lightning.chat_ladders
+    platform: gb300
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    status: measured-imported
+    data_file: gb300_lightning_ladders_imported.json
+    note: "shapes 200/200 and 6400/100 only; NOT the 60k/1k agent shape"
+  - id: t6.gpu4.lightning.chat_ladder
+    platform: t6 (one RTX PRO 6000 Blackwell Max-Q of five; GPU 4)
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    shape: chat_200_200
+    status: measured-imported
+    data_file: ../20261019_422dbe6/t6-gpu4_nvidia-nemotron-3.5-lightning_chat_200_200/ladder.json
+    note: "Run 2026-10-19 on a Precision T6 tower through the recipe contract wrapper (TP=1, util 0.9, 70K ctx, 512 seqs), aiperf 0.7.0, 64 requests/level, image vllm/vllm-openai:nightly sha256:cb9bc64f. Aggregate output tok/s: C1 294, C4 775, C16 1731, C32 2440, C64 3320 (still climbing: ladder ended before the peak). Per-session = aggregate/C. NOT comparable to the T2 5,352 peak (different shape/ladder/host)."
+  - id: gb10.qwen38_27b.single_stream
+    platform: gb10
+    model: nvidia/Qwen3.8-27B-NVFP4
+    metric: single_stream_output_tok_s
+    status: spot-check
+    values: {low: 62, high: 65}
+    note: "measured with predecessor unsloth/ checkpoint; re-sweep on the measurement plan"
+    doc_refs:
+      - {file: recipes/README.md, text: "~62–65 out tok/s 1-stream (MTP)"}
+  - id: gb300.flash_next.single_stream
+    platform: gb300
+    model: nvidia/Qwen3.8-Flash-Next-NVFP4
+    status: spot-check
+    values: {published: 310}
+    note: "single-stream spot check on a warm instance; docs quote one conservative value everywhere"
+    doc_refs:
+      - {file: solutions/agentic-coding/README.md, text: "~310 out tok/s"}
+      - {file: recipes/README.md, text: "310 tok/s 1-stream"}
+      - {file: recipes/README.md, text: "~310 out tok/s 1-stream (spot)"}
+  - id: gb300.glm53_flash.single_stream
+    platform: gb300
+    model: RedHatAI/GLM-5.3-Flash-NVFP4
+    status: spot-check
+    values: {published: 111}
+    note: "single-stream spot check; docs quote one conservative value everywhere"
+    doc_refs:
+      - {file: solutions/agentic-coding/README.md, text: "~111 out tok/s"}
+      - {file: recipes/README.md, text: "111 tok/s 1-stream"}
+      - {file: recipes/README.md, text: "~111 out tok/s 1-stream (spot)"}
+      - {file: recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh, text: "~111 out tok/s"}
+  - id: gb10.prior_model.chat_200_200_ladder
+    platform: gb10
+    shape: chat_200_200
+    status: retired-model
+    note: "prior reference model + cutlass MoE backend on the Dell GB10 build; NOT the shipping Lightning/marlin config. No longer shown in the IT guide (replaced by per-configuration measured tables); the Higher-Ed sizing tables still derive from it."
+    points: [{c: 1, ttft_ms: 113, per_session: 58, aggregate: 58}, {c: 4, ttft_ms: 267, per_session: 40, aggregate: 158}, {c: 8, ttft_ms: 348, per_session: 29, aggregate: 228}, {c: 16, ttft_ms: 583, per_session: 20, aggregate: 321}]
+  - id: agents.hermes_harness.wall_p50_s
+    status: doc-reported
+    note: "Hermes-shaped harness; the OpenClaw page reuses these numbers"
+    points:
+      gb10: {c1: 11, c2: 15, c4: 23}
+      t2:   {c1: 3,  c2: 3,  c4: 4}
+      t4:   {c1: 9,  c2: 11, c4: 12}
+      t6_one_gpu: {c1: 10, c2: 10, c4: 12}
+      gb300: {c1: 8,  c2: 8,  c4: 8}
+    doc_refs:
+      - {file: solutions/hermes-on-nemoclaw/README.md, text: "| Dell Pro Precision with GB10 | ~11 s | ~15 s | ~23 s | 1 – 2 interactive |"}
+  - id: vss.t2.llm_ladder
+    platform: t2
+    status: retired-model
+    note: "Nemotron 3 Nano 30B A3B NVFP4, 200 in / 1000 out"
+    points: [{c: 1, ttft_ms: 29, tok_s: 80}, {c: 4, ttft_ms: 47, tok_s: 301}, {c: 8, ttft_ms: 11575, tok_s: 301}]
+    doc_refs:
+      - {file: solutions/agentic-vss/README.md, text: "| 8 | ~11,575 ms | 301 |"}
+  - id: vss.gb10.llm_ladder
+    platform: gb10
+    status: retired-model
+    note: "Nemotron Nano 9B v2 FP8"
+    points: [{c: 1, aggregate: 23}, {c: 16, aggregate: 256}, {c: 128, aggregate: 573}]
+    doc_refs:
+      - {file: solutions/agentic-vss/README.md, text: "| 128 | ~1,985 ms | 573 | 4 | Batch-only |"}
+  - id: t4.t6.lightning
+    platform: [t4, t6]
+    status: pending
+    note: "launch-era routed figures retired as single-worker-router artifacts; routed sweep is on the measurement plan (docs/scope.md) -- docs show designation only"
+  - id: t6.gpu34.super_vl.chat_ladder
+    platform: t6 (two RTX PRO 6000 Blackwell Max-Q, GPUs 3+4, TP=2)
+    model: nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4
+    shape: chat_200_200
+    status: measured-imported
+    data_file: ../20261019_776d08c/t6-gpu34-tp2_nvidia-nemotron-3.5-super-vl_chat_200_200/ladder.json
+    note: "Run 2026-10-19 through the precision recipe (TP=2, PCIe custom all-reduce disabled, 131072 ctx, 64 seqs). Ready in 1333 s cold (weight download, compile). Aggregate output tok/s: C1 109, C4 288, C16 748, C64 1744 (still climbing; ladder ended before the peak). Health check 0 FAIL incl. tool call."
+  - id: super_vl.t4_tp2.agent_and_chat
+    platform: t4 (one TP=2 instance on two RTX PRO 6000 Max-Q GPUs of a T6 tower)
+    model: nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4
+    status: measured-imported
+    note: "agent 60k/1k aggregate tok/s C1..C32: 65.4, 94.6, 111, 137, 157, 168 (per-session 65, 47, 28, 17, 9.8, 5.3: about 6 sessions at the 20 tok/s floor, about 15 at the 10 tok/s floor). chat 200/200 C1..C64: 110 ... 1814."
+    doc_refs:
+      - {file: docs/stack.md, text: "agent shape 168 tok/s aggregate at c32"}
+  - id: super_vl.t6_dp2xtp2.agent_and_chat
+    platform: t6 (2 replicas x TP=2 behind LiteLLM on four of five GPUs)
+    model: nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4
+    status: measured-imported
+    note: "agent 60k/1k aggregate tok/s C1..C32: 65.8, 88.5, 165, 203, 231, 252 (about 11 sessions at the 20 tok/s floor, about 24 at the 10 tok/s floor). chat C1..C64: 106 ... 2020. 1.5x the single TP=2 agent throughput at C=32."
+    doc_refs:
+      - {file: docs/stack.md, text: "agent shape 252 tok/s at c32"}
+  - id: super_vl.gb300.single.agent_and_chat
+    platform: gb300
+    model: nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4
+    status: measured-imported
+    note: "agent 60k/1k aggregate tok/s C1..C32: 85.9, 130, 159, 185, 221, 225 (about 10 sessions at the 20 tok/s floor, about 22 at the 10 tok/s floor). chat C1..C64: 167 ... 3694. Agent shape is prefill-bound: a GB300 instance is not faster than 2 x TP=2 on towers at this shape."
+    doc_refs:
+      - {file: docs/stack.md, text: "agent shape 225 tok/s at c32"}
+  - id: gb10.lightning.new_wrapper.ladders
+    platform: gb10
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    status: measured-imported
+    note: "Recipe run through the Landscape serving payload on a GB10 (unified memory shared with other services stopped for the run). chat 200/200 aggregate tok/s C1/C4/C16: 44.1, 125.5, 279.3. agent 60k/1k aggregate C1/C4: 28.4, 38.5 (per-session 28.4 and 9.6): about 1.9 sessions at the 20 tok/s floor, about 3.8 at the 10 tok/s floor. Ladders are short (quick) because of host speed."
+    doc_refs:
+      - {file: solutions/agentic-coding/README.md, text: "| S | GB10, 1 instance | Nemotron 3.5 Lightning | ~1.9 |"}
+  - id: gb300.lightning.agent_ladder_remeasured
+    platform: gb300
+    model: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    shape: agent_60k_1k
+    status: measured-imported
+    data_file: ../20261020_bb8ae93/gb300_nvidia-nemotron-3.5-lightning_agent_60k_1k/ladder.json
+    note: "Re-measured through the recipe (single instance, aiperf 0.7.0, 40 requests/level). Aggregate tok/s at C=1,2,4,8,12,16,20,24,28,32,48,64: 159, 220, 272, 305, 317, 330, 335, 339, 335, 332, 350, 350. Per-session output holds 20 tok/s up to about C=17 and 10 tok/s up to about C=33."
+    doc_refs:
+      - {file: solutions/agentic-coding/README.md, text: "| L | GB300, 1 instance | Nemotron 3.5 Lightning | ~17 | ~33 | 332 |"}
+      - {file: recipes/README.md, text: "≥20 tok/s/session to C≈17"}
+      - {file: docs/stack.md, text: "up to ~17 concurrent sessions"}
+  - id: m_l.super_vl
+    platform: [t4, t6, gb300]
+    model: nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4
+    status: pending
+    note: "M/L default. Serving validated on a T6 pair (above); GB300 recipe and agent-shape capacity are on the measurement plan (docs/scope.md)."
+    doc_refs:
+      - {file: docs/stack.md, text: "recipes in `recipes/{precision,gb300}/vllm/`"}

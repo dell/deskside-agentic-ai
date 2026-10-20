@@ -1,0 +1,24 @@
+# aiperf workload shapes used by this repo's sizing claims.
+# Each (shape, concurrency) is one `aiperf profile` run. per-session tok/s = aggregate / C.
+# Flags mirror the drivers used for the published ladders (aiperf 0.7.0).
+defaults:
+  endpoint_type: chat
+  endpoint: /v1/chat/completions
+  streaming: true
+  input_stddev: 0
+  extra_inputs: ["min_tokens:{osl}", "ignore_eos:true"]   # fixed OSL so tok/s is comparable
+  tokenizer: "<HF id of the served model, e.g. nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4>"
+  # request_count: aiperf's default (10) is too noisy; use >= max(256, 4*C) for chat shapes.
+shapes:
+  chat_200_200:      {isl: 200,   osl: 200,  request_count: 256, use: "interactive chat; the retired GB10 ladder and the w200 reference"}
+  rag_6400_100:      {isl: 6400,  osl: 100,  request_count: 256, use: "long prompt / RAG (w6400 reference)"}
+  longgen_7000_1000: {isl: 7000,  osl: 1000, request_count: 256, use: "agentic long generation (standard set)"}
+  agent_60k_1k:      {isl: 60000, osl: 1024, request_count: 40,  use: "coding-agent shape behind the GB300 capacity envelope and the recipe-header c20 numbers",
+                      note: "40 requests is what the published numbers used; for C>10 prefer request_count >= 4*C"}
+ladders:
+  standard:  [1, 2, 4, 8, 16, 32, 64]
+  extended:  [1, 2, 4, 8, 16, 32, 64, 128, 256]            # MANDATORY to reach a measured peak on big platforms
+  agent:     [1, 2, 4, 8, 12, 16, 20, 24, 28, 32, 48, 64]   # dense around the 20-30 tok/s floor crossing
+  quick:     [1, 4, 16]                                       # smoke ladder for slow hosts (GB10)
+  agent_quick: [1, 4, 8]
+  agent_short: [1, 2, 4, 8, 16, 32]                          # 60k-token prompts are prefill-heavy; short ladder for topology checks

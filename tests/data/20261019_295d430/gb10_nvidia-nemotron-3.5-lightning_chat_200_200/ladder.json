@@ -1,0 +1,40 @@
+{
+ "manifest": "MANIFEST.json",
+ "ladders": {
+  "chat_200_200": {
+   "platform": "gb10",
+   "model": "nvidia/nemotron-3.5-lightning",
+   "isl": 200,
+   "osl": 200,
+   "points": [
+    {
+     "c": 1,
+     "aggregate_tok_s": 44.06681001003041,
+     "per_session_tok_s": 44.06681001003041,
+     "ttft_ms_avg": 119.51759803124999,
+     "itl_ms_avg": 22.194606919912058,
+     "request_throughput": 0.22033405005015205,
+     "source": "levelC1/profile_c1.json"
+    },
+    {
+     "c": 4,
+     "aggregate_tok_s": 125.49182367047501,
+     "per_session_tok_s": 31.372955917618754,
+     "ttft_ms_avg": 234.936696875,
+     "itl_ms_avg": 30.837098955244972,
+     "request_throughput": 0.6274591183523751,
+     "source": "levelC4/profile_c4.json"
+    },
+    {
+     "c": 16,
+     "aggregate_tok_s": 279.3180187009449,
+     "per_session_tok_s": 17.457376168809056,
+     "ttft_ms_avg": 501.19212134375,
+     "itl_ms_avg": 55.00160385186165,
+     "request_throughput": 1.3964809934271127,
+     "source": "levelC16/profile_c16.json"
+    }
+   ]
+  }
+ }
+}

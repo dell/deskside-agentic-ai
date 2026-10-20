@@ -1,0 +1,36 @@
+# Alert rules for deskside vLLM serving (loaded by monitoring/prometheus.yml).
+# Replaces the earlier guide table: "running > max-num-seqs" can never fire (running is capped by
+# max-num-seqs); the real overload signal is requests WAITING. Metric names are vLLM's own
+# (verified against a live server); GPU memory comes from DCGM only on discrete GPUs
+# (DCGM_FI_DEV_FB_USED) -- GB10 unified memory has no framebuffer metric, use node memory instead.
+groups:
+  - name: deskside-vllm
+    rules:
+      - alert: DesksideTargetDown
+        expr: up{job="deskside-vllm"} == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations: {summary: "{{ $labels.instance_name }} metrics endpoint down", description: "Scrape of {{ $labels.instance }} failing; check the container (recipes/*/vllm/health-*.sh)."}
+      - alert: DesksideQueueBuilding
+        expr: sum by (instance_name) (vllm:num_requests_waiting) > 0
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "{{ $labels.instance_name }} has waiting requests for 5m", description: "Sustained queue = capacity exceeded: add replicas / next tier / lower concurrency."}
+      - alert: DesksideKVCacheHigh
+        expr: max by (instance_name) (vllm:kv_cache_usage_perc) > 0.9
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "{{ $labels.instance_name }} KV cache > 90%", description: "Shorten context or reduce --max-num-seqs; preemptions follow."}
+      - alert: DesksideTTFTHigh
+        expr: histogram_quantile(0.95, sum by (le, instance_name) (rate(vllm:time_to_first_token_seconds_bucket[5m]))) > 2
+        for: 10m
+        labels: {severity: warning}
+        annotations: {summary: "{{ $labels.instance_name }} TTFT p95 > 2s", description: "TTFT includes reasoning tokens when a reasoning parser is active."}
+      - alert: DesksidePerSessionBelowFloor
+        expr: |
+          (sum by (instance_name) (rate(vllm:generation_tokens_total[2m]))
+            / clamp_min(sum by (instance_name) (vllm:num_requests_running), 1)) < 10
+          and sum by (instance_name) (vllm:num_requests_running) > 0
+        for: 10m
+        labels: {severity: warning}
+        annotations: {summary: "{{ $labels.instance_name }} per-session output < 10 tok/s while busy", description: "Below the 10 tok/s secondary floor (capacity tables size sessions at 20 tok/s)."}

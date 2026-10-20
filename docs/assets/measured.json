@@ -1,0 +1,668 @@
+[
+ {
+  "platform": "gb10",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "agent_60k_1k",
+  "isl": 60000,
+  "osl": 1024,
+  "topology": "1 instance on the GB10 (unified memory)",
+  "run": "20261019_295d430",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 28.4,
+    "per": 28.39,
+    "ttft": 12437
+   },
+   {
+    "c": 4,
+    "agg": 38.5,
+    "per": 9.62,
+    "ttft": 19563
+   }
+  ]
+ },
+ {
+  "platform": "gb10",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "1 instance on the GB10 (unified memory)",
+  "run": "20261019_295d430",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 44.1,
+    "per": 44.07,
+    "ttft": 120
+   },
+   {
+    "c": 4,
+    "agg": 125.5,
+    "per": 31.37,
+    "ttft": 235
+   },
+   {
+    "c": 16,
+    "agg": 279.3,
+    "per": 17.46,
+    "ttft": 501
+   }
+  ]
+ },
+ {
+  "platform": "gb300",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "agent_60k_1k",
+  "isl": 60000,
+  "osl": 1024,
+  "topology": "1 instance on the GB300",
+  "run": "20261020_bb8ae93",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 158.8,
+    "per": 158.84,
+    "ttft": 2803
+   },
+   {
+    "c": 2,
+    "agg": 220.1,
+    "per": 110.07,
+    "ttft": 4169
+   },
+   {
+    "c": 4,
+    "agg": 272.1,
+    "per": 68.03,
+    "ttft": 6832
+   },
+   {
+    "c": 8,
+    "agg": 305.4,
+    "per": 38.18,
+    "ttft": 12105
+   },
+   {
+    "c": 12,
+    "agg": 316.8,
+    "per": 26.4,
+    "ttft": 14092
+   },
+   {
+    "c": 16,
+    "agg": 329.6,
+    "per": 20.6,
+    "ttft": 17170
+   },
+   {
+    "c": 20,
+    "agg": 334.6,
+    "per": 16.73,
+    "ttft": 21948
+   },
+   {
+    "c": 24,
+    "agg": 339.0,
+    "per": 14.13,
+    "ttft": 24727
+   },
+   {
+    "c": 28,
+    "agg": 334.6,
+    "per": 11.95,
+    "ttft": 30485
+   },
+   {
+    "c": 32,
+    "agg": 331.7,
+    "per": 10.37,
+    "ttft": 37302
+   },
+   {
+    "c": 48,
+    "agg": 350.0,
+    "per": 7.29,
+    "ttft": 54779
+   },
+   {
+    "c": 64,
+    "agg": 349.8,
+    "per": 5.47,
+    "ttft": 54787
+   }
+  ]
+ },
+ {
+  "platform": "gb300",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "1 instance on the GB300",
+  "run": "20261019_dbb74c8 (imported)",
+  "source": "imported",
+  "points": [
+   {
+    "c": 1,
+    "agg": 365.9,
+    "per": 365.91,
+    "ttft": null
+   },
+   {
+    "c": 2,
+    "agg": 463.9,
+    "per": 231.93,
+    "ttft": null
+   },
+   {
+    "c": 3,
+    "agg": 847.4,
+    "per": 282.48,
+    "ttft": null
+   },
+   {
+    "c": 4,
+    "agg": 974.7,
+    "per": 243.68,
+    "ttft": null
+   },
+   {
+    "c": 8,
+    "agg": 1816.7,
+    "per": 227.09,
+    "ttft": null
+   },
+   {
+    "c": 16,
+    "agg": 3193.7,
+    "per": 199.6,
+    "ttft": null
+   },
+   {
+    "c": 32,
+    "agg": 4990.1,
+    "per": 155.94,
+    "ttft": null
+   },
+   {
+    "c": 64,
+    "agg": 6788.2,
+    "per": 106.07,
+    "ttft": null
+   },
+   {
+    "c": 128,
+    "agg": 8957.5,
+    "per": 69.98,
+    "ttft": null
+   },
+   {
+    "c": 256,
+    "agg": 11955.1,
+    "per": 46.7,
+    "ttft": null
+   },
+   {
+    "c": 512,
+    "agg": 13535.3,
+    "per": 26.44,
+    "ttft": null
+   },
+   {
+    "c": 1024,
+    "agg": 14029.5,
+    "per": 13.7,
+    "ttft": null
+   }
+  ]
+ },
+ {
+  "platform": "gb300",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "rag_6400_100",
+  "isl": 6400,
+  "osl": 100,
+  "topology": "1 instance on the GB300",
+  "run": "20261019_dbb74c8 (imported)",
+  "source": "imported",
+  "points": [
+   {
+    "c": 1,
+    "agg": 269.0,
+    "per": 268.99,
+    "ttft": null
+   },
+   {
+    "c": 2,
+    "agg": 374.9,
+    "per": 187.47,
+    "ttft": null
+   },
+   {
+    "c": 3,
+    "agg": 525.8,
+    "per": 175.27,
+    "ttft": null
+   },
+   {
+    "c": 4,
+    "agg": 658.5,
+    "per": 164.61,
+    "ttft": null
+   },
+   {
+    "c": 8,
+    "agg": 949.7,
+    "per": 118.72,
+    "ttft": null
+   },
+   {
+    "c": 16,
+    "agg": 1248.1,
+    "per": 78.01,
+    "ttft": null
+   },
+   {
+    "c": 32,
+    "agg": 1458.2,
+    "per": 45.57,
+    "ttft": null
+   },
+   {
+    "c": 64,
+    "agg": 1604.2,
+    "per": 25.07,
+    "ttft": null
+   },
+   {
+    "c": 128,
+    "agg": 1664.0,
+    "per": 13.0,
+    "ttft": null
+   },
+   {
+    "c": 256,
+    "agg": 1768.9,
+    "per": 6.91,
+    "ttft": null
+   },
+   {
+    "c": 512,
+    "agg": 1803.0,
+    "per": 3.52,
+    "ttft": null
+   },
+   {
+    "c": 1024,
+    "agg": 1820.3,
+    "per": 1.78,
+    "ttft": null
+   }
+  ]
+ },
+ {
+  "platform": "gb300",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "agent_60k_1k",
+  "isl": 60000,
+  "osl": 1024,
+  "topology": "1 instance on the GB300",
+  "run": "20261019_27689d3",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 85.9,
+    "per": 85.94,
+    "ttft": 3696
+   },
+   {
+    "c": 2,
+    "agg": 129.9,
+    "per": 64.93,
+    "ttft": 5444
+   },
+   {
+    "c": 4,
+    "agg": 158.6,
+    "per": 39.64,
+    "ttft": 7123
+   },
+   {
+    "c": 8,
+    "agg": 185.0,
+    "per": 23.12,
+    "ttft": 7830
+   },
+   {
+    "c": 16,
+    "agg": 221.2,
+    "per": 13.83,
+    "ttft": 12400
+   },
+   {
+    "c": 32,
+    "agg": 225.0,
+    "per": 7.03,
+    "ttft": 32252
+   }
+  ]
+ },
+ {
+  "platform": "gb300",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "1 instance on the GB300",
+  "run": "20261019_27689d3",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 167.1,
+    "per": 167.06,
+    "ttft": 203
+   },
+   {
+    "c": 2,
+    "agg": 285.5,
+    "per": 142.77,
+    "ttft": 381
+   },
+   {
+    "c": 4,
+    "agg": 513.1,
+    "per": 128.26,
+    "ttft": 421
+   },
+   {
+    "c": 8,
+    "agg": 846.2,
+    "per": 105.78,
+    "ttft": 485
+   },
+   {
+    "c": 16,
+    "agg": 1300.3,
+    "per": 81.27,
+    "ttft": 685
+   },
+   {
+    "c": 32,
+    "agg": 2360.3,
+    "per": 73.76,
+    "ttft": 527
+   },
+   {
+    "c": 64,
+    "agg": 3693.8,
+    "per": 57.72,
+    "ttft": 659
+   }
+  ]
+ },
+ {
+  "platform": "t2",
+  "model": "nvidia/nemotron-3.5-lightning",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "1 instance on 1x RTX PRO 6000 (Max-Q)",
+  "run": "20261019_422dbe6",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 293.9,
+    "per": 293.91,
+    "ttft": 30
+   },
+   {
+    "c": 2,
+    "agg": 489.6,
+    "per": 244.78,
+    "ttft": 63
+   },
+   {
+    "c": 4,
+    "agg": 774.6,
+    "per": 193.64,
+    "ttft": 106
+   },
+   {
+    "c": 8,
+    "agg": 1205.5,
+    "per": 150.69,
+    "ttft": 120
+   },
+   {
+    "c": 16,
+    "agg": 1730.9,
+    "per": 108.18,
+    "ttft": 169
+   },
+   {
+    "c": 32,
+    "agg": 2439.7,
+    "per": 76.24,
+    "ttft": 287
+   },
+   {
+    "c": 64,
+    "agg": 3320.0,
+    "per": 51.87,
+    "ttft": 463
+   }
+  ]
+ },
+ {
+  "platform": "t4",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "agent_60k_1k",
+  "isl": 60000,
+  "osl": 1024,
+  "topology": "1 instance, TP=2 on 2x RTX PRO 6000",
+  "run": "20261019_27689d3",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 65.4,
+    "per": 65.37,
+    "ttft": 4596
+   },
+   {
+    "c": 2,
+    "agg": 94.6,
+    "per": 47.32,
+    "ttft": 6760
+   },
+   {
+    "c": 4,
+    "agg": 111.0,
+    "per": 27.74,
+    "ttft": 7822
+   },
+   {
+    "c": 8,
+    "agg": 137.2,
+    "per": 17.15,
+    "ttft": 9054
+   },
+   {
+    "c": 16,
+    "agg": 157.3,
+    "per": 9.83,
+    "ttft": 14932
+   },
+   {
+    "c": 32,
+    "agg": 168.4,
+    "per": 5.26,
+    "ttft": 40304
+   }
+  ]
+ },
+ {
+  "platform": "t4",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "1 instance, TP=2 on 2x RTX PRO 6000",
+  "run": "20261019_776d08c",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 109.3,
+    "per": 109.26,
+    "ttft": 181
+   },
+   {
+    "c": 2,
+    "agg": 165.8,
+    "per": 82.89,
+    "ttft": 267
+   },
+   {
+    "c": 4,
+    "agg": 287.7,
+    "per": 71.92,
+    "ttft": 316
+   },
+   {
+    "c": 8,
+    "agg": 455.7,
+    "per": 56.97,
+    "ttft": 419
+   },
+   {
+    "c": 16,
+    "agg": 748.0,
+    "per": 46.75,
+    "ttft": 492
+   },
+   {
+    "c": 32,
+    "agg": 1133.3,
+    "per": 35.42,
+    "ttft": 769
+   },
+   {
+    "c": 64,
+    "agg": 1743.9,
+    "per": 27.25,
+    "ttft": 784
+   }
+  ]
+ },
+ {
+  "platform": "t6",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "agent_60k_1k",
+  "isl": 60000,
+  "osl": 1024,
+  "topology": "2 replicas x TP=2 behind LiteLLM (4 of 5 GPUs)",
+  "run": "20261019_27689d3",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 65.8,
+    "per": 65.78,
+    "ttft": 4621
+   },
+   {
+    "c": 2,
+    "agg": 88.5,
+    "per": 44.27,
+    "ttft": 6788
+   },
+   {
+    "c": 4,
+    "agg": 165.2,
+    "per": 41.31,
+    "ttft": 7911
+   },
+   {
+    "c": 8,
+    "agg": 203.3,
+    "per": 25.42,
+    "ttft": 9559
+   },
+   {
+    "c": 16,
+    "agg": 230.7,
+    "per": 14.42,
+    "ttft": 14212
+   },
+   {
+    "c": 32,
+    "agg": 251.5,
+    "per": 7.86,
+    "ttft": 36549
+   }
+  ]
+ },
+ {
+  "platform": "t6",
+  "model": "nvidia/nemotron-3.5-super-vl",
+  "shape": "chat_200_200",
+  "isl": 200,
+  "osl": 200,
+  "topology": "2 replicas x TP=2 behind LiteLLM (4 of 5 GPUs)",
+  "run": "20261019_27689d3",
+  "source": "measured",
+  "points": [
+   {
+    "c": 1,
+    "agg": 106.5,
+    "per": 106.52,
+    "ttft": 206
+   },
+   {
+    "c": 2,
+    "agg": 162.5,
+    "per": 81.27,
+    "ttft": 301
+   },
+   {
+    "c": 4,
+    "agg": 309.4,
+    "per": 77.34,
+    "ttft": 301
+   },
+   {
+    "c": 8,
+    "agg": 491.5,
+    "per": 61.43,
+    "ttft": 343
+   },
+   {
+    "c": 16,
+    "agg": 791.4,
+    "per": 49.46,
+    "ttft": 477
+   },
+   {
+    "c": 32,
+    "agg": 1221.7,
+    "per": 38.18,
+    "ttft": 510
+   },
+   {
+    "c": 64,
+    "agg": 2020.3,
+    "per": 31.57,
+    "ttft": 567
+   }
+  ]
+ }
+]

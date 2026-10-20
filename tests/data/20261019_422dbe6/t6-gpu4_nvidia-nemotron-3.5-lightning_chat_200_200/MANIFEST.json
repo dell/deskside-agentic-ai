@@ -1,0 +1,27 @@
+{
+ "date": "2026-10-19T12:00:03-0500",
+ "git_sha": "422dbe6",
+ "host": "lab host",
+ "platform": "t6-gpu4",
+ "model": "nvidia/nemotron-3.5-lightning",
+ "tokenizer": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+ "url": "http://localhost:8001",
+ "shape": "chat_200_200",
+ "isl": 200,
+ "osl": 200,
+ "request_count": 64,
+ "ladder": [
+  1,
+  2,
+  4,
+  8,
+  16,
+  32,
+  64
+ ],
+ "aiperf": "0.7.0",
+ "gpus": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition x1 (GPU 4)",
+ "container": "ds-validate-lightning",
+ "image": "sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd vllm/vllm-openai:nightly",
+ "container_args": "serve nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 --served-model-name nvidia/nemotron-3.5-lightning nemotron-lightning lightning auto --host 0.0.0.0 --port 8000 --trust-remote-code --tensor-parallel-size 1 --moe-backend marlin --kv-cache-dtype fp8 --enable-expert-parallel --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3 --gpu-memory-utilization 0.9 --max-model-len 70000 --max-num-seqs 512 --max-cudagraph-capture-size 512"
+}

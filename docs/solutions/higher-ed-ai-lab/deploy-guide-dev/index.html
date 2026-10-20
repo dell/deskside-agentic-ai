@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higher Education AI Lab — Developer Deploy Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/" class="active">Higher Education AI Lab</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/">Overview</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub active" href="../../../solutions/higher-ed-ai-lab/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / higher-ed-ai-lab / deploy-guide-dev</div>
+    <article class="article" data-picker>
+<h1 id="higher-ed-ai-lab-lab-admin-quick-start">Higher Ed AI Lab — Lab Admin Quick-Start</h1>
+<blockquote>
+<p><strong>Who this is for:</strong> lab admins / faculty standing up a pilot AI lab on a
+handful of Dell Pro Precision with GB10 systems for evaluation before
+committing to a full deployment.</p>
+<p><strong>IT admin path:</strong> <a href="../it-admin-guide/">IT-Admin Guide</a>.</p>
+</blockquote>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>1–3 Dell Pro Precision with GB10 systems for a pilot (plus one Dell Pro
+  Dell Pro Precision 9 T4 (RTX PRO 6000) or Dell Pro Precision with GB300 if exploring the
+  shared-compute options).</li>
+<li>Ubuntu 24.04 LTS or newer on each system (GB10 ships with DGX OS).</li>
+<li>A shared NAS / NFS mount reachable by every system (even a small NAS is
+  fine for a pilot).</li>
+<li>A single <a href="https://huggingface.co/">Hugging Face</a> token for the group.</li>
+<li>One test student account per pilot use case.</li>
+</ul>
+<h2 id="1-bring-up-a-shared-llm-endpoint-on-one-gb10">1) Bring up a shared LLM endpoint on one GB10</h2>
+<p><em>Commands in this guide run from the repository root (<code>git clone</code> this repo and <code>cd</code> into it).</em></p>
+<pre><code class="language-bash">recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+curl -s http://localhost:8000/v1/models
+</code></pre>
+<p>For a pilot, one GB10 comfortably serves a small handful of concurrent
+notebook users at intro-course concurrency (2–3 students per pool node is
+the planning rule; see the README's inherited S-tier ladder).</p>
+<p>Reasoning-model client rule: <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> is a reasoning model —
+give client requests <code>max_tokens &gt;= 512</code> or the budget is eaten by the
+thinking trace.</p>
+<h2 id="2-stand-up-jupyterhub-on-the-same-box">2) Stand up JupyterHub on the same box</h2>
+<p>Use the official JupyterHub <a href="https://www.docker.com/">Docker</a> image. Example minimal Compose:</p>
+<pre><code class="language-yaml">services:
+  jupyterhub:
+    image: jupyterhub/jupyterhub@sha256:15d50a67d5e898e16cfb44abefeda57e6330473408b99e170dc437e5286f5b58
+    ports: [&quot;8080:8000&quot;]
+    volumes:
+      - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro
+      - /mnt/shared/students:/home/students     # NFS mount
+    environment:
+      - LOCAL_LLM_BASE_URL=http://host.docker.internal:8000/v1
+      - LOCAL_LLM_MODEL=nvidia/nemotron-3.5-lightning
+</code></pre>
+<p>Point students' notebooks at the local endpoint via the <code>openai</code> Python
+package:</p>
+<pre><code class="language-python">from openai import OpenAI
+client = OpenAI(base_url=&quot;http://gb10-pilot.lab.university.edu:8000/v1&quot;, api_key=&quot;local&quot;)
+resp = client.chat.completions.create(
+    model=&quot;nvidia/nemotron-3.5-lightning&quot;,
+    messages=[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Explain gradient descent.&quot;}],
+    max_tokens=1024,
+)
+print(resp.choices[0].message.content)
+</code></pre>
+<h2 id="3-add-openwebui-optional-chat-ui">3) Add OpenWebUI (optional chat UI)</h2>
+<p>For students who prefer a chat interface rather than notebooks:</p>
+<pre><code class="language-yaml">services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
+    ports: [&quot;3000:8080&quot;]
+    environment:
+      - OPENAI_API_BASE_URL=http://host.docker.internal:8000/v1
+      - OPENAI_API_KEY=local
+</code></pre>
+<p>Students reach it at <code>http://&lt;gb10-hostname&gt;:3000</code>.</p>
+<h2 id="4-per-seat-setup-m-tier-exploration">4) Per-seat setup (M tier exploration)</h2>
+<p>For the M tier, each student's GB10 runs its own <a href="https://github.com/vllm-project/vllm">vLLM</a> (or Ollama) instance:</p>
+<pre><code class="language-bash"># Per-seat vLLM — the same recipe runs on every student workstation:
+recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+
+# Or Ollama as the developer quick-start on each seat:
+ollama serve &amp;
+ollama pull &lt;course-model&gt;   # whichever lineup model the course pins
+
+# Students use JupyterHub or OpenWebUI on localhost
+</code></pre>
+<p>Coding-heavy courses swap to the S-alt per seat:</p>
+<pre><code class="language-bash">recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh --port 8000
+</code></pre>
+<p>The application stack (Unsloth Studio, ComfyUI, <a href="https://opencode.ai/">OpenCode</a>) installs as
+per-student containers, backed by course-profile images pulled from the
+shared model proxy / cache. For agent-workflow courses, each seat runs the
+<a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a> runtime stack per <a href="../../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a>.</p>
+<h2 id="5-shared-compute-for-frontier-fine-tuning-work-optional">5) Shared compute for frontier / fine-tuning work (optional)</h2>
+<p>If you have a Dell Pro Precision with GB300 or a multi-GPU RTX PRO 6000 tower
+available, stand up a shared vLLM instance for large-model workloads:</p>
+<pre><code class="language-bash"># GB300 — Lightning (M/L default Nemotron 3.5 Super VL: recipes/gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh):
+recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+
+# GB300 — L-tier alt (frontier dense-model assignments):
+recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh --port 8000
+
+# RTX PRO 6000 tower — M-tier alt (multi-instance or TP):
+recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh --port 8000
+</code></pre>
+<p>Front with <a href="https://www.litellm.ai/">LiteLLM</a> to route course-specific requests to the appropriate
+back-end — one endpoint URL for students, routing by course group.</p>
+<h2 id="6-vss-teaching-module-video-understanding-courses">6) VSS teaching module (video-understanding courses)</h2>
+<p>Classroom VSS uses public images only — the VLM (<a href="https://huggingface.co/nvidia/nemotron-3-nano-omni-30b-a3b">Nemotron 3 Nano Omni</a>) and
+LLM both serve as local vLLM endpoints, consumed by the upstream blueprint in
+hybrid mode (<code>--use-remote-vlm --use-remote-llm</code>):</p>
+<pre><code class="language-bash">git clone https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization.git
+# Serve VLM + LLM locally with vllm/vllm-openai containers, then bring up
+# the VSS stack in dev-profile hybrid mode against those endpoints.
+</code></pre>
+<p>Detailed per-tier VSS sizing: <a href="../../agentic-vss">Agentic Video Search &amp; Summarization</a>.</p>
+<h2 id="verify-the-pilot">Verify the pilot</h2>
+<ul>
+<li>Log in as a test student.</li>
+<li>Open a JupyterHub notebook.</li>
+<li>Call the LLM endpoint from Python.</li>
+<li>Confirm you get a completion in &lt; 1 s TTFT for a small prompt.</li>
+</ul>
+<h2 id="what-to-observe-during-the-pilot">What to observe during the pilot</h2>
+<p>These observations tune the pool sizing in the
+<a href="../#benchmarks-performance-validation">Solution overview</a>:</p>
+<ul>
+<li><strong>Concurrency comfort</strong> — how many students can run a notebook
+  simultaneously at acceptable TTFT.</li>
+<li><strong>State reset speed</strong> — how long between-class reset actually takes on
+  your storage.</li>
+<li><strong>Storage growth</strong> — model cache + student home directory growth per week.</li>
+<li><strong>Student experience</strong> — is the local endpoint fast enough for the
+  intended coursework?</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../">Solution overview</a> — solution overview (sizing, models, S/M/L).</li>
+<li><a href="../it-admin-guide/">IT-Admin Guide</a> — full semester rollout playbook.</li>
+<li><a href="../../agentic-coding">Agentic Coding</a> — coding-agent course module
+  (source of the S-tier concurrency ladder used for pool sizing).</li>
+<li><a href="../../agentic-vss">Agentic Video Search &amp; Summarization</a> — video search &amp; summarization module.</li>
+<li><a href="../../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a> — agent-runtime course module.</li>
+<li><a href="../../../stack/">Inference Stack &amp; Models</a> — inference stack choices.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

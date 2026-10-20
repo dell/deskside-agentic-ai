@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Builder — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<style>
+/* Dell design tokens (mirrors docs/assets/dell.css — self-contained per html-slide-deck pattern) */
+:root{
+  --dell-blue:#0672CB; --navy:#1D2553; --cosmos:#1D2C3B; --mid-navy:#174889;
+  --ocean:#00468B; --raven:#40586D; --mist:#C5D4E3; --quartz:#F0F0F0;
+  --titanium:#D2D2D2; --white:#FFFFFF; --orange:#E97132; --teal:#0B7C84; --green:#196B24;
+  --font-sans:"Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-mono:"Roboto Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --panel:#fff; --line:var(--titanium); --shadow:0 6px 24px rgba(29,37,83,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:var(--font-sans);color:var(--cosmos);background:var(--quartz);overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:64px 1fr 320px;grid-template-rows:52px 1fr;height:100vh}
+
+/* Topbar */
+.topbar{grid-column:1/4;display:flex;align-items:center;gap:14px;padding:0 16px;
+  background:linear-gradient(135deg,var(--white) 0%,var(--quartz) 55%,var(--mist) 100%);
+  border-bottom:2px solid rgba(6,114,203,.15);z-index:30}
+.topbar .logo{height:24px}
+.topbar .ttl{font-weight:700;color:var(--cosmos);font-size:.95rem;white-space:nowrap}
+.topbar .ttl small{display:block;font-weight:400;color:var(--raven);font-size:.68rem}
+.spacer{flex:1}
+.tb-btn{font-size:.78rem;font-weight:600;padding:6px 12px;border:1px solid var(--line);
+  background:var(--white);border-radius:6px;color:var(--cosmos)}
+.tb-btn:hover{border-color:var(--dell-blue);color:var(--dell-blue)}
+.tb-btn.on{background:rgba(6,114,203,.1);border-color:var(--dell-blue);color:var(--dell-blue)}
+.zoom{display:flex;align-items:center;gap:2px}
+.zoom button{width:28px;height:28px;border:1px solid var(--line);background:#fff;border-radius:6px;font-size:1rem;line-height:1}
+.zoom span{font-size:.72rem;color:var(--raven);min-width:40px;text-align:center}
+.gaps-badge{display:inline-block;min-width:16px;padding:0 5px;border-radius:999px;background:var(--orange);
+  color:#fff;font-size:.66rem;font-weight:700;margin-left:6px;line-height:16px;text-align:center}
+
+/* Left rail */
+.rail{background:var(--navy);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;position:relative;z-index:25}
+.rail .rb{width:44px;height:44px;border-radius:10px;border:none;background:transparent;color:#c7d2e6;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.54rem}
+.rail .rb svg{width:20px;height:20px}
+.rail .rb:hover,.rail .rb.on{background:rgba(255,255,255,.12);color:#fff}
+/* Library flyout */
+.flyout{position:absolute;left:64px;top:12px;width:300px;max-height:calc(100vh - 24px);overflow:auto;
+  background:var(--panel);border:1px solid var(--line);border-radius:0 10px 10px 0;box-shadow:var(--shadow);
+  padding:12px;display:none}
+.flyout.show{display:block}
+.flyout h4{margin:0 0 4px;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:var(--raven)}
+.flyout .lib-item{display:flex;align-items:flex-start;gap:8px;padding:8px;border:1px solid var(--line);
+  border-radius:8px;margin-bottom:6px;cursor:pointer;background:#fff}
+.flyout .lib-item:hover{border-color:var(--dell-blue);background:#f5faff}
+.flyout .lib-item .li-body{flex:1;min-width:0}
+.flyout .lib-item b{font-size:.82rem;color:var(--cosmos);display:block}
+.flyout .lib-item small{font-size:.68rem;color:var(--raven);display:block;line-height:1.35}
+.flyout .lib-item .tag{font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--dell-blue)}
+.flyout .lib-del{border:none;background:transparent;color:var(--raven);font-size:1rem;padding:2px 4px}
+.flyout .lib-del:hover{color:#c0392b}
+.flyout .import{margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
+
+/* Canvas */
+.canvas-wrap{position:relative;overflow:auto;background:
+  linear-gradient(0deg,rgba(0,0,0,.03) 1px,transparent 1px) 0 0/22px 22px,
+  linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px) 0 0/22px 22px,var(--quartz);padding:24px}
+#stage{background:#fff;box-shadow:var(--shadow);border-radius:6px;display:inline-block}
+#stage svg{display:block}
+.hint{position:fixed;left:calc(50vw - 128px);bottom:14px;transform:translateX(-50%);background:rgba(29,37,83,.9);
+  color:#fff;font-size:.7rem;padding:6px 12px;border-radius:999px;pointer-events:none}
+
+/* SVG interactive states */
+.comp,.variant,.rowbg,.rowtitle{cursor:pointer}
+.comp:hover rect,.variant:hover rect{filter:brightness(.96)}
+
+/* Right inspector */
+.inspector{background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:0}
+.insp-tabs{display:flex;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.insp-tabs button{flex:1;border:none;background:none;padding:10px 4px;font-size:.74rem;font-weight:600;color:var(--raven);border-bottom:2px solid transparent}
+.insp-tabs button.on{color:var(--dell-blue);border-bottom-color:var(--dell-blue)}
+.insp-body{padding:14px}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--raven);margin-bottom:4px}
+.fld input[type=text],.fld textarea,.fld select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font-size:.82rem;color:var(--cosmos);background:#fff}
+.fld textarea{resize:vertical;min-height:52px}
+.fld.row{display:flex;gap:8px}.fld.row>*{flex:1}
+.chk{display:flex;align-items:center;gap:8px;font-size:.82rem;margin-bottom:12px}
+.chk input{width:16px;height:16px}
+.swatches{display:flex;flex-wrap:wrap;gap:6px}
+.swatch{width:26px;height:26px;border-radius:6px;border:2px solid rgba(0,0,0,.12)}
+.swatch.sel{outline:2px solid var(--dell-blue);outline-offset:1px}
+.btnrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.mini{font-size:.72rem;padding:6px 9px;border:1px solid var(--line);background:#fff;border-radius:6px;color:var(--cosmos)}
+.mini:hover{border-color:var(--dell-blue);color:var(--dell-blue)}
+.mini.danger:hover{border-color:#c0392b;color:#c0392b}
+.mini.pri{background:var(--dell-blue);color:#fff;border-color:var(--dell-blue)}
+.mini.pri:hover{background:#0561ad}
+.empty{color:var(--raven);font-size:.8rem;padding:20px 4px;text-align:center}
+.sec-h{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dell-blue);
+  margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.abstract-note{font-size:.7rem;color:var(--raven);background:#fff7ef;border:1px solid #f4d3b3;border-radius:6px;padding:6px 8px;margin-bottom:10px}
+
+/* Gaps panel */
+.gaps-panel{position:absolute;right:336px;top:60px;width:300px;max-height:70vh;overflow:auto;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:12px;display:none;z-index:20}
+.gaps-panel.show{display:block}
+.gaps-panel h4{margin:0 0 8px;font-size:.8rem;color:var(--cosmos)}
+.gap{display:flex;gap:8px;padding:7px 0;border-top:1px solid var(--quartz);font-size:.76rem;line-height:1.4}
+.gap .dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex:none}
+.gap.warn .dot{background:var(--orange)} .gap.info .dot{background:var(--dell-blue)} .gap.ok .dot{background:var(--green)}
+
+/* Export flyout (bottom-right hover) */
+.export-dock{position:fixed;right:344px;bottom:24px;z-index:20}
+.export-btn{border:none;background:var(--dell-blue);color:#fff;font-weight:700;font-size:.82rem;padding:12px 18px;
+  border-radius:999px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}
+.export-menu{position:absolute;right:0;bottom:54px;width:230px;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;box-shadow:var(--shadow);padding:6px;display:none}
+.export-dock:hover .export-menu,.export-menu.show{display:block}
+.export-menu button{display:flex;width:100%;gap:10px;align-items:center;text-align:left;border:none;background:none;
+  padding:9px 10px;border-radius:7px;font-size:.82rem;color:var(--cosmos)}
+.export-menu button:hover{background:#f5faff;color:var(--dell-blue)}
+.export-menu .em-ico{font-size:1rem;width:18px;text-align:center}
+.export-menu small{display:block;color:var(--raven);font-size:.66rem;font-weight:400}
+.export-menu hr{border:none;border-top:1px solid var(--line);margin:4px 0}
+
+/* Context menu */
+.ctx{position:fixed;z-index:100;min-width:190px;background:#fff;border:1px solid var(--line);border-radius:8px;
+  box-shadow:var(--shadow);padding:5px;display:none;font-size:.82rem}
+.ctx.show{display:block}
+.ctx button{display:flex;justify-content:space-between;gap:10px;width:100%;border:none;background:none;
+  padding:7px 9px;border-radius:6px;text-align:left;color:var(--cosmos)}
+.ctx button:hover{background:#f5faff;color:var(--dell-blue)}
+.ctx .sub{display:none;padding:4px 0 4px 8px;margin:2px 0;border-left:2px solid var(--mist)}
+.ctx .sub.show{display:block}
+.ctx .sub button{font-size:.78rem;padding:5px 8px}
+.ctx .sw-row{display:flex;flex-wrap:wrap;gap:5px;padding:6px 9px}
+.ctx hr{border:none;border-top:1px solid var(--line);margin:4px 0}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(29,37,83,.5);display:none;align-items:center;justify-content:center;z-index:200}
+.modal-bg.show{display:flex}
+.modal{background:#fff;border-radius:12px;box-shadow:var(--shadow);width:min(760px,92vw);max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.modal header{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.modal header button{border:none;background:none;font-size:1.3rem;color:var(--raven)}
+.modal .mbody{padding:16px 18px;overflow:auto}
+.modal textarea{width:100%;height:340px;font-family:var(--font-mono);font-size:.72rem;border:1px solid var(--line);border-radius:8px;padding:10px}
+.modal footer{padding:12px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--cosmos);color:#fff;padding:10px 18px;border-radius:999px;font-size:.8rem;z-index:300;
+  transition:.25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Topbar -->
+  <div class="topbar">
+    <span class="ttl">Architecture Builder<small id="metaName">Dell Deskside Agentic AI Solutions</small></span>
+    <div class="spacer"></div>
+    <div class="zoom">
+      <button id="zoomOut" title="Zoom out">−</button>
+      <span id="zoomLbl">100%</span>
+      <button id="zoomIn" title="Zoom in">+</button>
+      <button id="zoomFit" title="Fit width" style="width:auto;padding:0 8px;font-size:.72rem">Fit</button>
+    </div>
+    <button class="tb-btn" id="undoBtn" title="Undo (Ctrl+Z)">↶ Undo</button>
+    <button class="tb-btn" id="gapsBtn">Gaps<span class="gaps-badge" id="gapsBadge">0</span></button>
+    <a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="color:var(--cosmos);display:inline-flex;align-items:center;margin-left:10px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+  </div>
+
+  <!-- Left rail -->
+  <div class="rail">
+    <button class="rb" id="railLibrary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h6v14H4zM14 5h6v14h-6z"/></svg>
+      Library
+    </button>
+    <button class="rb" id="railAddRow" title="Add a new layer row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      Add Row
+    </button>
+    <button class="rb" id="railSettings" title="Diagram settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      Diagram
+    </button>
+    <div class="flyout" id="libFlyout">
+      <h4>Built-in templates</h4>
+      <div id="seedList"></div>
+      <h4 style="margin-top:12px">My templates</h4>
+      <div id="savedList"></div>
+      <div class="import">
+        <label class="mini" style="display:inline-block">Import JSON…
+          <input type="file" id="importFile" accept="application/json" style="display:none">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-wrap" id="canvasWrap">
+    <div id="stage"></div>
+    <div class="hint">Click a block to edit · Right-click for quick actions &amp; providers · Hover “Export” bottom-right</div>
+    <div class="gaps-panel" id="gapsPanel"><h4>Architecture gaps &amp; recommendations</h4><div id="gapsList"></div></div>
+    <div class="export-dock">
+      <div class="export-menu" id="exportMenu">
+        <button data-exp="save"><span class="em-ico">💾</span><span>Save template<small>Store + download JSON definition</small></span></button>
+        <hr>
+        <button data-exp="svg"><span class="em-ico">🖼️</span><span>Export as SVG<small>Vector, editable</small></span></button>
+        <button data-exp="png"><span class="em-ico">📷</span><span>Export as PNG<small>Raster @2×</small></span></button>
+        <button data-exp="html"><span class="em-ico">🌐</span><span>Export as HTML<small>Standalone viewer / copy code</small></span></button>
+      </div>
+      <button class="export-btn" id="exportBtn">Export ▴</button>
+    </div>
+  </div>
+
+  <!-- Right inspector -->
+  <div class="inspector">
+    <div class="insp-tabs">
+      <button id="tabSel" class="on">Selection</button>
+      <button id="tabDia">Diagram</button>
+    </div>
+    <div class="insp-body" id="inspBody"></div>
+  </div>
+</div>
+
+<div class="ctx" id="ctx"></div>
+<div class="modal-bg" id="modalBg"><div class="modal">
+  <header><span id="modalTitle">Export</span><button id="modalClose">×</button></header>
+  <div class="mbody" id="modalBody"></div>
+  <footer id="modalFooter"></footer>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================= constants ============================= */
+const W = 1400, RECT_X = 60, RECT_W = 1280, INNER_L = 80, INNER_R = 1320, GAP = 8;
+
+const CATS = {
+  common:    {name:'Common (All Platforms)',   fill:'#e8f5e9', stroke:'#2e7d32', chip:'#c8e6c9', text:'#1b5e20', head:'#2e7d32'},
+  template:  {name:'Solution Template',      fill:'#fff3e0', stroke:'#ef6c00', chip:'#ffe0b2', text:'#e65100', head:'#ef6c00'},
+  container: {name:'Container / Runtime',      fill:'#e3f2fd', stroke:'#1565c0', chip:'#bbdefb', text:'#0d47a1', head:'#1565c0'},
+  management:{name:'Management',               fill:'#f3e5f5', stroke:'#7b1fa2', chip:'#e1bee7', text:'#4a148c', head:'#7b1fa2'},
+  platform:  {name:'Platform / OS Variant',    fill:'#e8eaf6', stroke:'#1a237e', chip:'#e8eaf6', text:'#1a237e', head:'#1a237e'},
+};
+const CAT_KEYS = Object.keys(CATS);
+// Dell-branded alternate palette for chrome/title
+const THEMES = { material:{title:'#1a237e', sub:'#e8eaf6'}, dell:{title:'#1D2553', sub:'#C5D4E3'} };
+const SWATCH_COLORS = ['#c8e6c9','#ffe0b2','#bbdefb','#e1bee7','#e8eaf6','#ffcdd2','#fff9c4','#b2dfdb','#d7ccc8','#cfd8dc','#0672CB','#E97132','#0B7C84','#196B24','#40155C'];
+
+// Provider catalog for abstract blocks
+const PROVIDERS = {
+  fleet:['Microsoft Intune','Tanium','Ansible / AAP','Microsoft SCCM / MECM','NVIDIA Fleet Command','Red Hat Satellite','Jamf Pro','HCL BigFix'],
+  monitoring:['Prometheus + Grafana','NVIDIA DCGM','Datadog','Zabbix','Nagios','Elastic Observability'],
+  security:['SELinux / AppArmor','CrowdStrike Falcon','Microsoft Defender','Wiz','Falco','SentinelOne'],
+  identity:['Active Directory','LDAP','Microsoft Entra ID','Okta','Keycloak','Ping Identity'],
+  logging:['Elastic / ELK','Grafana Loki','Splunk','Fluent Bit','Graylog'],
+  patching:['Ansible','WSUS','Canonical Landscape','Red Hat Satellite','unattended-upgrades'],
+  sourcecontrol:['Gitea','GitHub Enterprise','GitLab','Bitbucket','Azure DevOps'],
+  productivity:['Microsoft 365','Google Workspace','Slack','Atlassian'],
+  cloudapi:['AWS','Microsoft Azure','Google Cloud','Oracle Cloud'],
+  gateway:['NGINX','Kong','Envoy','Traefik','LiteLLM','Cloudflare'],
+  storage:['NFS','Ceph','MinIO','Dell PowerScale','Dell ObjectScale','Amazon S3'],
+  container:['Docker Engine','containerd','Podman','CRI-O'],
+  orchestration:['Kubernetes','Docker Compose','K3s','HashiCorp Nomad'],
+  registry:['Harbor','NVIDIA NGC','Docker Hub','JFrog Artifactory','Amazon ECR'],
+  inference:['vLLM','Ollama','NVIDIA NIM','TensorRT-LLM','SGLang','llama.cpp'],
+  model:['Nemotron (NVIDIA)','Qwen','GLM','Llama','Mistral'],
+  vectordb:['Milvus','Qdrant','pgvector','Weaviate','Chroma','FAISS'],
+  os:['DGX OS','Ubuntu 24.04+','Windows 11','RHEL'],
+  gpu:['NVIDIA GB10','NVIDIA GB300','RTX PRO 6000'],
+};
+const PK_KEYS = Object.keys(PROVIDERS);
+
+/* ============================= util ============================= */
+let _uid = 0;
+const uid = p => p + (++_uid).toString(36) + Math.random().toString(36).slice(2,6);
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const clone = o => JSON.parse(JSON.stringify(o));
+const el = id => document.getElementById(id);
+function toast(msg){ const t=el('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
+
+/* ============================= seed library ============================= */
+function baseModel(){
+  return {
+    meta:{name:'Dell Deskside Agentic AI Solutions — Base Architecture', slug:'deskside-base',
+      description:'Common architecture across all Deskside Agentic AI hardware platforms & operating systems.',
+      category:'reference', status:'reference'},
+    title:'Dell Deskside Agentic AI Solutions - Technical Architecture',
+    subtitle:'Common Architecture Across All Deskside Agentic AI Hardware Platforms & Operating Systems',
+    theme:'material', showLegend:true, showConnectors:true, showSummary:true, showSideLabels:true,
+    summary:'Hardware: Dell Pro Precision with GB10 • Precision 9 T2 / T4 / T6 (RTX PRO 6000) • Dell Pro Precision with GB300    |    OS: DGX OS (GB10) • Ubuntu • Windows',
+    rows:[
+      {label:'INTEGRATION', cat:'template', side:'TEMPLATE', title:'Integration Layer - External System Connectivity', components:[
+        {name:'Source Control (Git/Gitea)', pk:'sourcecontrol', provider:'Gitea'},
+        {name:'Enterprise Identity (AD/LDAP)', pk:'identity', provider:'Active Directory'},
+        {name:'Productivity (M365/Google)', pk:'productivity'},
+        {name:'Cloud APIs', pk:'cloudapi'},
+        {name:'API Gateway', pk:'gateway'},
+        {name:'Data / Storage Systems', pk:'storage'}]},
+      {label:'APPLICATION', cat:'template', side:'TEMPLATE', title:'Application Layer - Solution Templates (built on the common base)', components:[
+        {name:'Coding / Dev Agents'},{name:'Agentic Workflows'},{name:'Video Search & Summ.'},
+        {name:'Vision / Inspection'},{name:'Healthcare / Imaging'},{name:'Inference Serving APIs', pk:'inference', provider:'vLLM'}]},
+      {label:'MANAGEMENT', cat:'management', side:'COMMON', title:'Management & Orchestration Layer', components:[
+        {name:'Monitoring', pk:'monitoring'},{name:'Security', pk:'security'},{name:'Updates / Patching', pk:'patching'},
+        {name:'Identity (AD/LDAP)', pk:'identity'},{name:'Logging', pk:'logging'},{name:'Fleet Management', pk:'fleet'}]},
+      {label:'CONTAINER', cat:'container', side:'COMMON', title:'Container Runtime Layer', components:[
+        {name:'Docker Engine', pk:'container', provider:'Docker Engine'},{name:'containerd', pk:'container'},
+        {name:'Podman', pk:'container'},{name:'Kubernetes', pk:'orchestration'},{name:'Container Registry', pk:'registry'}]},
+      {label:'NVIDIA', cat:'common', side:'COMMON', title:'NVIDIA Software Stack', components:[
+        {name:'GPU Drivers'},{name:'CUDA Toolkit'},{name:'cuDNN'},{name:'AI Frameworks'},
+        {name:'NIM Microservices'},{name:'NGC Containers'},{name:'NCCL'}]},
+      {label:'OS LAYER', cat:'common', side:'PER OS', title:'OS Layer - DGX OS / Ubuntu / Windows  (functionally common, implemented differently)',
+        variants:[{name:'DGX OS  (Ubuntu-based · Dell Pro Precision with GB10)'},{name:'Ubuntu  (24.04+ · GB300 / Precision Towers)'},{name:'Windows  (Precision Towers)'}],
+        components:[{name:'Kernel', sub:'(Linux / NT)'},{name:'System Libraries'},{name:'Security'},
+        {name:'File System'},{name:'Networking'},{name:'Package Manager', sub:'(shared Linux pkgs)'}]},
+      {label:'HARDWARE', cat:'common', side:'PER PLATFORM', title:'Hardware Layer - Dell deskside NVIDIA platforms  (common silicon classes, implemented per platform)',
+        variants:[{name:'Dell Pro Precision with GB10'},{name:'Dell Pro Precision 9 T2', sub:'1× RTX PRO 6000'},
+        {name:'Dell Pro Precision 9 T4', sub:'2× RTX PRO 6000'},{name:'Dell Pro Precision 9 T6', sub:'5× RTX PRO 6000'},{name:'Dell Pro Precision with GB300'}],
+        components:[{name:'GPU (NVIDIA)', sub:'GB10 / GB300 / RTX PRO 6000'},{name:'CPU', sub:'(Grace Arm / x86)'},
+        {name:'Memory', sub:'(Unified / System + VRAM)'},{name:'Storage (NVMe)'},{name:'Networking'},{name:'Power & Thermal'}]},
+    ]
+  };
+}
+
+// A solution template = base with its Application layer + prescribed providers.
+function useCase(meta, appTitle, appComps, model){
+  const m = baseModel();
+  m.meta = Object.assign({category:'', status:'planned'}, meta);
+  m.title = meta.name + ' — Dell Deskside Agentic AI Solution';
+  m.subtitle = meta.description;
+  const app = m.rows.find(r=>r.label==='APPLICATION');
+  app.title = appTitle;
+  app.components = appComps.map(c => typeof c==='string' ? {name:c} : c);
+  // Prescribed common choices across solution templates
+  const setProv = (label, pk, prov) => { for(const r of m.rows){ for(const c of r.components){ if(c.name===label){ c.pk=pk; c.provider=prov; } } } };
+  setProv('Fleet Management','fleet','Microsoft Intune');
+  setProv('Monitoring','monitoring','Prometheus + Grafana');
+  setProv('Security','security','CrowdStrike Falcon');
+  setProv('Identity (AD/LDAP)','identity','Active Directory');
+  setProv('Logging','logging','Grafana Loki');
+  setProv('Container Registry','registry','NVIDIA NGC');
+  setProv('Kubernetes','orchestration','Kubernetes');
+  // add a Model block into the app layer (prescribed default) if room
+  app.components.push({name:'Model', pk:'model', provider:model||'Nemotron (NVIDIA)'});
+  app.components.push({name:'Inference Serving', pk:'inference', provider:'vLLM'});
+  return m;
+}
+
+const SEEDS = [
+  baseModel(),
+  useCase({name:'Agentic Coding', slug:'agentic-coding', description:'Private on-deskside AI coding assistant — CLI/IDE agents behind an OpenAI-compatible API.', category:'horizontal', status:'published'},
+    'Application Layer - Coding Assistant',
+    ['CLI Coding Agent','IDE Assistant (VS Code / JetBrains)','Agentic Skills (AGENTS.md)','OpenAI-Compatible API'], 'Nemotron (NVIDIA)'),
+  useCase({name:'Agentic Video Search & Summarization', slug:'agentic-vss', description:'Natural-language search, Q&A, and summarization over local video libraries.', category:'vertical', status:'published'},
+    'Application Layer - Video Search & Summarization',
+    ['Video Ingest & Indexing','Semantic Search','Q&A over Video','Summarization'], 'Qwen3-VL + Nemotron (NVIDIA)'),
+  useCase({name:'OpenClaw on NemoClaw', slug:'nemoclaw', description:'The OpenClaw assistant on NVIDIA\'s NemoClaw runtime — tool-using agents with policy and sandboxing.', category:'horizontal', status:'published'},
+    'Application Layer - Agent Runtime',
+    ['NemoClaw Runtime','Policy Engine','OpenShell Sandbox','Tool Integrations'], 'Nemotron (NVIDIA)'),
+  useCase({name:'Hermes on NemoClaw', slug:'hermes-on-nemoclaw', description:'The shipping tool-using agent on the NemoClaw runtime, fully local.', category:'horizontal', status:'published'},
+    'Application Layer - Tool-Using Agent',
+    ['Hermes Agent','NemoClaw Runtime','Policy & Sandbox','Tool Integrations'], 'Nemotron (NVIDIA)'),
+  useCase({name:'Higher Education AI Lab', slug:'higher-ed-ai-lab', description:'Repeatable design for university AI teaching labs on Dell hardware.', category:'vertical', status:'published'},
+    'Application Layer - Teaching Lab',
+    ['Course Provisioning','Student Clients','Shared Serving Tier','Curriculum Solutions'], 'Nemotron (NVIDIA)'),
+];
+
+/* ============================= state ============================= */
+let model, selection = null, zoom = 1, activeTab = 'sel';
+const history = [];
+function normalize(m){
+  m.rows = m.rows || [];
+  for(const r of m.rows){
+    r.id = r.id || uid('r');
+    r.components = r.components || [];
+    r.components.forEach(c => { c.id = c.id || uid('c'); });
+    if(r.variants) r.variants.forEach(v => { v.id = v.id || uid('v'); });
+  }
+  m.meta = m.meta || {name:'Untitled', slug:'untitled'};
+  if(m.theme==null) m.theme='material';
+  ['showLegend','showConnectors','showSummary','showSideLabels'].forEach(k=>{ if(m[k]==null) m[k]=true; });
+  return m;
+}
+function pushHistory(){ history.push(JSON.stringify(model)); if(history.length>60) history.shift(); }
+function undo(){ if(history.length){ model = normalize(JSON.parse(history.pop())); selection=null; render(); } }
+function loadModel(m, {resetHist=true}={}){ model = normalize(clone(m)); if(resetHist) history.length=0; selection=null; render(); }
+
+function findRow(id){ return model.rows.find(r=>r.id===id); }
+function findComp(rid,cid){ const r=findRow(rid); return r && (r.components.find(c=>c.id===cid) || (r.variants||[]).find(v=>v.id===cid)); }
+
+/* ============================= layout + SVG ============================= */
+function chipXs(n){ const usable=INNER_R-INNER_L, w=(usable-(n-1)*GAP)/n, xs=[]; for(let i=0;i<n;i++) xs.push(INNER_L+i*(w+GAP)); return {xs,w}; }
+function twoLine(c){ return !!(c.sub || c.provider); }
+function catOf(o, rowCat){ return CATS[o.cat] || CATS[rowCat] || CATS.common; }
+
+function buildSVG(opts){
+  opts = opts||{}; const forExport = opts.forExport;
+  const th = THEMES[model.theme] || THEMES.material;
+  const parts = []; let y = 0;
+  const rowLayout = [];
+
+  // --- vertical layout pass ---
+  y = 80; // title bar
+  let legendTop = 0, legendCats = [];
+  if(model.showLegend){
+    legendCats = [...new Set(model.rows.map(r=>r.cat))].filter(c=>CATS[c]);
+    legendTop = 90; y = 170;
+  } else { y = 100; }
+  const rowsTop = y + 20;
+  y = rowsTop;
+  for(const r of model.rows){
+    const hasSub = r.components.some(twoLine);
+    const compH = hasSub ? 46 : 40;
+    let contentTop = y + 34;
+    let variantTop = 0, variantH = 0;
+    if(r.variants && r.variants.length){ variantTop = contentTop; variantH = 34; contentTop += variantH + 12; }
+    const compTop = contentTop;
+    const rh = (compTop + compH + 14) - y;
+    rowLayout.push({r, y, rh, compTop, compH, variantTop, variantH});
+    y += rh + 20;
+  }
+  let summaryTop = 0;
+  if(model.showSummary){ summaryTop = y; y += 60; }
+  const totalH = y + 20;
+
+  // --- background ---
+  parts.push(`<rect width="${W}" height="${totalH}" fill="#ffffff"/>`);
+
+  // --- title bar ---
+  parts.push(`<rect x="0" y="0" width="${W}" height="80" fill="${th.title}"/>`);
+  parts.push(`<text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">${esc(model.title)}</text>`);
+  parts.push(`<text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="${th.sub}">${esc(model.subtitle)}</text>`);
+
+  // --- legend ---
+  if(model.showLegend && legendCats.length){
+    const lw = Math.min(320, (W-100)/legendCats.length - 20);
+    let lx = 50;
+    for(const ck of legendCats){
+      const c = CATS[ck];
+      parts.push(`<rect x="${lx}" y="${legendTop}" width="${lw}" height="70" fill="${c.fill}" stroke="${c.stroke}" stroke-width="2" rx="5"/>`);
+      parts.push(`<rect x="${lx+10}" y="${legendTop+15}" width="20" height="20" fill="${c.fill}" stroke="${c.stroke}" stroke-width="2"/>`);
+      parts.push(`<text x="${lx+40}" y="${legendTop+30}" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="${c.stroke}">${esc(c.name)}</text>`);
+      lx += lw + 20;
+    }
+  }
+
+  // --- connectors (behind rows) ---
+  if(model.showConnectors){
+    for(let i=1;i<rowLayout.length;i++){
+      const top = rowLayout[i].y;
+      parts.push(`<line x1="700" y1="${top}" x2="700" y2="${top-20}" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>`);
+    }
+  }
+
+  // --- rows ---
+  for(const L of rowLayout){
+    const r = L.r, cat = CATS[r.cat] || CATS.common;
+    // layer bg (selectable as row)
+    const rowSel = selection && selection.kind==='row' && selection.row===r.id;
+    parts.push(`<g class="rowbg" data-kind="row" data-row="${r.id}">`);
+    parts.push(`<rect x="${RECT_X}" y="${L.y}" width="${RECT_W}" height="${L.rh}" fill="${cat.fill}" stroke="${rowSel?'#0672CB':cat.stroke}" stroke-width="${rowSel?3:2}" rx="5"/>`);
+    parts.push(`<text x="720" y="${L.y+24}" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="${cat.head}">${esc(r.title)}</text>`);
+    parts.push(`</g>`);
+    // rotated layer label (left)
+    parts.push(`<text x="30" y="${L.y+L.rh/2}" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" text-anchor="middle" transform="rotate(-90, 30, ${L.y+L.rh/2})">${esc(r.label)}</text>`);
+    // side label (right)
+    if(model.showSideLabels){
+      const side = r.side || (r.cat==='template'?'TEMPLATE':'COMMON');
+      parts.push(`<text x="1390" y="${L.y+L.rh/2}" font-family="Arial, sans-serif" font-size="10" fill="#666" text-anchor="middle" transform="rotate(90, 1390, ${L.y+L.rh/2})">${esc(side)}</text>`);
+    }
+    // variants
+    if(L.variantH){
+      const {xs,w} = chipXs(r.variants.length);
+      r.variants.forEach((v,i)=>{
+        const sel = selection && selection.id===v.id;
+        parts.push(chip({kind:'variant', row:r.id, id:v.id, x:xs[i], y:L.variantTop, w, h:L.variantH,
+          fill:CATS.platform.chip, stroke:sel?'#0672CB':CATS.platform.stroke, sw:sel?3:1.5, text:CATS.platform.text,
+          name:v.name, sub:v.sub, bold:true}));
+      });
+    }
+    // components
+    const {xs,w} = chipXs(r.components.length);
+    r.components.forEach((c,i)=>{
+      const sc = catOf(c, r.cat);
+      const fill = c.fill || sc.chip, stroke = c.stroke || sc.stroke, txt = c.text || sc.text;
+      const sel = selection && selection.id===c.id;
+      const abstract = !!c.pk;
+      parts.push(chip({kind:'comp', row:r.id, id:c.id, x:xs[i], y:L.compTop, w, h:L.compH,
+        fill, stroke:sel?'#0672CB':stroke, sw:sel?3:1, text:txt,
+        name:c.name, sub: c.provider ? '▾ '+c.provider : c.sub, subItalic:!!c.provider, dash:abstract, notes:c.notes}));
+    });
+  }
+
+  // --- summary ---
+  if(model.showSummary){
+    parts.push(`<rect x="${RECT_X}" y="${summaryTop}" width="${RECT_W}" height="60" fill="#f5f5f5" stroke="#999" stroke-width="1" rx="3"/>`);
+    parts.push(`<text x="720" y="${summaryTop+25}" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">${esc(model.summary)}</text>`);
+    parts.push(`<text x="720" y="${summaryTop+45}" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#666">Architecture is functionally common across platforms — differences are implementation details, not structural.</text>`);
+  }
+
+  const attrs = `xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${totalH}"`;
+  const dims = forExport ? `width="${W}" height="${totalH}"` : `width="${W*zoom}" height="${totalH*zoom}"`;
+  return {svg:`<svg ${attrs} ${dims}>${parts.join('')}</svg>`, height:totalH};
+}
+
+function chip(o){
+  const g = [];
+  g.push(`<g class="${o.kind}" data-kind="${o.kind}" data-row="${o.row}" data-id="${o.id}">`);
+  if(o.notes) g.push(`<title>${esc(o.notes)}</title>`);
+  g.push(`<rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" fill="${o.fill}" stroke="${o.stroke}" stroke-width="${o.sw}" rx="3"${o.dash?' stroke-dasharray="5,3"':''}/>`);
+  const cx = o.x + o.w/2;
+  const fw = o.bold ? ' font-weight="bold"' : '';
+  if(o.sub){
+    g.push(`<text x="${cx}" y="${o.y+o.h/2-3}" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="${o.text}"${fw}>${esc(o.name)}</text>`);
+    g.push(`<text x="${cx}" y="${o.y+o.h/2+12}" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="${o.text}"${o.subItalic?' font-style="italic"':''}>${esc(o.sub)}</text>`);
+  } else {
+    g.push(`<text x="${cx}" y="${o.y+o.h/2+4}" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="${o.text}"${fw}>${esc(o.name)}</text>`);
+  }
+  g.push(`</g>`);
+  return g.join('');
+}
+
+/* ============================= render ============================= */
+function render(){
+  el('metaName').textContent = model.meta.name || 'Untitled';
+  const built = buildSVG();
+  el('stage').innerHTML = built.svg;
+  el('zoomLbl').textContent = Math.round(zoom*100)+'%';
+  renderInspector();
+  renderGaps();
+}
+
+/* ============================= inspector ============================= */
+function setTab(t){ activeTab=t; el('tabSel').classList.toggle('on',t==='sel'); el('tabDia').classList.toggle('on',t==='dia'); renderInspector(); }
+el('tabSel').onclick=()=>setTab('sel'); el('tabDia').onclick=()=>setTab('dia');
+
+function renderInspector(){
+  const b = el('inspBody');
+  if(activeTab==='dia'){ b.innerHTML = diagramForm(); wireDiagramForm(); return; }
+  if(!selection){ b.innerHTML = `<div class="empty">Select a block, row header, or platform chip on the canvas to edit it.<br><br>Right-click any block for quick actions and provider choices.</div>`; return; }
+  if(selection.kind==='row'){ b.innerHTML = rowForm(findRow(selection.row)); wireRowForm(); return; }
+  const r = findRow(selection.row); const c = findComp(selection.row, selection.id);
+  if(!c){ selection=null; return renderInspector(); }
+  b.innerHTML = selection.kind==='variant' ? variantForm(r,c) : compForm(r,c);
+  wireCompForm();
+}
+
+function opts(arr, cur){ return arr.map(v=>`<option value="${esc(v)}"${v===cur?' selected':''}>${esc(v)}</option>`).join(''); }
+
+function compForm(r,c){
+  const abstract = !!c.pk;
+  const provOpts = abstract ? (PROVIDERS[c.pk]||[]) : [];
+  return `
+  <div class="fld"><label>Component name</label><input type="text" id="f_name" value="${esc(c.name)}"></div>
+  <div class="fld"><label>Subtitle (optional)</label><input type="text" id="f_sub" value="${esc(c.sub||'')}"></div>
+  <div class="chk"><input type="checkbox" id="f_abs" ${abstract?'checked':''}><label style="margin:0">Abstract block (selectable provider)</label></div>
+  ${abstract?`
+    <div class="abstract-note">Abstract blocks expose a provider dropdown. Right-click the block on canvas for a quick provider menu too.</div>
+    <div class="fld"><label>Provider category</label><select id="f_pk">${opts(PK_KEYS, c.pk)}</select></div>
+    <div class="fld"><label>Selected provider</label>
+      <select id="f_prov"><option value="">— none —</option>${opts(provOpts, c.provider||'')}${c.provider && !provOpts.includes(c.provider)?`<option value="${esc(c.provider)}" selected>${esc(c.provider)} (custom)</option>`:''}</select>
+    </div>
+    <div class="fld"><label>Add custom provider</label><div class="fld row" style="margin:0">
+      <input type="text" id="f_provcustom" placeholder="e.g. In-house tool"><button class="mini" id="f_provadd">Add</button></div></div>
+  `:''}
+  <div class="sec-h">Appearance</div>
+  <div class="fld"><label>Category (color scheme)</label><select id="f_cat"><option value="">— inherit row (${esc(r.cat)}) —</option>${opts(CAT_KEYS, c.cat||'')}</select></div>
+  <div class="fld"><label>Custom fill color</label><div class="swatches" id="f_sw"></div></div>
+  <div class="btnrow"><button class="mini" id="f_resetcolor">Reset colors</button></div>
+  <div class="sec-h">Notes</div>
+  <div class="fld"><textarea id="f_notes" placeholder="Tooltip / notes shown on hover">${esc(c.notes||'')}</textarea></div>
+  <div class="sec-h">Actions</div>
+  <div class="btnrow">
+    <button class="mini" id="f_left">◀ Move left</button>
+    <button class="mini" id="f_right">Move right ▶</button>
+    <button class="mini" id="f_dup">Duplicate</button>
+    <button class="mini danger" id="f_del">Delete</button>
+  </div>`;
+}
+function variantForm(r,c){
+  return `<div class="fld"><label>Platform / OS chip name</label><input type="text" id="f_name" value="${esc(c.name)}"></div>
+  <div class="fld"><label>Subtitle (optional)</label><input type="text" id="f_sub" value="${esc(c.sub||'')}"></div>
+  <div class="sec-h">Actions</div>
+  <div class="btnrow">
+    <button class="mini" id="f_left">◀ Move left</button><button class="mini" id="f_right">Move right ▶</button>
+    <button class="mini" id="f_dup">Duplicate</button><button class="mini danger" id="f_del">Delete</button>
+  </div>`;
+}
+function wireCompForm(){
+  const r = findRow(selection.row), c = findComp(selection.row, selection.id);
+  const list = selection.kind==='variant' ? r.variants : r.components;
+  const idx = list.indexOf(c);
+  const on=(id,ev,fn)=>{ const n=el(id); if(n) n[ev]=fn; };
+  const commit=()=>{ pushHistory(); render(); };
+  on('f_name','oninput',e=>{ c.name=e.target.value; softRender(); });
+  on('f_sub','oninput',e=>{ c.sub=e.target.value; softRender(); });
+  on('f_notes','oninput',e=>{ c.notes=e.target.value; });
+  on('f_abs','onchange',e=>{ if(e.target.checked){ c.pk=c.pk||'fleet'; } else { delete c.pk; delete c.provider; } commit(); });
+  on('f_pk','onchange',e=>{ c.pk=e.target.value; c.provider=''; commit(); });
+  on('f_prov','onchange',e=>{ c.provider=e.target.value; commit(); });
+  on('f_provadd','onclick',()=>{ const v=el('f_provcustom').value.trim(); if(v){ if(!PROVIDERS[c.pk].includes(v)) PROVIDERS[c.pk].push(v); c.provider=v; commit(); } });
+  on('f_cat','onchange',e=>{ c.cat=e.target.value||undefined; delete c.fill; delete c.stroke; delete c.text; commit(); });
+  on('f_resetcolor','onclick',()=>{ delete c.fill; delete c.stroke; delete c.text; delete c.cat; commit(); });
+  on('f_left','onclick',()=>{ if(idx>0){ list.splice(idx,1); list.splice(idx-1,0,c); commit(); } });
+  on('f_right','onclick',()=>{ if(idx<list.length-1){ list.splice(idx,1); list.splice(idx+1,0,c); commit(); } });
+  on('f_dup','onclick',()=>{ const n=clone(c); n.id=uid('c'); list.splice(idx+1,0,n); selection={...selection,id:n.id}; commit(); });
+  on('f_del','onclick',()=>{ list.splice(idx,1); selection=null; commit(); });
+  // swatches
+  const sw = el('f_sw');
+  if(sw){ SWATCH_COLORS.forEach(col=>{ const d=document.createElement('div'); d.className='swatch'+(c.fill===col?' sel':''); d.style.background=col;
+    d.onclick=()=>{ c.fill=col; c.stroke=shade(col,-40); c.text=shade(col,-120); commit(); }; sw.appendChild(d); }); }
+}
+function softRender(){ el('stage').innerHTML = buildSVG().svg; }
+
+function rowForm(r){
+  return `<div class="fld"><label>Layer label (left)</label><input type="text" id="r_label" value="${esc(r.label)}"></div>
+  <div class="fld"><label>Row title</label><input type="text" id="r_title" value="${esc(r.title)}"></div>
+  <div class="fld"><label>Side label (right)</label><input type="text" id="r_side" value="${esc(r.side||'')}"></div>
+  <div class="fld"><label>Category (color scheme)</label><select id="r_cat">${opts(CAT_KEYS, r.cat)}</select></div>
+  <div class="sec-h">Contents</div>
+  <div class="btnrow">
+    <button class="mini pri" id="r_addcomp">+ Component</button>
+    <button class="mini" id="r_addvar">+ Platform chip</button>
+  </div>
+  <div class="sec-h">Row actions</div>
+  <div class="btnrow">
+    <button class="mini" id="r_up">▲ Move up</button><button class="mini" id="r_down">▼ Move down</button>
+    <button class="mini" id="r_dup">Duplicate row</button><button class="mini danger" id="r_del">Delete row</button>
+  </div>`;
+}
+function wireRowForm(){
+  const r = findRow(selection.row); const idx = model.rows.indexOf(r);
+  const on=(id,ev,fn)=>{ const n=el(id); if(n) n[ev]=fn; };
+  const commit=()=>{ pushHistory(); render(); };
+  on('r_label','oninput',e=>{ r.label=e.target.value; softRender(); });
+  on('r_title','oninput',e=>{ r.title=e.target.value; softRender(); });
+  on('r_side','oninput',e=>{ r.side=e.target.value; softRender(); });
+  on('r_cat','onchange',e=>{ r.cat=e.target.value; commit(); });
+  on('r_addcomp','onclick',()=>{ const c={id:uid('c'),name:'New Component'}; r.components.push(c); selection={kind:'comp',row:r.id,id:c.id}; commit(); });
+  on('r_addvar','onclick',()=>{ r.variants=r.variants||[]; const v={id:uid('v'),name:'New Platform'}; r.variants.push(v); selection={kind:'variant',row:r.id,id:v.id}; commit(); });
+  on('r_up','onclick',()=>{ if(idx>0){ model.rows.splice(idx,1); model.rows.splice(idx-1,0,r); commit(); } });
+  on('r_down','onclick',()=>{ if(idx<model.rows.length-1){ model.rows.splice(idx,1); model.rows.splice(idx+1,0,r); commit(); } });
+  on('r_dup','onclick',()=>{ const n=clone(r); n.id=uid('r'); n.components.forEach(c=>c.id=uid('c')); (n.variants||[]).forEach(v=>v.id=uid('v')); model.rows.splice(idx+1,0,n); commit(); });
+  on('r_del','onclick',()=>{ model.rows.splice(idx,1); selection=null; commit(); });
+}
+
+function diagramForm(){
+  return `<div class="fld"><label>Template name</label><input type="text" id="d_name" value="${esc(model.meta.name||'')}"></div>
+  <div class="fld"><label>Slug (for saving)</label><input type="text" id="d_slug" value="${esc(model.meta.slug||'')}"></div>
+  <div class="fld"><label>Description</label><textarea id="d_desc">${esc(model.meta.description||'')}</textarea></div>
+  <div class="fld row"><div><label>Category</label><input type="text" id="d_cat" value="${esc(model.meta.category||'')}"></div>
+    <div><label>Status</label><input type="text" id="d_status" value="${esc(model.meta.status||'')}"></div></div>
+  <div class="sec-h">Diagram header</div>
+  <div class="fld"><label>Title</label><input type="text" id="d_title" value="${esc(model.title)}"></div>
+  <div class="fld"><label>Subtitle</label><input type="text" id="d_sub" value="${esc(model.subtitle)}"></div>
+  <div class="fld"><label>Summary bar text</label><textarea id="d_summary">${esc(model.summary||'')}</textarea></div>
+  <div class="fld"><label>Theme</label><select id="d_theme">${opts(Object.keys(THEMES), model.theme)}</select></div>
+  <div class="sec-h">Show / hide</div>
+  <div class="chk"><input type="checkbox" id="d_leg" ${model.showLegend?'checked':''}><label style="margin:0">Legend</label></div>
+  <div class="chk"><input type="checkbox" id="d_con" ${model.showConnectors?'checked':''}><label style="margin:0">Connectors</label></div>
+  <div class="chk"><input type="checkbox" id="d_sum" ${model.showSummary?'checked':''}><label style="margin:0">Summary bar</label></div>
+  <div class="chk"><input type="checkbox" id="d_sl" ${model.showSideLabels?'checked':''}><label style="margin:0">Side labels</label></div>
+  <div class="sec-h">Rows</div>
+  <div class="btnrow"><button class="mini pri" id="d_addrow">+ Add layer row</button></div>`;
+}
+function wireDiagramForm(){
+  const on=(id,ev,fn)=>{ const n=el(id); if(n) n[ev]=fn; };
+  const soft=()=>softRender();
+  on('d_name','oninput',e=>{ model.meta.name=e.target.value; el('metaName').textContent=e.target.value; });
+  on('d_slug','oninput',e=>{ model.meta.slug=e.target.value; });
+  on('d_desc','oninput',e=>{ model.meta.description=e.target.value; });
+  on('d_cat','oninput',e=>{ model.meta.category=e.target.value; });
+  on('d_status','oninput',e=>{ model.meta.status=e.target.value; });
+  on('d_title','oninput',e=>{ model.title=e.target.value; soft(); });
+  on('d_sub','oninput',e=>{ model.subtitle=e.target.value; soft(); });
+  on('d_summary','oninput',e=>{ model.summary=e.target.value; soft(); });
+  on('d_theme','onchange',e=>{ model.theme=e.target.value; pushHistory(); render(); });
+  const tog=(id,key)=>on(id,'onchange',e=>{ model[key]=e.target.checked; pushHistory(); render(); });
+  tog('d_leg','showLegend'); tog('d_con','showConnectors'); tog('d_sum','showSummary'); tog('d_sl','showSideLabels');
+  on('d_addrow','onclick',addRow);
+}
+function addRow(){ pushHistory(); const r={id:uid('r'),label:'NEW LAYER',cat:'common',side:'COMMON',title:'New Layer',components:[{id:uid('c'),name:'New Component'}]}; model.rows.push(r); selection={kind:'row',row:r.id}; setTab('sel'); render(); }
+
+function shade(hex,amt){ hex=hex.replace('#',''); if(hex.length===3) hex=hex.split('').map(x=>x+x).join('');
+  let r=Math.max(0,Math.min(255,parseInt(hex.slice(0,2),16)+amt)),g=Math.max(0,Math.min(255,parseInt(hex.slice(2,4),16)+amt)),b=Math.max(0,Math.min(255,parseInt(hex.slice(4,6),16)+amt));
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join(''); }
+
+/* ============================= canvas interactions ============================= */
+const stage = el('stage');
+function target(e){ const g=e.target.closest('[data-kind]'); if(!g) return null; return {kind:g.dataset.kind, row:g.dataset.row, id:g.dataset.id||null}; }
+stage.addEventListener('click', e=>{ const t=target(e); if(!t){ selection=null; setTab('sel'); render(); return; }
+  selection = t.kind==='row' ? {kind:'row',row:t.row} : {kind:t.kind,row:t.row,id:t.id}; setTab('sel'); render(); });
+stage.addEventListener('dblclick', e=>{ const t=target(e); if(t && t.id){ selection={kind:t.kind,row:t.row,id:t.id}; setTab('sel'); render(); const n=el('f_name'); if(n){ n.focus(); n.select(); } } });
+stage.addEventListener('contextmenu', e=>{ const t=target(e); if(!t) return; e.preventDefault(); selection = t.kind==='row'?{kind:'row',row:t.row}:{kind:t.kind,row:t.row,id:t.id}; render(); showCtx(e.clientX,e.clientY); });
+
+/* ============================= context menu ============================= */
+const ctx = el('ctx');
+function hideCtx(){ ctx.classList.remove('show'); }
+document.addEventListener('click', e=>{ if(!ctx.contains(e.target)) hideCtx(); });
+window.addEventListener('scroll', hideCtx, true);
+function showCtx(x,y){
+  const isRow = selection.kind==='row';
+  const r = findRow(selection.row); const c = isRow?null:findComp(selection.row,selection.id);
+  const items=[];
+  items.push(`<button data-a="rename">Rename…</button>`);
+  if(!isRow && selection.kind==='comp'){
+    const abstract=!!c.pk;
+    items.push(`<button data-a="toggleabs">${abstract?'✓ ':''}Abstract block</button>`);
+    if(abstract){
+      items.push(`<button data-a="provmenu">Set provider ▸</button>`);
+      items.push(`<div class="sub" id="sub_prov">${(PROVIDERS[c.pk]||[]).map(p=>`<button data-prov="${esc(p)}">${p===c.provider?'✓ ':''}${esc(p)}</button>`).join('')}<button data-prov="">— none —</button></div>`);
+    }
+    items.push(`<button data-a="catmenu">Category ▸</button>`);
+    items.push(`<div class="sub" id="sub_cat">${CAT_KEYS.map(k=>`<button data-cat="${k}">${esc(CATS[k].name)}</button>`).join('')}<button data-cat="">Inherit row</button></div>`);
+    items.push(`<button data-a="colormenu">Recolor ▸</button>`);
+    items.push(`<div class="sub" id="sub_color"><div class="sw-row">${SWATCH_COLORS.map(col=>`<div class="swatch" data-col="${col}" style="background:${col}"></div>`).join('')}</div><button data-col="reset">Reset color</button></div>`);
+  }
+  items.push('<hr>');
+  if(isRow){
+    items.push(`<button data-a="addcomp">+ Add component</button>`);
+    items.push(`<button data-a="addvar">+ Add platform chip</button>`);
+    items.push(`<button data-a="rowup">Move row up</button><button data-a="rowdown">Move row down</button>`);
+    items.push(`<button data-a="duprow">Duplicate row</button>`);
+    items.push(`<button data-a="delrow">Delete row</button>`);
+  } else {
+    items.push(`<button data-a="left">Move left</button><button data-a="right">Move right</button>`);
+    items.push(`<button data-a="dup">Duplicate</button>`);
+    items.push(`<button data-a="del">Delete</button>`);
+  }
+  ctx.innerHTML = items.join('');
+  ctx.style.left = Math.min(x, innerWidth-210)+'px'; ctx.style.top = Math.min(y, innerHeight-20)+'px';
+  ctx.classList.add('show');
+  ctx.querySelectorAll('button, .swatch').forEach(btn=> btn.onclick = ev=>{ ev.stopPropagation(); ctxAction(btn); });
+}
+function ctxAction(btn){
+  const a=btn.dataset.a; const isRow=selection.kind==='row';
+  const r=findRow(selection.row); const c=isRow?null:findComp(selection.row,selection.id);
+  const list = c ? (selection.kind==='variant'?r.variants:r.components) : null;
+  const idx = c ? list.indexOf(c) : -1;
+  const commit=(keep)=>{ pushHistory(); if(!keep) hideCtx(); render(); };
+  if(btn.dataset.prov!==undefined){ c.provider=btn.dataset.prov; return commit(); }
+  if(btn.dataset.cat!==undefined){ c.cat=btn.dataset.cat||undefined; delete c.fill;delete c.stroke;delete c.text; return commit(); }
+  if(btn.dataset.col!==undefined){ if(btn.dataset.col==='reset'){ delete c.fill;delete c.stroke;delete c.text; } else { c.fill=btn.dataset.col; c.stroke=shade(btn.dataset.col,-40); c.text=shade(btn.dataset.col,-120); } return commit(); }
+  switch(a){
+    case 'provmenu': el('sub_prov').classList.toggle('show'); return;
+    case 'catmenu': el('sub_cat').classList.toggle('show'); return;
+    case 'colormenu': el('sub_color').classList.toggle('show'); return;
+    case 'rename': { const cur = isRow?r.title:c.name; const v=prompt('Rename:', cur); if(v!=null){ if(isRow) r.title=v; else c.name=v; commit(); } return; }
+    case 'toggleabs': if(c.pk){ delete c.pk; delete c.provider; } else { c.pk='fleet'; } return commit();
+    case 'left': if(idx>0){ list.splice(idx,1); list.splice(idx-1,0,c);} return commit();
+    case 'right': if(idx<list.length-1){ list.splice(idx,1); list.splice(idx+1,0,c);} return commit();
+    case 'dup': { const n=clone(c); n.id=uid('c'); list.splice(idx+1,0,n); selection={...selection,id:n.id}; return commit(); }
+    case 'del': list.splice(idx,1); selection=null; return commit();
+    case 'addcomp': { const n={id:uid('c'),name:'New Component'}; r.components.push(n); selection={kind:'comp',row:r.id,id:n.id}; return commit(); }
+    case 'addvar': { r.variants=r.variants||[]; const n={id:uid('v'),name:'New Platform'}; r.variants.push(n); selection={kind:'variant',row:r.id,id:n.id}; return commit(); }
+    case 'rowup': { const i=model.rows.indexOf(r); if(i>0){ model.rows.splice(i,1); model.rows.splice(i-1,0,r);} return commit(); }
+    case 'rowdown': { const i=model.rows.indexOf(r); if(i<model.rows.length-1){ model.rows.splice(i,1); model.rows.splice(i+1,0,r);} return commit(); }
+    case 'duprow': { const i=model.rows.indexOf(r); const n=clone(r); n.id=uid('r'); n.components.forEach(x=>x.id=uid('c')); (n.variants||[]).forEach(v=>v.id=uid('v')); model.rows.splice(i+1,0,n); return commit(); }
+    case 'delrow': { const i=model.rows.indexOf(r); model.rows.splice(i,1); selection=null; return commit(); }
+  }
+}
+
+/* ============================= gaps linter ============================= */
+function analyze(){
+  const g=[]; const allComps=[]; model.rows.forEach(r=>r.components.forEach(c=>allComps.push(c)));
+  const has = fn => allComps.some(fn);
+  const nameRx = rx => allComps.some(c=>rx.test(c.name));
+  // abstract without provider
+  allComps.filter(c=>c.pk && !c.provider).forEach(c=> g.push({level:'warn', msg:`“${c.name}” is abstract but no provider is selected.`}));
+  if(!has(c=>c.pk==='inference') && !nameRx(/inference|vllm|serving/i)) g.push({level:'info', msg:'No inference/serving stack — recommend adding vLLM (preferred).'});
+  if(!has(c=>c.pk==='model') && !nameRx(/model|nemotron|llm|qwen|glm/i)) g.push({level:'info', msg:'No model specified — recommend a Nemotron-family primary + ≥2 measured alternatives from the model matrix (per-tier winner may be GLM-5.3-Flash NVFP4 on L·GB300, etc.).'});
+  if(!has(c=>c.pk==='identity' && c.provider) ) g.push({level:'info', msg:'No enterprise identity provider chosen (AD/Entra/LDAP) — required in ~50% of deployments.'});
+  if(!has(c=>c.pk==='monitoring' && c.provider) && !nameRx(/monitor|observ|prometheus|grafana/i)) g.push({level:'info', msg:'No observability provider — recommend Prometheus + Grafana / DCGM.'});
+  if(!has(c=>c.pk==='storage'||c.pk==='vectordb') && !nameRx(/data|storage|vector|rag/i)) g.push({level:'info', msg:'No data / RAG / vector-store layer — most enterprise use cases need retrieval + storage.'});
+  if(!nameRx(/network/i)) g.push({level:'info', msg:'No networking fabric represented (between platforms / to clients).'});
+  if(!has(c=>c.pk==='fleet' && c.provider)) g.push({level:'info', msg:'Fleet management provider not selected (e.g. Intune) — key for multi-node scale.'});
+  model.rows.filter(r=>r.components.length===0).forEach(r=> g.push({level:'warn', msg:`Layer “${r.label}” has no components.`}));
+  if(!g.length) g.push({level:'ok', msg:'No gaps detected — this view looks complete for a solution architecture.'});
+  return g;
+}
+function renderGaps(){
+  const g=analyze(); const warn=g.filter(x=>x.level==='warn').length; const info=g.filter(x=>x.level==='info').length;
+  el('gapsBadge').textContent = warn+info; el('gapsBadge').style.background = warn? 'var(--orange)':(info?'var(--dell-blue)':'var(--green)');
+  el('gapsList').innerHTML = g.map(x=>`<div class="gap ${x.level}"><span class="dot"></span><span>${esc(x.msg)}</span></div>`).join('');
+}
+el('gapsBtn').onclick=()=> el('gapsPanel').classList.toggle('show');
+
+/* ============================= library ============================= */
+const LS_KEY='deskside-arch-templates';
+function loadSaved(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'{}'); }catch(e){ return {}; } }
+function saveSaved(o){ localStorage.setItem(LS_KEY, JSON.stringify(o)); }
+function renderLibrary(){
+  el('seedList').innerHTML = SEEDS.map((s,i)=>libItem(s.meta, 'seed:'+i, false)).join('');
+  const saved=loadSaved();
+  const keys=Object.keys(saved);
+  el('savedList').innerHTML = keys.length ? keys.map(k=>libItem(saved[k].meta||{name:k,slug:k}, 'saved:'+k, true)).join('') : `<div class="empty" style="padding:8px">No saved templates yet. Use Export ▸ Save.</div>`;
+  el('libFlyout').querySelectorAll('.lib-item').forEach(n=> n.onclick=e=>{ if(e.target.classList.contains('lib-del')) return; libOpen(n.dataset.ref); });
+  el('libFlyout').querySelectorAll('.lib-del').forEach(n=> n.onclick=e=>{ e.stopPropagation(); const k=n.dataset.k; const s=loadSaved(); delete s[k]; saveSaved(s); renderLibrary(); toast('Deleted'); });
+}
+function libItem(meta, ref, del){
+  return `<div class="lib-item" data-ref="${ref}">
+    <div class="li-body"><span class="tag">${esc(meta.category||meta.status||'template')}</span>
+      <b>${esc(meta.name||'Untitled')}</b><small>${esc(meta.description||'')}</small></div>
+    ${del?`<button class="lib-del" data-k="${esc(ref.split(':')[1])}" title="Delete">×</button>`:''}</div>`;
+}
+function libOpen(ref){
+  const [kind,key]=ref.split(':');
+  if(kind==='seed'){ loadModel(SEEDS[+key]); toast('Loaded: '+SEEDS[+key].meta.name); }
+  else { const s=loadSaved()[key]; if(s){ loadModel(s); toast('Loaded: '+(s.meta&&s.meta.name)); } }
+  el('libFlyout').classList.remove('show');
+}
+el('railLibrary').onclick=()=>{ const f=el('libFlyout'); const show=!f.classList.contains('show'); f.classList.toggle('show',show); if(show) renderLibrary(); };
+el('railAddRow').onclick=addRow;
+el('railSettings').onclick=()=>{ selection=null; setTab('dia'); };
+el('importFile').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ try{ loadModel(JSON.parse(rd.result)); toast('Imported'); el('libFlyout').classList.remove('show'); }catch(err){ toast('Invalid JSON'); } }; rd.readAsText(f); };
+
+/* ============================= export ============================= */
+function currentSVG(){ const keep=selection; selection=null; const s=buildSVG({forExport:true}).svg; selection=keep; return s; }
+function download(name, blob){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function slug(){ return (model.meta.slug||'architecture').replace(/[^a-z0-9._-]+/gi,'-'); }
+
+function exportSVG(){ download(slug()+'.svg', new Blob([currentSVG()], {type:'image/svg+xml'})); toast('SVG downloaded'); }
+function exportPNG(){
+  const svg=currentSVG(); const {height}=buildSVG(); const scale=2;
+  const img=new Image(); const url='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  img.onload=()=>{ const cv=document.createElement('canvas'); cv.width=W*scale; cv.height=height*scale;
+    const cx=cv.getContext('2d'); cx.fillStyle='#fff'; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(img,0,0,cv.width,cv.height);
+    cv.toBlob(b=>{ download(slug()+'.png', b); toast('PNG downloaded'); }); };
+  img.onerror=()=>toast('PNG export failed'); img.src=url;
+}
+function htmlDoc(){
+  const svg=currentSVG();
+  return '<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8">'
+    +'<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+    +'<title>'+esc(model.meta.name||'Architecture')+'</title>'
+    +'<style>body{margin:0;background:#F0F0F0;font-family:Arial,Helvetica,sans-serif}'
+    +'.wrap{max-width:1440px;margin:0 auto;padding:20px}svg{width:100%;height:auto;background:#fff;'
+    +'box-shadow:0 6px 24px rgba(29,37,83,.16);border-radius:6px}h1{color:#1D2C3B;font-size:1.1rem}</style></head>'
+    +'<body><div class="wrap"><h1>'+esc(model.meta.name||'Architecture')+'</h1>'+svg+'</div></body></html>';
+}
+function exportHTML(){
+  const html=htmlDoc();
+  openModal('Export as HTML', 
+    `<p style="margin:0 0 10px;color:#40586D;font-size:.85rem">Standalone HTML viewer. Download the file, or copy the code below.</p>
+     <textarea id="mcode" readonly>${esc(html)}</textarea>`,
+    [{label:'Copy code', cls:'', fn:()=>{ const t=el('mcode'); t.select(); navigator.clipboard.writeText(t.value).then(()=>toast('Copied')).catch(()=>{document.execCommand('copy');toast('Copied');}); }},
+     {label:'Download .html', cls:'pri', fn:()=>{ download(slug()+'.html', new Blob([html],{type:'text/html'})); toast('HTML downloaded'); }}]);
+}
+function saveTemplate(){
+  if(!model.meta.slug){ model.meta.slug = (model.meta.name||'template').toLowerCase().replace(/[^a-z0-9]+/g,'-'); }
+  const def = clone(model);
+  const s=loadSaved(); const existed=!!s[model.meta.slug]; s[model.meta.slug]=def; saveSaved(s);
+  download(slug()+'.json', new Blob([JSON.stringify(def,null,2)],{type:'application/json'}));
+  renderLibrary();
+  toast((existed?'Updated':'Saved')+' template “'+model.meta.name+'” + JSON downloaded');
+}
+const EXP={save:saveTemplate, svg:exportSVG, png:exportPNG, html:exportHTML};
+el('exportMenu').querySelectorAll('button').forEach(b=> b.onclick=()=>{ el('exportMenu').classList.remove('show'); EXP[b.dataset.exp](); });
+el('exportBtn').onclick=()=> el('exportMenu').classList.toggle('show');
+
+/* ============================= modal ============================= */
+function openModal(title, bodyHTML, buttons){
+  el('modalTitle').textContent=title; el('modalBody').innerHTML=bodyHTML;
+  const f=el('modalFooter'); f.innerHTML='';
+  (buttons||[]).forEach(b=>{ const btn=document.createElement('button'); btn.className='mini '+(b.cls||''); btn.textContent=b.label; btn.onclick=b.fn; f.appendChild(btn); });
+  el('modalBg').classList.add('show');
+}
+el('modalClose').onclick=()=> el('modalBg').classList.remove('show');
+el('modalBg').addEventListener('click',e=>{ if(e.target===el('modalBg')) el('modalBg').classList.remove('show'); });
+
+/* ============================= zoom + keys ============================= */
+function setZoom(z){ zoom=Math.max(.3,Math.min(2.2,z)); el('stage').innerHTML=buildSVG().svg; el('zoomLbl').textContent=Math.round(zoom*100)+'%'; }
+el('zoomIn').onclick=()=>setZoom(zoom+.1); el('zoomOut').onclick=()=>setZoom(zoom-.1);
+el('zoomFit').onclick=()=>{ const wrap=el('canvasWrap'); setZoom((wrap.clientWidth-48)/W); };
+el('undoBtn').onclick=undo;
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='z'){ e.preventDefault(); undo(); }
+  if(e.key==='Escape'){ hideCtx(); el('modalBg').classList.remove('show'); el('libFlyout').classList.remove('show'); }
+  if((e.key==='Delete'||e.key==='Backspace') && selection && selection.id && document.activeElement===document.body){
+    const r=findRow(selection.row); const list=selection.kind==='variant'?r.variants:r.components; const c=findComp(selection.row,selection.id);
+    if(c){ pushHistory(); list.splice(list.indexOf(c),1); selection=null; render(); }
+  }
+});
+
+/* ============================= boot ============================= */
+loadModel(SEEDS[0]);
+renderLibrary();
+setTimeout(()=> el('zoomFit').click(), 60);
+</script>
+</body>
+</html>

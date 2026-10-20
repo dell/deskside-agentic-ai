@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw on NemoClaw — IT-Admin Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/" class="active">OpenClaw on NemoClaw</a>
+<a class="sub" href="../../../solutions/openclaw-on-nemoclaw/">Overview</a>
+<a class="sub active" href="../../../solutions/openclaw-on-nemoclaw/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../../solutions/openclaw-on-nemoclaw/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../../solutions/openclaw-on-nemoclaw/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / nemoclaw / it-admin-guide</div>
+    <article class="article" data-picker>
+<h1 id="openclaw-on-nemoclaw-it-admin-deployment-guide">OpenClaw on NemoClaw — IT-Admin Deployment Guide</h1>
+<p>Runbook for deploying and operating the <a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a> runtime as the substrate for
+a fleet's custom agents on Dell deskside systems.</p>
+<p><strong>Target:</strong> a new admin reaches a working, verified agent sandbox in
+<strong>&lt; 60 minutes</strong> (warm model cache) following this guide end-to-end.</p>
+<blockquote>
+<p><strong>Developer quick-start:</strong> <a href="../deploy-guide-dev/">Developer Deploy Guide</a>.</p>
+<p><strong>Shipping agent:</strong> if the fleet wants the ready-to-use <a href="https://hermes-agent.nousresearch.com/">Hermes</a> agent, see
+<a href="../../hermes-on-nemoclaw">Hermes on NemoClaw</a> (IT-Admin guide there).</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<table>
+<thead>
+<tr>
+<th>Plane</th>
+<th>Contents</th>
+<th>Install path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prerequisites</strong></td>
+<td><a href="https://www.docker.com/">Docker</a> CE + NVIDIA Container Toolkit + secrets + disk for weights</td>
+<td>Ubuntu package install</td>
+</tr>
+<tr>
+<td><strong>Plane 1 — Serving</strong></td>
+<td><a href="https://github.com/vllm-project/vllm">vLLM</a> + Nemotron + <a href="https://prometheus.io/">Prometheus</a> + <a href="https://grafana.com/">Grafana</a></td>
+<td>Ansible playbook or the recipe scripts</td>
+</tr>
+<tr>
+<td><strong>Plane 2 — Agent runtime</strong></td>
+<td>NemoClaw + <a href="https://github.com/NVIDIA/OpenShell">OpenShell</a> (k3s + policy engine + sandboxes)</td>
+<td>NVIDIA installer, scripted for fleets by <code>scripts/landscape/deploy-solution.sh</code></td>
+</tr>
+<tr>
+<td><strong>Agent code</strong></td>
+<td>Your custom agent(s) or the shipping Hermes agent</td>
+<td>See the Hermes on NemoClaw solution for Hermes</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>same Plane 1 endpoint</strong> is reusable across other solutions in this
+repository (coding assistant, Hermes agent, video search &amp; summarization) —
+you do not need one vLLM instance per solution on the same workstation.</p>
+<h2 id="0-prerequisites">0. Prerequisites</h2>
+<p>Every target host must have:</p>
+<ul>
+<li><strong>Ubuntu 24.04+</strong> on Dell Pro Precision 9 towers and Dell Pro Precision with GB300; GB10 systems ship with <strong>DGX OS</strong>.</li>
+<li><strong>Docker CE ≥ 24</strong> and <strong>NVIDIA Container Toolkit</strong> — verify with
+  <code>docker run --rm --gpus all nvidia/cuda:12.4.0-base-ubuntu24.04 nvidia-smi</code>.</li>
+<li><strong><a href="https://huggingface.co/">Hugging Face</a> token</strong> (<code>HF_TOKEN</code>) with access to <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a>
+  NVFP4, or weights already staged in <code>~/.cache/huggingface</code>.</li>
+<li><strong>~30 GB free</strong> in the HF cache path (~60+ GB on L tier if serving larger
+  alternative models).</li>
+<li><strong>Outbound network</strong> to <code>huggingface.co</code>, <code>nvidia.com</code>, <code>github.com</code> from
+  Plane 2 hosts for the initial NemoClaw installer. For air-gapped fleets,
+  pre-seed <code>~/.cache/huggingface</code> from a connected host (<code>rsync</code>) and run the
+  Plane 2 install once from staged media per NVIDIA's installer docs.</li>
+</ul>
+<pre><code class="language-bash"># Prerequisite checks — every command must pass
+cat /etc/os-release | grep VERSION_ID            # 24.04+
+nvidia-smi --query-gpu=driver_version --format=csv,noheader   # &gt;= 570
+docker --version                                 # Docker 24+
+docker info 2&gt;/dev/null | grep -i nvidia         # nvidia runtime present
+df -h ~/.cache/huggingface --output=avail 2&gt;/dev/null || df -h /home --output=avail
+# Expected: &gt;= 30 GB free (S/M)
+_Commands in this guide run from the repository root (`git clone` this repo and `cd` into it)._
+
+</code></pre>
+<h2 id="1-plane-1-serving">1. Plane 1 — Serving</h2>
+<h3 id="path-a-multi-host-fleet">Path A — Multi-host fleet</h3>
+<p>Fleet rollout of the serving recipes today uses Canonical Landscape script
+execution (no SSH) — see <a href="../../agentic-coding/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>.
+Until then map hosts to per-tier recipes in your own automation; every recipe
+blocks until ready and exits non-zero on failure, so it composes safely.</p>
+<h3 id="path-b-recipe-script-per-host">Path B — Recipe script per host</h3>
+<p>For a single workstation, run the platform recipe directly:</p>
+<table>
+<thead>
+<tr>
+<th>Dell system</th>
+<th>Recipe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10</td>
+<td><code>recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+</tr>
+<tr>
+<td>Precision T2 / T4 / T6 (Blackwell)</td>
+<td><code>recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+</tr>
+<tr>
+<td>Dell Pro Precision with GB300</td>
+<td><code>recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">recipes/&lt;platform&gt;/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+curl -sf http://localhost:8000/health &amp;&amp; echo VLLM_OK
+</code></pre>
+<p>On T6 (L tier), run one vLLM instance per GPU behind a <a href="https://www.litellm.ai/">LiteLLM</a>-style proxy for
+load balancing instead of tensor-parallelism over PCIe.</p>
+<h3 id="verify-plane-1">Verify Plane 1</h3>
+<pre><code class="language-bash">curl -sf  http://localhost:8000/health              # 200
+curl -s   http://localhost:8000/v1/models           # lists nemotron-lightning
+curl -sfI http://localhost:3000/login | head -1     # Grafana (port may differ: printed by the recipe)
+curl -sf  http://localhost:9090/-/healthy           # Prometheus (port may differ: printed by the recipe)
+</code></pre>
+<h2 id="2-plane-2-nemoclaw-runtime">2. Plane 2 — NemoClaw runtime</h2>
+<p>Plane 2 uses NVIDIA's shipping installer; for a fleet, <code>scripts/landscape/deploy-solution.sh</code> runs it
+non-interactively (see <a href="../landscape-fleet-deploy/">Fleet Deploy via Landscape</a>). Inline:</p>
+<pre><code class="language-bash">curl -fsSL https://www.nvidia.com/nemoclaw.sh | bash
+export PATH=&quot;$HOME/.local/bin:$PATH&quot;
+
+# Onboard the runtime (accepts defaults for the base install)
+nemoclaw onboard
+
+# Wire inference to Plane 1 on this host
+openshell provider create \
+  --name vllm-local \
+  --type openai \
+  --credential OPENAI_API_KEY=local \
+  --config base_url=http://host.docker.internal:8000/v1
+
+openshell inference set --provider vllm-local --model nvidia/nemotron-3.5-lightning
+openshell status              # Connected
+</code></pre>
+<h2 id="3-policy-tiers">3. Policy tiers</h2>
+<p>Every sandbox runs under a policy that governs filesystem, network, and
+subprocess boundaries. Tier semantics follow NemoClaw's own tiers; use the policies NVIDIA's installer provides and review what "standard" allows before approving it:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Filesystem</th>
+<th>Network</th>
+<th>Subprocess</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>strict</code></td>
+<td>Read-only allowlist</td>
+<td>Egress denied except whitelist</td>
+<td>Denied</td>
+<td>First evaluation of an untrusted agent</td>
+</tr>
+<tr>
+<td><code>standard</code></td>
+<td>Landlock + workspace write</td>
+<td>Egress allowed to same host + configured MCP servers</td>
+<td>Common CLIs allowed</td>
+<td>Enterprise default</td>
+</tr>
+<tr>
+<td><code>permissive</code></td>
+<td>Broad workspace access</td>
+<td>Broad egress</td>
+<td>Broad subprocess</td>
+<td>Never in production; internal experimentation only</td>
+</tr>
+</tbody>
+</table>
+<p>Apply at sandbox create time. <strong>Filesystem landlock cannot be retrofitted</strong> on
+a running sandbox — network policy can be applied live.</p>
+<h2 id="4-validation-checklist">4. Validation checklist</h2>
+<p>Before handing a host to a developer or agent, confirm:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Command</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plane 1 model loaded</td>
+<td><code>curl -s :8000/v1/models</code></td>
+<td>Lists <code>nemotron-lightning</code></td>
+</tr>
+<tr>
+<td>Plane 1 health</td>
+<td><code>curl -sf :8000/health</code></td>
+<td>HTTP 200</td>
+</tr>
+<tr>
+<td>OpenShell connected</td>
+<td><code>openshell status</code></td>
+<td><code>Connected</code></td>
+</tr>
+<tr>
+<td>Sandbox creates</td>
+<td><code>openshell sandbox create test --policy solutions/openclaw-on-nemoclaw/policy/standard.sample.yaml</code></td>
+<td><code>Ready</code></td>
+</tr>
+<tr>
+<td>Sandbox reaches LLM</td>
+<td>Chat completion from inside sandbox</td>
+<td>Non-error response</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-monitoring">5. Monitoring</h2>
+<ul>
+<li><strong>vLLM</strong> exposes <code>/metrics</code> — the tokenomics Grafana started by each recipe
+  (URL printed by the recipe) covers tokens, cost vs cloud, utilisation, TTFT / ITL, KV-cache, queue. Sustained KV-cache &gt; 80 % → shorten context length
+  or reduce concurrency.</li>
+<li><strong>NemoClaw</strong> emits agent telemetry (task success rate, agent turns,
+  tool-call counts).</li>
+<li><strong>GPU</strong> telemetry via NVIDIA DCGM exporter (recommended add-on).</li>
+</ul>
+<h2 id="6-lifecycle">6. Lifecycle</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Update the LLM</strong></td>
+<td>Change the recipe's model tag, re-run the recipe.</td>
+</tr>
+<tr>
+<td><strong>Update the agent runtime</strong></td>
+<td>Re-run the NemoClaw installer.</td>
+</tr>
+<tr>
+<td><strong>Rotate <code>HF_TOKEN</code></strong></td>
+<td>Update in the secret store; restart vLLM.</td>
+</tr>
+<tr>
+<td><strong>Add a new agent</strong></td>
+<td>Create a new sandbox with the appropriate policy tier.</td>
+</tr>
+<tr>
+<td><strong>Uninstall</strong></td>
+<td><code>docker rm -f</code> the vLLM container + Plane 2 uninstall per NVIDIA installer.</td>
+</tr>
+</tbody>
+</table>
+<p>Never commit HF tokens or credentials to the repository; use environment
+variables or a secrets manager. The vLLM endpoint takes no API key by default
+— front it with the org gateway/proxy for AD/LDAP-backed auth on multi-user
+tiers.</p>
+<h2 id="7-scale-dev-prod">7. Scale (dev → prod)</h2>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Trigger (measured)</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single user (<strong>S</strong>, GB10 / T2)</td>
+<td>Small team (<strong>M</strong>, T4)</td>
+<td>&gt; 4 concurrent interactive agents, or agent-turn p50 degrading past your SLA</td>
+<td>TP=2 or 2× instances on T4</td>
+</tr>
+<tr>
+<td>Team (<strong>M</strong>)</td>
+<td>App host (<strong>L</strong>, GB300 / T6)</td>
+<td>&gt; 4 concurrent agents sustained, or longer contexts needed</td>
+<td>Multi-instance on T6 (1 vLLM per GPU + proxy) or single instance on GB300</td>
+</tr>
+</tbody>
+</table>
+<p>Measured per-tier agent envelopes (wall p50, Hermes-shaped harness):
+<a href="../#benchmarks-performance-validation">Solution overview</a>.</p>
+<h2 id="8-common-issues">8. Common issues</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vLLM never becomes healthy</td>
+<td>Weights download on first boot (~20 GB). Watch <code>docker logs</code> for <code>Application startup complete.</code></td>
+</tr>
+<tr>
+<td>Sandbox network policy blocks Plane 1</td>
+<td>Add <code>host.docker.internal:8000</code> to the sandbox network policy.</td>
+</tr>
+<tr>
+<td><code>openshell policy set</code> doesn't take effect on filesystem</td>
+<td>Filesystem landlock is set at sandbox create time only. Recreate the sandbox with the desired policy.</td>
+</tr>
+<tr>
+<td>Rootless Docker + <code>--ulimit memlock=-1</code> fails</td>
+<td>Set <code>NEMOTRON_LIGHTNING_ROOTLESS=1</code> before running the recipe.</td>
+</tr>
+<tr>
+<td>Agent tool calls return as plain text</td>
+<td>Model served without the matching <code>--tool-call-parser</code> — use the recipe for that model.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../">Solution overview</a> — sizing, benchmarks.</li>
+<li><a href="../deploy-guide-dev/">Developer Deploy Guide</a> — developer quick-start.</li>
+<li><code>docs/recipes/</code> — serving recipe catalog ·
+  <a href="../../../sizing/">S/M/L Sizing</a> — tier framework.</li>
+<li><a href="../../hermes-on-nemoclaw">Hermes on NemoClaw</a> — shipping Hermes agent
+  on top of this runtime.</li>
+<li><a href="../../agentic-coding">Agentic Coding</a> — coding assistant sharing the
+  same serving layer.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

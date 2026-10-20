@@ -1,0 +1,23 @@
+{
+ "date": "2026-10-19T18:06:46-0400",
+ "git_sha": "295d430",
+ "host": "lab host",
+ "platform": "gb10",
+ "model": "nvidia/nemotron-3.5-lightning",
+ "tokenizer": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+ "url": "http://localhost:8001",
+ "shape": "agent_60k_1k",
+ "isl": 60000,
+ "osl": 1024,
+ "request_count": 12,
+ "ladder": [
+  1,
+  4,
+  8
+ ],
+ "aiperf": "0.7.0",
+ "gpus": "NVIDIA GB10 (1 unified GPU)",
+ "container": "lightning-3.5-gb10",
+ "image": "sha256:9dfef102a162fbe71821683e252a1f30454d183fb5ef7c8f9c45886f7e594f04 vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd",
+ "container_args": "serve nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 --served-model-name nvidia/nemotron-3.5-lightning nemotron-lightning lightning auto --host 0.0.0.0 --port 8000 --trust-remote-code --tensor-parallel-size 1 --moe-backend marlin --kv-cache-dtype fp8 --load-format auto --max-model-len 70000 --max-num-seqs 32 --gpu-memory-utilization 0.70 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3"
+}

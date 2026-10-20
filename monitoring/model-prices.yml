@@ -1,0 +1,42 @@
+# Deskside tokenomics -- cloud comparison price assumptions.
+# These recording rules publish point-in-time public list prices (USD per 1M
+# tokens, newest release of each frontier model as listed on the public
+# model marketplace on 2026-10-20) as static Prometheus series. They are
+# ASSUMPTIONS for the dashboard's "compare against" picker, not telemetry.
+# "Custom (from deploy env)" carries the deploy-time DESKSIDE_CLOUD_*_PER_M
+# defaults. Refresh: update the rates here and re-run any recipe (the
+# monitoring stack re-renders config at start).
+groups:
+  - name: cloud_comparison_prices
+    interval: 1m
+    rules:
+      - record: deskside:cloud_price_in_usd_per_m
+        labels: {model: "OpenAI GPT Terra"}
+        expr: 2.00
+      - record: deskside:cloud_price_out_usd_per_m
+        labels: {model: "OpenAI GPT Terra"}
+        expr: 12.00
+      - record: deskside:cloud_price_in_usd_per_m
+        labels: {model: "OpenAI GPT Luna"}
+        expr: 0.10
+      - record: deskside:cloud_price_out_usd_per_m
+        labels: {model: "OpenAI GPT Luna"}
+        expr: 0.50
+      - record: deskside:cloud_price_in_usd_per_m
+        labels: {model: "Anthropic Claude Sonnet"}
+        expr: 2.00
+      - record: deskside:cloud_price_out_usd_per_m
+        labels: {model: "Anthropic Claude Sonnet"}
+        expr: 10.00
+      - record: deskside:cloud_price_in_usd_per_m
+        labels: {model: "Anthropic Claude Haiku"}
+        expr: 0.10
+      - record: deskside:cloud_price_out_usd_per_m
+        labels: {model: "Anthropic Claude Haiku"}
+        expr: 0.50
+      - record: deskside:cloud_price_in_usd_per_m
+        labels: {model: "Custom (from deploy env)"}
+        expr: __CLOUD_IN__
+      - record: deskside:cloud_price_out_usd_per_m
+        labels: {model: "Custom (from deploy env)"}
+        expr: __CLOUD_OUT__

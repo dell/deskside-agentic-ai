@@ -1,0 +1,76 @@
+{
+ "manifest": "MANIFEST.json",
+ "ladders": {
+  "chat_200_200": {
+   "platform": "t6-dp2xtp2-gpu0-3",
+   "model": "nvidia/nemotron-3.5-super-vl",
+   "isl": 200,
+   "osl": 200,
+   "points": [
+    {
+     "c": 1,
+     "aggregate_tok_s": 106.51950853853612,
+     "per_session_tok_s": 106.51950853853612,
+     "ttft_ms_avg": 205.55432778124998,
+     "itl_ms_avg": 8.271861473838573,
+     "request_throughput": 0.5326391551266749,
+     "source": "levelC1/profile_c1.json"
+    },
+    {
+     "c": 2,
+     "aggregate_tok_s": 162.53263251755084,
+     "per_session_tok_s": 81.26631625877542,
+     "ttft_ms_avg": 301.208839484375,
+     "itl_ms_avg": 10.7162739947647,
+     "request_throughput": 0.8127901610504183,
+     "source": "levelC2/profile_c2.json"
+    },
+    {
+     "c": 4,
+     "aggregate_tok_s": 309.36077626695743,
+     "per_session_tok_s": 77.34019406673936,
+     "ttft_ms_avg": 301.16588923437496,
+     "itl_ms_avg": 11.244347882840591,
+     "request_throughput": 1.5469247348296955,
+     "source": "levelC4/profile_c4.json"
+    },
+    {
+     "c": 8,
+     "aggregate_tok_s": 491.4512012670689,
+     "per_session_tok_s": 61.43140015838361,
+     "ttft_ms_avg": 342.564012953125,
+     "itl_ms_avg": 13.822760527853816,
+     "request_throughput": 2.457064048206578,
+     "source": "levelC8/profile_c8.json"
+    },
+    {
+     "c": 16,
+     "aggregate_tok_s": 791.3765925972145,
+     "per_session_tok_s": 49.46103703732591,
+     "ttft_ms_avg": 477.02632271874995,
+     "itl_ms_avg": 16.56079965779378,
+     "request_throughput": 3.957501322567724,
+     "source": "levelC16/profile_c16.json"
+    },
+    {
+     "c": 32,
+     "aggregate_tok_s": 1221.6757764873244,
+     "per_session_tok_s": 38.177368015228886,
+     "ttft_ms_avg": 510.18434269531247,
+     "itl_ms_avg": 21.51410524189841,
+     "request_throughput": 6.108856136822311,
+     "source": "levelC32/profile_c32.json"
+    },
+    {
+     "c": 64,
+     "aggregate_tok_s": 2020.3111865757317,
+     "per_session_tok_s": 31.567362290245807,
+     "ttft_ms_avg": 566.7926932929687,
+     "itl_ms_avg": 27.35348560051517,
+     "request_throughput": 10.103331909190821,
+     "source": "levelC64/profile_c64.json"
+    }
+   ]
+  }
+ }
+}

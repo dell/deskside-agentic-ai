@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higher Education AI Lab — IT-Admin Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/" class="active">Higher Education AI Lab</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/">Overview</a>
+<a class="sub active" href="../../../solutions/higher-ed-ai-lab/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../../solutions/higher-ed-ai-lab/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / higher-ed-ai-lab / it-admin-guide</div>
+    <article class="article" data-picker>
+<h1 id="higher-ed-ai-lab-it-admin-semester-playbook">Higher Ed AI Lab — IT Admin Semester Playbook</h1>
+<blockquote>
+<p><strong>Who this is for:</strong> campus IT admins rolling out an AI lab across a set
+of Dell workstations and running it through a full semester.</p>
+<p><strong>Lab admin quick-start (pilot):</strong> <a href="../deploy-guide-dev/">Developer Deploy Guide</a>.</p>
+</blockquote>
+<p>This guide covers the full lifecycle: initial rollout, per-semester
+operation, and end-of-term reset.</p>
+<h2 id="discovery-sizing-the-lab">Discovery — sizing the lab</h2>
+<p>Before ordering hardware, capture:</p>
+<ol>
+<li><strong>Peak seat count</strong> — how many students concurrently use the lab at
+   peak.</li>
+<li><strong>Course mix</strong> — mix of intro (notebook), advanced (per-seat), and
+   research (shared compute) courses.</li>
+<li><strong>Facility</strong> — power, cooling, networking (10 GbE recommended for
+   shared pools).</li>
+<li><strong>Identity infrastructure</strong> — Active Directory, Entra ID, or LDAP.</li>
+<li><strong>Remote access</strong> — is off-campus student access required?</li>
+</ol>
+<p>Tier recommendations by profile:</p>
+<table>
+<thead>
+<tr>
+<th>Institutional profile</th>
+<th>Recommended tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Introductory AI, cross-departmental, budget-constrained</td>
+<td><strong>S</strong> — Shared GB10 pool</td>
+</tr>
+<tr>
+<td>Dedicated AI teaching lab, advanced coursework</td>
+<td><strong>M</strong> — 1:1 GB10 seats</td>
+</tr>
+<tr>
+<td>Graduate research + fine-tuning + multi-modal</td>
+<td><strong>L</strong> — 1:1 GB10 + shared frontier pool</td>
+</tr>
+</tbody>
+</table>
+<h2 id="design-bill-of-materials">Design — bill of materials</h2>
+<p>Sample BOM per tier for a 30-seat lab:</p>
+<h3 id="s-shared-pool">S — Shared pool</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Count</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10</td>
+<td style="text-align: right;">10–15</td>
+<td>Shared serving pool, 2–3 students each</td>
+</tr>
+<tr>
+<td>Student endpoints (existing PCs / laptops)</td>
+<td style="text-align: right;">30</td>
+<td>Thin clients over the lab LAN</td>
+</tr>
+<tr>
+<td>Management node</td>
+<td style="text-align: right;">1</td>
+<td><a href="https://ubuntu.com/landscape">Landscape</a>  / <a href="https://www.litellm.ai/">LiteLLM</a> / JupyterHub host</td>
+</tr>
+<tr>
+<td>NAS</td>
+<td style="text-align: right;">1</td>
+<td>Shared model / dataset / home dir storage</td>
+</tr>
+<tr>
+<td>10 GbE switch</td>
+<td style="text-align: right;">1</td>
+<td>Backbone between GB10 pool and NAS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="m-allocated-11">M — Allocated 1:1</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Count</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10</td>
+<td style="text-align: right;">30</td>
+<td>1:1 — the workstation is the endpoint</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T4 (RTX PRO 6000)</td>
+<td style="text-align: right;">0–1</td>
+<td>Optional cohort-shared amplifier, multi-instance or TP</td>
+</tr>
+<tr>
+<td>Management node</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+<tr>
+<td>NAS</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+<tr>
+<td>10 GbE switch</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="l-allocated-shared-compute">L — Allocated + shared compute</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Count</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10</td>
+<td style="text-align: right;">30</td>
+<td>1:1 seats</td>
+</tr>
+<tr>
+<td>Dell Pro Precision with GB300 (252 GB HBM3e, aarch64)</td>
+<td style="text-align: right;">3</td>
+<td>Shared frontier-model pool (~1:10)</td>
+</tr>
+<tr>
+<td><strong>or</strong> multi-GPU RTX PRO 6000 tower (Dell Pro Precision 9 T4/T6 class)</td>
+<td style="text-align: right;">3</td>
+<td>Alternate shared-pool option — one <a href="https://github.com/vllm-project/vllm">vLLM</a> instance per GPU behind LiteLLM</td>
+</tr>
+<tr>
+<td>Management node</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+<tr>
+<td>NAS</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+<tr>
+<td>10 GbE switch</td>
+<td style="text-align: right;">1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="provisioning">Provisioning</h2>
+<p>Reference automation lane is <strong>Canonical Landscape</strong>:</p>
+<ul>
+<li><strong>Landscape</strong> for imaging, patching, and course-profile deployment.</li>
+<li><strong>Ansible</strong> (infrastructure-as-code) can render per-tier
+  <a href="https://www.docker.com/">Docker</a> Compose files and per-course profiles onto nodes. Fleet rollouts
+  run without SSH; host administration is per campus policy.</li>
+</ul>
+<p>Deployment order for the initial rollout:</p>
+<ol>
+<li><strong>NAS + model proxy</strong> — stage model weights and course datasets on the
+   NAS. All nodes pull from the local model proxy rather than <a href="https://huggingface.co/">Hugging Face</a>
+   directly.</li>
+<li><strong>Golden image</strong> — build one Ubuntu 24.04 image (GB10 and GB300 ship
+   DGX OS) with Docker CE + NVIDIA Container Toolkit + management agents.
+   Image every node from it.</li>
+<li><strong>Course profiles</strong> — one Docker Compose per course, referencing the
+   NAS-hosted model paths. Push to nodes via Landscape.</li>
+<li><strong>Applications</strong> — JupyterHub (S / L management node), OpenWebUI
+   (endpoint), Unsloth Studio / ComfyUI / <a href="https://opencode.ai/">OpenCode</a> (M / L per-seat).</li>
+<li><strong>Identity</strong> — wire JupyterHub / OpenWebUI to campus SSO / IdP.</li>
+</ol>
+<h2 id="course-profiles">Course profiles</h2>
+<p>A course profile is a Docker Compose file that stands up the
+course-specific application stack and points at the course-specific model.</p>
+<p>Example course profile (<code>courses/intro-ai/docker-compose.yml</code>) — illustrative; for real serving use the recipes, which carry the required Marlin/parser/memory flags and GPU pinning that this snippet omits:</p>
+<pre><code class="language-yaml">services:
+  vllm:
+    image: vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd
+    # the vllm-openai image entrypoint is already `vllm serve`; pass only the model + flags:
+    command: [&quot;nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4&quot;, &quot;--port&quot;, &quot;8000&quot;]
+    ports: [&quot;8000:8000&quot;]
+    volumes:
+      - /mnt/nas/models:/root/.cache/huggingface
+  openwebui:
+    image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
+    environment:
+      - OPENAI_API_BASE_URL=http://vllm:8000/v1
+    ports: [&quot;3100:8080&quot;]   # not 3000: that is Grafana
+_Commands in this guide run from the repository root (`git clone` this repo and `cd` into it)._
+
+</code></pre>
+<p>Per-platform serving is the same one-command recipes used across the repo —
+<code>recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code>,
+<code>recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code> (coding courses),
+<code>recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh</code> (frontier tier), and
+siblings; catalog at <code>docs/recipes/</code>.</p>
+<p>Faculty select a course profile at the start of class; Landscape
+pushes the compose file to the appropriate nodes and starts services.</p>
+<h2 id="nm-scheduling-and-state-reset">N×M scheduling and state reset</h2>
+<p>One managed fleet serves many courses over a term. Between classes, reset
+options:</p>
+<table>
+<thead>
+<tr>
+<th>Reset method</th>
+<th>Time</th>
+<th>Use case</th>
+<th>Command shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Container reset</td>
+<td>~2 s</td>
+<td>Course profile change, model swap</td>
+<td><code>docker compose down &amp;&amp; docker compose up -d</code></td>
+</tr>
+<tr>
+<td>LVM snapshot restore</td>
+<td>~30 s</td>
+<td>Per-student home dir wipe</td>
+<td><code>lvconvert --merge students@baseline</code></td>
+</tr>
+<tr>
+<td>Autoinstall re-image</td>
+<td>3–5 min</td>
+<td>End-of-term / curriculum change</td>
+<td>Ubuntu autoinstall from PXE / USB</td>
+</tr>
+</tbody>
+</table>
+<p>Reset is a Landscape-orchestrated fleet operation; individual
+faculty don't touch nodes directly.</p>
+<h2 id="identity-integration">Identity integration</h2>
+<p>Wire the following to campus SSO / IdP:</p>
+<ul>
+<li><strong>JupyterHub</strong> — OAuth2 / LDAP authenticator with per-course group
+  scoping.</li>
+<li><strong>OpenWebUI</strong> — OAuth2 provider config.</li>
+<li><strong>VDI broker</strong> (if used) — campus SSO.</li>
+<li><strong>Reverse proxy for remote access</strong> — SSO termination at the proxy;
+  students never reach a raw serving port. Terminal-access courses go through
+  a jump host, not direct exposure.</li>
+</ul>
+<h2 id="network-and-endpoint-security">Network and endpoint security</h2>
+<p>A teaching lab is a shared system with untrusted users, GPUs that are expensive to lose, and a reset cycle that wipes
+local evidence. The design goals: students reach the models and their own work and nothing else; every action is
+attributable to a person and a course; and the audit trail survives a reset because it never lives only on the machine.
+Product names below are examples; confirm exact settings against your vendor's documentation.</p>
+<h3 id="network-segmentation-dedicated-isolated-vlans">Network segmentation (dedicated, isolated VLANs)</h3>
+<table>
+<thead>
+<tr>
+<th>Segment (example VLAN)</th>
+<th>Members</th>
+<th>Reachable from students?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Student seats</strong> (VLAN 110)</td>
+<td>seat workstations, thin clients, lab Wi-Fi</td>
+<td>n/a — this is where students are</td>
+</tr>
+<tr>
+<td><strong>Lab serving</strong> (VLAN 120)</td>
+<td>GB10 / GB300 / tower serving nodes, LiteLLM, model proxy</td>
+<td>only the gateway/proxy ports below</td>
+</tr>
+<tr>
+<td><strong>Lab services</strong> (VLAN 130)</td>
+<td>JupyterHub, OpenWebUI, reverse proxy, SSO connector</td>
+<td>HTTPS only, via the proxy</td>
+</tr>
+<tr>
+<td><strong>Management</strong> (VLAN 190)</td>
+<td>Landscape, Prometheus/Grafana, jump host, EDR console, SIEM collector</td>
+<td><strong>never</strong></td>
+</tr>
+<tr>
+<td><strong>Storage</strong> (VLAN 140)</td>
+<td>NAS/NFS, model cache</td>
+<td><strong>never</strong> (NFS from serving and services only)</td>
+</tr>
+<tr>
+<td><strong>Remote access</strong> (DMZ)</td>
+<td>reverse proxy / VDI broker for off-campus</td>
+<td>HTTPS + SSO + MFA only</td>
+</tr>
+</tbody>
+</table>
+<p>Rules that matter more than the numbering:
+* <strong>Isolate the seat VLAN east-west</strong> (private VLAN / port isolation / <code>client isolation</code> on Wi-Fi): a student machine must not
+  reach another student machine.
+* <strong>Serving nodes live on their own VLAN</strong> so a compromised seat cannot scan them. Recipes publish on all interfaces by default;
+  bind them to the serving VLAN address (<code>--bind &lt;ip&gt;</code>) and require a key (<code>DESKSIDE_API_KEY</code>, or LiteLLM virtual keys).
+* <strong>Management is out-of-band to students</strong>: Prometheus, Grafana, Landscape and the EDR console are reachable only from the
+  management VLAN and the jump host.
+* Use <strong>802.1X / NAC</strong> so seat devices land in the seat VLAN automatically and unknown devices land in a quarantine VLAN.
+  Assign the VLAN per device group, not per person.
+* <strong>Never expose</strong> a raw vLLM port (<code>:8000…</code>), Prometheus (<code>:9090</code>), Grafana (<code>:3000</code>), or the Docker socket to the seat VLAN or
+  the internet. Terminate TLS and SSO at the reverse proxy.</p>
+<h3 id="allow-deny-lists">Allow / deny lists</h3>
+<p>Flows to permit (everything else default-deny between segments):</p>
+<table>
+<thead>
+<tr>
+<th>From → to</th>
+<th>Ports</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seat → reverse proxy</td>
+<td>443</td>
+<td>Jupyter, OpenWebUI, API gateway (OpenAI-compatible endpoint)</td>
+</tr>
+<tr>
+<td>Reverse proxy → LiteLLM / serving nodes</td>
+<td>8000–8099 (only the ports in use)</td>
+<td>model traffic, authenticated by key</td>
+</tr>
+<tr>
+<td>Services → serving nodes</td>
+<td>same</td>
+<td>JupyterHub / OpenWebUI backends</td>
+</tr>
+<tr>
+<td>Serving + services → NAS</td>
+<td>2049 (NFS), 111 if your NFS version needs it</td>
+<td>models, datasets, homes</td>
+</tr>
+<tr>
+<td>Management → all nodes</td>
+<td>22 (jump host only), 9100/8000 metrics scrape, EDR/Landscape agent ports</td>
+<td>operations and monitoring</td>
+</tr>
+<tr>
+<td>All nodes → DNS / NTP / SIEM collector</td>
+<td>53, 123, 514/6514 or your collector</td>
+<td>resolution, time (needed for audit), log shipping</td>
+</tr>
+</tbody>
+</table>
+<p>Egress (allow-list, not deny-list, for serving nodes and seats):
+* <strong>Serving nodes:</strong> package/OS mirror, container registry or pull-through cache, Hugging Face <strong>only through the model proxy</strong>,
+  Landscape, EDR cloud. No direct internet otherwise.
+* <strong>Seats:</strong> the reverse proxy, campus SSO, the course LMS and documentation your faculty approve. Decide explicitly whether
+  public LLM APIs (for example <code>api.openai.com</code>, <code>api.anthropic.com</code>, <code>generativelanguage.googleapis.com</code>) are allowed per course;
+  for a "local models only" course, block them at DNS and the firewall.</p>
+<p>Deny / block categories on the seat VLAN: anonymizers and VPN/proxy services, Tor, peer-to-peer, remote-admin tools,
+public code-execution sandboxes you do not control, and direct access to the storage and management VLANs.</p>
+<h3 id="tagging">Tagging</h3>
+<p>Tags make policy and audit queries cheap. Apply the same vocabulary everywhere:</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Tags / labels</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network (NAC, switch/Wi-Fi groups)</td>
+<td><code>lab-seat</code>, <code>lab-serving</code>, <code>lab-services</code>, <code>lab-mgmt</code></td>
+</tr>
+<tr>
+<td>EDR / device groups</td>
+<td>the same four, plus <code>course-&lt;id&gt;</code> and <code>term-&lt;yyyy-s&gt;</code> on seats</td>
+</tr>
+<tr>
+<td>Landscape</td>
+<td>tags per group and course so scripts target <code>course-cs101</code> or <code>term-2026-fall</code></td>
+</tr>
+<tr>
+<td>LiteLLM virtual keys</td>
+<td>metadata <code>course</code>, <code>term</code>, <code>user</code>, per-key budget and rate limit</td>
+</tr>
+<tr>
+<td>Containers</td>
+<td><code>--label course=&lt;id&gt; --label owner=&lt;user&gt;</code>; Prometheus relabels them onto metrics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identity-accounts-and-containers">Identity, accounts and containers</h3>
+<ul>
+<li>One identity per student from campus SSO; <strong>no shared local accounts</strong>; no <code>sudo</code> on seats or serving nodes for students.</li>
+<li><strong>Docker group membership is root-equivalent</strong>: do not add students to it. Let JupyterHub/the course profile start student
+  containers on their behalf, behind a socket proxy or rootless Docker/Podman, and forbid <code>--privileged</code>, <code>--network host</code>,
+  host path mounts outside the student's home, and mounting the Docker socket.</li>
+<li>Student containers run as non-root with the default seccomp profile, a CPU/memory/GPU limit, and images only from the
+  internal registry or pull-through cache (image allow-list).</li>
+<li>Give every course its own <strong>LiteLLM key set</strong>: per-student keys with request/token budgets and rate limits so one notebook
+  loop cannot starve a class, and revocation at term end.</li>
+</ul>
+<h3 id="endpoint-detection-and-response-edr-that-survives-resets">Endpoint detection and response (EDR) that survives resets</h3>
+<p>Policies must work with a reset cycle (container reset between classes, snapshot restore of home directories, re-image at term
+end) and with persistent student data:</p>
+<p><strong>Agent identity across resets</strong>
+* Do not bake the agent's device identity into the golden image. Generalize it (VDI/golden-image mode where your EDR offers one,
+  or clear the sensor ID before sealing) so each re-imaged seat registers once with a stable name (<code>&lt;room&gt;-&lt;asset-tag&gt;</code>), not as
+  a new device every term. Auto-expire stale device objects after a reset window.
+* Keep the agent and its policy <strong>out of the student-writable layer</strong> (system-level install, tamper protection on) so a container
+  or home-directory reset neither removes nor weakens it.</p>
+<p><strong>Auditing between resets</strong>
+* <strong>Ship telemetry off the box continuously</strong>; never rely on local logs that a reset deletes: EDR events, <code>auditd</code> records
+  (<code>execve</code>, privilege changes, file access to the course data area), container runtime events (start/stop/image/privileges), shell
+  session records, and SSH/SSO login events, all to the central SIEM with synchronized time.
+* <strong>Snapshot before wipe:</strong> the reset runbook takes a read-only snapshot of the student home volume (LVM/ZFS/NAS snapshot) and
+  retains it for your investigation window (for example 30 days) before the wipe or snapshot-restore. Investigators mount snapshots
+  read-only on a management host, never on a seat.
+* <strong>Persistence enabled</strong> (students keep work across sessions): keep homes on NFS with quotas and per-student ACLs; make the
+  working area scannable and auditable, and keep system paths immutable. Persistence is a data-retention decision, so record
+  it in the course's retention schedule.
+* Tie identities together: EDR device tag + SSO user + LiteLLM key all carry the same <code>course</code>/<code>user</code> values, so one query shows
+  who ran what, from which seat, against which model.</p>
+<p><strong>Policy settings that work well on GPU nodes and seats</strong>
+* Prevention: tamper protection on; block unsigned/unknown executables in system paths; restrict removable media; alert on new
+  persistence mechanisms (cron, systemd units, SSH keys) in student areas.
+* Performance: model weights are large read-only files. Exclude <strong>only</strong> the read-only model cache (for example
+  <code>/mnt/nas/models</code>, <code>~/.cache/huggingface</code>) from real-time scanning and verify those files by hash instead; <strong>do not</strong> exclude
+  student-writable homes, container layers or <code>/tmp</code>. Schedule full scans off-hours.
+* Memory: on GB10 the CPU and GPU share one 128 GB pool, so the agent's footprint counts against model memory. Check the agent's
+  resident size and cap it.
+* Serving nodes get a stricter profile than seats (no interactive logins, application allow-listing, outbound allow-list).</p>
+<h3 id="auditing-student-model-usage">Auditing student model usage</h3>
+<ul>
+<li>Log <strong>metadata by default</strong> — who (key/user), course, model, time, token counts, latency, status — from the gateway
+  (LiteLLM request logs) and the tokenomics dashboard (which stores no prompts or completions).</li>
+<li>Capture <strong>prompts and completions only when policy requires it</strong>, with notice to students, a defined retention period, and
+  restricted access by a separate role (academic-integrity office, not lab staff).</li>
+<li>Retain logs in the SIEM, not on the serving node; alert on key sharing (one key, many seats), unusual token volume, and
+  blocked-egress attempts.</li>
+</ul>
+<h3 id="academic-lab-considerations">Academic-lab considerations</h3>
+<ul>
+<li>Publish an acceptable-use policy and monitoring notice at login; align retention with FERPA and institutional policy
+  (this guide is not legal advice).</li>
+<li><strong>Remote cohorts</strong> reach the lab only through the reverse proxy or VDI broker with SSO + MFA; terminal courses use a jump host
+  with recorded sessions.</li>
+<li><strong>Guest and workshop users</strong> get a separate, time-boxed VLAN and keys that expire.</li>
+<li><strong>Research groups</strong> that need broader access get their own segment and policy, not exceptions in the student segment.</li>
+</ul>
+<h3 id="reset-runbook-with-audit-continuity">Reset runbook with audit continuity</h3>
+<ol>
+<li>Freeze new logins to the room; let running jobs finish or checkpoint.</li>
+<li>Flush and verify log shipping (agent heartbeat, SIEM last-event time per seat).</li>
+<li>Snapshot student homes (read-only) and record the snapshot ID against the course/term tag.</li>
+<li>Revoke the course's LiteLLM keys and session tokens.</li>
+<li>Reset: container reset, snapshot restore, or re-image per the table in the N×M section.</li>
+<li>Re-register the seat under its stable name, confirm EDR policy and tags, re-issue keys for the next course, re-open logins.</li>
+</ol>
+<h2 id="monitoring">Monitoring</h2>
+<p><a href="https://prometheus.io/">Prometheus</a> + <a href="https://grafana.com/">Grafana</a> (served on <code>:3000</code>) per node + a central aggregator:</p>
+<ul>
+<li><strong>GPU utilization</strong> — DCGM exporter.</li>
+<li><strong>vLLM</strong> <code>/metrics</code> — request rate, tok/s, TTFT, KV-cache utilization.</li>
+<li><strong>JupyterHub / OpenWebUI</strong> — per-user session count and duration.</li>
+<li><strong>Storage</strong> — NAS free space, per-student home directory growth,
+  model-cache size.</li>
+<li><strong>Fleet health</strong> — node uptime, package drift, patch status via
+  Landscape.</li>
+</ul>
+<h2 id="semester-operations">Semester operations</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Start of term</strong></td>
+<td>Push course profiles for enrolled courses. Verify all nodes are on the target Ubuntu / driver version. Run a faculty dry-run from a test student account.</td>
+</tr>
+<tr>
+<td><strong>Between classes</strong></td>
+<td>Container reset per node (Landscape push).</td>
+</tr>
+<tr>
+<td><strong>Mid-semester patch window</strong></td>
+<td>Landscape rolling patch across the fleet with a canary node first.</td>
+</tr>
+<tr>
+<td><strong>End of term</strong></td>
+<td>LVM snapshot restore to wipe student home dirs; autoinstall re-image if the curriculum changed.</td>
+</tr>
+<tr>
+<td><strong>Model or driver update</strong></td>
+<td>Bump the model tag in the course profile OR re-image with the new driver via Landscape. Canary one node before pushing fleet-wide.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="storage-lifecycle">Storage lifecycle</h2>
+<ul>
+<li><strong>Model weights</strong> — one copy on the NAS; every node's Docker volume
+  mounts the NAS path read-only.</li>
+<li><strong>Datasets</strong> — course-owned directories on the NAS.</li>
+<li><strong>Student home directories</strong> — per-student LVM volumes, snapshot at
+  baseline for end-of-term reset.</li>
+<li><strong>Retention</strong> — end-of-term wipe by default; per-student opt-in
+  archival if the curriculum requires it.</li>
+</ul>
+<p>Planning band (30 seats, one term, indicative): ~2–3 TB usable NAS — see
+<a href="../#cost-tco">Solution overview</a>.</p>
+<h2 id="bulk-distribution-over-the-lan-multicast">Bulk distribution over the LAN (multicast)</h2>
+<p>NAS mounts work for steady state, but a course swap or a term re-image pushes tens of gigabytes to every seat at once, and
+unicast makes the server's uplink the bottleneck: 30 seats each pulling 50 GB means 1.5 TB through one 10 GbE port.
+<a href="https://www.udpcast.linux.lu/">UDPcast</a> sends the stream <strong>once</strong> to all receivers, so the transfer takes the time of a single
+copy no matter how many seats are listening. Landscape stays in charge of <em>which</em> seats and <em>when</em>; the image or model proxy
+server sends once.</p>
+<h3 id="rough-time-savings-30-seats-10-gbe-server-10-gbe-seats">Rough time savings (30 seats, 10 GbE server, 10 GbE seats)</h3>
+<p>Assumptions: the server's usable fan-out is ~1.1 GB/s for unicast; multicast streams at ~1.0 GB/s (the single-copy time) plus
+~60 s for the receivers to join; seat NVMe writes keep up. Asset sizes are the ones this template uses.</p>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th style="text-align: right;">Size</th>
+<th style="text-align: right;">Unicast to 30 seats</th>
+<th style="text-align: right;">Multicast to 30 seats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden OS image (typical)</td>
+<td style="text-align: right;">40 GB</td>
+<td style="text-align: right;">~18 min</td>
+<td style="text-align: right;">~1.7 min</td>
+</tr>
+<tr>
+<td>vLLM container image (pinned)</td>
+<td style="text-align: right;">26 GB</td>
+<td style="text-align: right;">~12 min</td>
+<td style="text-align: right;">~1.4 min</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> weights</td>
+<td style="text-align: right;">21 GB</td>
+<td style="text-align: right;">~9.5 min</td>
+<td style="text-align: right;">~1.4 min</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a> weights</td>
+<td style="text-align: right;">18 GB</td>
+<td style="text-align: right;">~8 min</td>
+<td style="text-align: right;">~1.3 min</td>
+</tr>
+<tr>
+<td>Course dataset (typical)</td>
+<td style="text-align: right;">10 GB</td>
+<td style="text-align: right;">~4.5 min</td>
+<td style="text-align: right;">~1.2 min</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> weights</td>
+<td style="text-align: right;">62 GB</td>
+<td style="text-align: right;">~28 min</td>
+<td style="text-align: right;">~2.0 min</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> weights (GB300 pool)</td>
+<td style="text-align: right;">~194 GB</td>
+<td style="text-align: right;">~88 min</td>
+<td style="text-align: right;">~4.2 min</td>
+</tr>
+<tr>
+<td><strong>Course swap</strong>: container image + Lightning + dataset</td>
+<td style="text-align: right;">57 GB</td>
+<td style="text-align: right;"><strong>~26 min</strong></td>
+<td style="text-align: right;"><strong>~2 min</strong></td>
+</tr>
+<tr>
+<td><strong>Course swap with Super VL</strong></td>
+<td style="text-align: right;">98 GB</td>
+<td style="text-align: right;">~45 min</td>
+<td style="text-align: right;">~2.6 min</td>
+</tr>
+<tr>
+<td><strong>Term re-image</strong>: OS + image + two models</td>
+<td style="text-align: right;">105 GB</td>
+<td style="text-align: right;">~48 min</td>
+<td style="text-align: right;">~2.8 min</td>
+</tr>
+</tbody>
+</table>
+<p>Unicast time grows with the number of seats; multicast time does not, so the gain is roughly the seat count (about 20–25× at 30
+seats after overhead). Over a 1 GbE segment the stream takes ~9× longer on both paths, and the ratio is unchanged.</p>
+<h3 id="how-it-works-with-landscape">How it works with Landscape</h3>
+<ol>
+<li><strong>Build the tools once per architecture</strong> (<code>scripts/multicast/udpcast-build.sh</code>; the distro package can abort large transfers).</li>
+<li><strong>Dispatch</strong> from the control host, pointing at the server that holds the content:</li>
+</ol>
+<pre><code class="language-bash">scripts/multicast/multicast-distribute.sh --ids &quot;&lt;landscape ids&gt;&quot; --sender-host &lt;image-server&gt; \
+    --src /srv/lab/course-cs101 --dest /srv/lab-cache --bin-dir &lt;udpcast-binaries-for-seat-arch&gt;
+</code></pre>
+<p>The receiver payload (script and binaries) travels inside the Landscape script. The sender waits until every seat has joined,
+   so Landscape's dispatch lag does not matter, then streams once. Each seat verifies the stream's sha256 and reports it; the
+   command compares every seat with the sender and fails if any differ.
+3. <strong>Target by tag</strong> (<code>course-&lt;id&gt;</code>, <code>term-&lt;yyyy-s&gt;</code>) so one dispatch covers a whole room.</p>
+<h3 id="measured-on-a-lab-segment">Measured on a lab segment</h3>
+<p>Sender and two receivers on one wired 1 GbE VLAN, UDPcast 20250223, aarch64 GB10 hosts:</p>
+<table>
+<thead>
+<tr>
+<th>Payload</th>
+<th style="text-align: right;">Receivers</th>
+<th style="text-align: right;">Time</th>
+<th style="text-align: right;">Per-receiver rate</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 GB single file</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">22.7 s</td>
+<td style="text-align: right;">~94 MB/s (about 94% of line rate)</td>
+<td>sha256 identical on both</td>
+</tr>
+<tr>
+<td>1.3 GB tree (mock golden image + mock Hugging Face cache)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15 s</td>
+<td style="text-align: right;">~88 MB/s</td>
+<td>sha256 identical on both</td>
+</tr>
+</tbody>
+</table>
+<p>Each receiver ran at the same rate with two receivers as it would alone, which is why the time does not grow with seat count.
+The distro <code>udpcast</code> package (20120424) aborted these transfers with a buffer-overflow error; use <code>scripts/multicast/udpcast-build.sh</code>.</p>
+<p><strong>Wired only.</strong> A DGX Spark attached over Wi-Fi did not join the stream during the validation window, so treat Wi-Fi seats as
+unsupported for this path and pull their content over unicast (or cable them for the swap).</p>
+<h3 id="network-requirements">Network requirements</h3>
+<ul>
+<li><strong>Wired seats and server only.</strong> Multicast over Wi-Fi is sent at the access point's lowest rate; keep this path on the lab VLAN.</li>
+<li>On the lab VLAN enable <strong>IGMP snooping with a querier</strong>, or the switch floods the stream to every port.</li>
+<li>Cap the stream below the slowest link with <code>--max-bitrate</code> (for example <code>900m</code> on 1 GbE seats).</li>
+<li>UDP ports 9000–9001 between server and seats; the default TTL of 1 keeps the stream inside the VLAN.</li>
+<li>Multicast is unauthenticated: run it on the isolated serving or management VLAN and always verify the sha256 against the value
+  the sender prints (or one published through Landscape).</li>
+</ul>
+<h2 id="common-issues">Common issues</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contention on S-tier shared endpoint</td>
+<td>Add a LiteLLM router + a second GB10 to the pool; route by course.</td>
+</tr>
+<tr>
+<td>Faculty course profile fails to load a package</td>
+<td>Course profiles must be validated on a pilot node before fleet rollout — build a canary-first workflow into your CI.</td>
+</tr>
+<tr>
+<td>Storage growth outpacing plan</td>
+<td>Snapshot rollover for home dirs + weekly reporting on model-cache size; enforce per-course cache limits.</td>
+</tr>
+<tr>
+<td>Off-campus student access broken</td>
+<td>Verify SSO token TTL + reverse proxy → JupyterHub connectivity separately.</td>
+</tr>
+<tr>
+<td>First-token latency degrades mid-class</td>
+<td>Check <code>vllm:num_requests_waiting</code> per pool node; rebalance course groups across nodes with LiteLLM.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../">Solution overview</a> — sizing, cost framing.</li>
+<li><a href="../deploy-guide-dev/">Developer Deploy Guide</a> — pilot / lab-admin
+  quick-start.</li>
+<li><a href="../../agentic-coding">Agentic Coding</a> — CS-course companion
+  (its IT-admin guide covers the serving stack per platform).</li>
+<li><a href="../../agentic-vss">Agentic Video Search &amp; Summarization</a> — video search &amp; summarization
+  teaching module.</li>
+<li><a href="../../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a> — agent-runtime teaching module.</li>
+<li><a href="../../../sizing/">S/M/L Sizing</a> ·
+  <a href="../../../glossary/">Glossary</a>.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

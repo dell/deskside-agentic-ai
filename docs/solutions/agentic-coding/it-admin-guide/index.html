@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Coding — IT-Admin Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/" class="active">Agentic Coding</a>
+<a class="sub" href="../../../solutions/agentic-coding/">Overview</a>
+<a class="sub active" href="../../../solutions/agentic-coding/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../../solutions/agentic-coding/ide-integration/">IDE Integration</a>
+<a class="sub" href="../../../solutions/agentic-coding/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / agentic-coding / it-admin-guide</div>
+    <article class="article" data-picker>
+<h1 id="agentic-coding-it-admin-deployment-guide">Agentic Coding — IT-Admin Deployment Guide</h1>
+<p>Runbook for deploying and operating the Agentic Coding template on a Dell deskside
+system.
+For fleet-wide rollouts across enrolled machines, see
+<a href="../landscape-fleet-deploy/">Fleet Deploy via Landscape</a>.</p>
+<p><strong>Target:</strong> a new admin reaches a working, verified endpoint in <strong>&lt; 60 minutes</strong>
+(warm cache) following this guide end-to-end.</p>
+<h2 id="0-prerequisites">0. Prerequisites</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>GB10 (S)</th>
+<th>T2 (S)</th>
+<th>T4 (M)</th>
+<th>T6 (L)</th>
+<th>GB300 (L)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>DGX OS (Ubuntu)</td>
+<td>Ubuntu 24.04</td>
+<td>Ubuntu 24.04</td>
+<td>Ubuntu 24.04</td>
+<td>Ubuntu 24.04</td>
+</tr>
+<tr>
+<td>NVIDIA driver</td>
+<td>Pre-installed</td>
+<td>&gt;= 570</td>
+<td>&gt;= 570</td>
+<td>&gt;= 570</td>
+<td>Pre-installed</td>
+</tr>
+<tr>
+<td>CUDA</td>
+<td>Pre-installed</td>
+<td>&gt;= 12.x</td>
+<td>&gt;= 12.x</td>
+<td>&gt;= 12.x</td>
+<td>Pre-installed</td>
+</tr>
+<tr>
+<td>Container runtime</td>
+<td><a href="https://www.docker.com/">Docker</a></td>
+<td>Docker (rootless OK)</td>
+<td>Docker (rootless OK)</td>
+<td>Docker (rootless OK)</td>
+<td>Docker</td>
+</tr>
+<tr>
+<td>HF model cache</td>
+<td><code>~/.cache/huggingface</code></td>
+<td>same</td>
+<td>same</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Disk (model)</td>
+<td>~21 GB (Lightning)</td>
+<td>~21 GB</td>
+<td>~62 GB (Super VL)</td>
+<td>~62 GB (Super VL)</td>
+<td>~62 GB (Super VL) – ~181 GB (<a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a>)</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Outbound HTTPS for first model pull (or pre-seed cache for air-gapped)</td>
+<td>same</td>
+<td>same</td>
+<td>same</td>
+<td>same</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prerequisite-checks">Prerequisite checks</h3>
+<p>Run all checks before deploying. Every command must pass.</p>
+<pre><code class="language-bash"># 1. OS version
+cat /etc/os-release | grep VERSION_ID
+# Expected: 24.04 or later
+
+# 2. NVIDIA driver
+nvidia-smi --query-gpu=driver_version --format=csv,noheader
+# Expected: 570.x or later
+
+# 3. GPU(s) detected
+nvidia-smi --query-gpu=name --format=csv,noheader
+# Expected: at least one NVIDIA GPU. (memory.total reports N/A on GB10 unified memory;
+# there use: free -g   -&gt; &gt;= 100 GiB total. Discrete GPUs: add memory.total, &gt;= 24 GB.)
+
+# 4. Docker + NVIDIA runtime
+docker --version
+docker info 2&gt;/dev/null | grep -i nvidia
+# Expected: Docker 24+ with nvidia runtime
+
+# 5. NVIDIA Container Toolkit
+docker run --rm --gpus all nvidia/cuda:12.8.0-base-ubuntu24.04 nvidia-smi
+# Expected: GPU table displayed inside container
+
+# 6. Disk space for model weights
+df -h ~/.cache/huggingface --output=avail 2&gt;/dev/null || df -h /home --output=avail
+# Expected: &gt;= 25 GB free (S/M) or &gt;= 70 GB free (L)
+</code></pre>
+<p>If any check fails, see <a href="#troubleshooting">Troubleshooting</a> at the end of this guide.</p>
+<h2 id="1-pre-seed-the-model-recommended-for-air-gapped-fleet">1. Pre-seed the model (recommended for air-gapped / fleet)</h2>
+<pre><code class="language-bash"># On a connected host, warm the HF cache, then sync ~/.cache/huggingface to fleet nodes
+huggingface-cli download nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+
+# Verify the download (~21 GB)
+du -sh ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4/
+</code></pre>
+<p>For air-gapped environments, copy the cache to each target host:</p>
+<pre><code class="language-bash">rsync -avP ~/.cache/huggingface/ admin@&lt;target-host&gt;:~/.cache/huggingface/
+</code></pre>
+<h2 id="2-deploy">2. Deploy</h2>
+<p>Every recipe serves on <strong>port 8000</strong> (the first free port counting up from 8000; <code>DESKSIDE_BASE_PORT</code> or <code>--port</code>
+override), pulls the pinned image, and returns only when the endpoint is ready. The <strong>Recipe Configuration</strong> panel at the top
+of this page fills the commands below for your platform, model, host, port and key.</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Tier</th>
+<th>Models (recipe directory)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10 (DGX Spark class device)</td>
+<td>S</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> (default) · <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a> — <code>gb10</code></td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T2 (1× RTX PRO 6000)</td>
+<td>S</td>
+<td>Nemotron 3.5 Lightning (default) · Qwen3.8-27B (<code>gb10</code> recipe with a GPU pin) — <code>precision</code></td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T4 (2× RTX PRO 6000)</td>
+<td>M</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> (default) · Nemotron 3.5 Lightning · <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a> · Qwen3.8-27B (<code>gb10</code> recipe, GPU-pinned) — <code>precision</code></td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T6 (5× RTX PRO 6000)</td>
+<td>L</td>
+<td>Nemotron 3.5 Super VL (default) · Nemotron 3.5 Lightning · Qwen3.8-Flash-Next · Qwen3.8-27B (<code>gb10</code> recipe, GPU-pinned) — <code>precision</code></td>
+</tr>
+<tr>
+<td>Dell Pro Precision with GB300 (DGX Station class device)</td>
+<td>L</td>
+<td>Nemotron 3.5 Super VL (default) · Nemotron 3.5 Lightning · <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> · Qwen3.8-Flash-Next (<code>precision</code> recipe) · Qwen3.8-27B (<code>gb10</code> recipe, GPU-pinned) — <code>gb300</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gb10-s">GB10 (S)</h3>
+<pre><code class="language-bash">recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000   # default
+recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh --port 8000              # alternative
+</code></pre>
+<h3 id="precision-t2-s-x86">Precision T2 (S, x86)</h3>
+<pre><code class="language-bash">recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+</code></pre>
+<p>The recipe bakes the Blackwell (RTX PRO 6000) reference config: FP8 KV
+cache, 0.9 GPU memory utilization, 200K context, and 512 concurrent
+sequences (cudagraph capture sized to match). Tunables: <code>--tp N</code>
+(auto-detects GPUs), <code>--max-model-len</code>, <code>--max-num-seqs</code>, <code>NEMOTRON_LIGHTNING_GPU_MEM_UTIL</code>. For air-gapped
+towers, point <code>NEMOTRON_LIGHTNING_DIR=/path/to/checkpoint</code> at a pre-copied
+checkpoint (no <a href="https://huggingface.co/">Hugging Face</a> pull); on rootless-Docker towers set
+<code>NEMOTRON_LIGHTNING_ROOTLESS=1</code>.</p>
+<h3 id="precision-t4-m-and-t6-l-topology-is-chosen-per-workload">Precision T4 (M) and T6 (L) — topology is chosen per workload</h3>
+<p>TP (one instance across GPUs) vs data-parallel (replicas behind a router) is decided <strong>by measurement for your
+workload</strong>, not by rule — see <a href="../../../topology/">topology</a>. Both paths use the same recipes:</p>
+<pre><code class="language-bash"># default model, one instance (TP auto-snaps to a power of two &lt;= GPU count; T4 -&gt; TP=2)
+recipes/precision/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh --port 8000
+#    PCIe-only towers: TP&gt;1 crashes vLLM's custom all-reduce unless you set NEMOTRON_35_SUPER_VL_DISABLE_CUSTOM_AR=1
+
+# alternatives on the same hardware
+recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh --port 8000
+
+# data-parallel: N replicas pinned one per GPU + LiteLLM front door on :8000 (replicas :8001..; front door always keyed)
+recipes/lib/launch-replicas.sh --recipe recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh \
+    --env-prefix NEMOTRON_LIGHTNING --served nvidia/nemotron-3.5-lightning --replicas 5     # T6
+</code></pre>
+<h3 id="gb300-l">GB300 (L)</h3>
+<pre><code class="language-bash">recipes/gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh --port 8000   # default
+recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000  # Lightning
+recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh --port 8000           # alternative
+</code></pre>
+<p>Running two recipes on one GB300 puts the second on the next free port (8001, …); give each its own
+<code>--gpu-mem-util</code>.</p>
+<p>The recipe pulls the <a href="https://github.com/vllm-project/vllm">vLLM</a> image, starts a detached container, and serves the
+model. Wait for readiness:</p>
+<pre><code class="language-bash">until curl -sf http://localhost:8000/v1/models &gt;/dev/null; do sleep 5; done
+curl -s http://localhost:8000/v1/models | python3 -m json.tool
+</code></pre>
+<p><strong>Expected time:</strong> &lt; 5 minutes from <code>docker run</code> to <code>/v1/models</code> responding
+(warm cache). First-time model download adds 10-30 minutes depending on
+network speed.</p>
+<h2 id="3-verification-checklist">3. Verification checklist</h2>
+<p>Run every check below. All must pass before declaring the deployment operational.</p>
+<pre><code class="language-bash"># --- A. Model endpoint ---
+# A1. Model is listed
+curl -sf http://localhost:8000/v1/models | python3 -c &quot;
+import sys, json
+models = json.load(sys.stdin)['data']
+print(f'Models loaded: {len(models)}')
+for m in models: print(f'  - {m[\&quot;id\&quot;]}')
+assert len(models) &gt; 0, 'No models loaded'
+&quot;
+
+# A2. Chat completion works (smoke test)
+curl -sf http://localhost:8000/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{
+    &quot;model&quot;: &quot;nvidia/nemotron-3.5-lightning&quot;,
+    &quot;messages&quot;: [{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Write a Python function to reverse a string.&quot;}],
+    &quot;max_tokens&quot;: 512
+  }' | python3 -c &quot;
+import sys, json
+r = json.load(sys.stdin)
+print(r['choices'][0]['message']['content'][:200])
+assert r['choices'][0]['finish_reason'] in ('stop','length'), 'Unexpected finish reason'
+print('PASS: chat completion works')
+&quot;
+# Note: Nemotron 3.5 Lightning is a reasoning model — budgets below ~500
+# tokens are consumed entirely by the thinking trace (empty content,
+# finish_reason=length). Give clients &gt;= 512.
+
+# --- B. GPU health ---
+# B1. GPU utilization is non-zero (during/after inference)
+nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu \
+  --format=csv
+# Expected (discrete GPUs): memory.used &gt; 15 GB (model loaded), temp &lt; 85C
+# GB10: memory.used is N/A -- check the container instead:  docker stats --no-stream &lt;container&gt;
+#       and  nvidia-smi --query-compute-apps=pid,process_name --format=csv   (the vLLM process is listed)
+
+# --- C. Container health ---
+# C1. Container is running. Names: GB10 lightning-3.5-gb10 | Precision lightning-3.5-precision-&lt;port&gt;
+#     | GB300 vllm_&lt;port&gt;   (ports count up from 8000; see docs/operations.md)
+docker ps --filter name=lightning-3.5 --filter name=vllm_ --format &quot;{{.Names}} {{.Status}}&quot;
+# Expected: &quot;&lt;name&gt;  Up X minutes&quot;
+# Or skip A-D and run the per-recipe health assessment (exit 1 on any FAIL, --json available):
+#   recipes/&lt;platform&gt;/vllm/health-nemotron-3.5-lightning-nvfp4.sh
+
+# C2. No errors in recent logs
+docker logs --tail 50 lightning-3.5-gb10 2&gt;&amp;1 | grep -iE &quot;error|exception|traceback&quot; || echo &quot;PASS: no errors in logs&quot;
+
+# C3. Restart policy baked in (boot-resume, locked to the pinned model)
+docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' lightning-3.5-gb10
+# Expected: unless-stopped
+
+# --- D. Metrics endpoint ---
+# D1. vLLM Prometheus metrics are available
+curl -sf http://localhost:8000/metrics | head -5
+# Expected: lines starting with # HELP or vllm_*
+</code></pre>
+<p>If any check fails, see <a href="#troubleshooting">Troubleshooting</a> below.</p>
+<h2 id="4-monitoring-prometheus-grafana">4. Monitoring (Prometheus + Grafana)</h2>
+<h3 id="prometheus-scrape-config">Prometheus scrape config</h3>
+<p>Add the vLLM endpoint to your <a href="https://prometheus.io/">Prometheus</a> <code>prometheus.yml</code>:</p>
+<pre><code class="language-yaml">scrape_configs:
+  - job_name: 'vllm-agentic-coding'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['&lt;deskside-host&gt;:8000']
+        labels:
+          tier: 'S'
+          model: 'nemotron-lightning'
+          host: 'deskside-s1'
+</code></pre>
+<h3 id="key-metrics-to-monitor">Key metrics to monitor</h3>
+<p>Every recipe starts the shared tokenomics Prometheus + Grafana for you (<code>monitoring/README.md</code>); the alert rules below are
+shipped in <code>monitoring/alerts.yml</code> (unit-tested with <code>promtool</code>). Bring-your-own Prometheus: copy the scrape job and rules.</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>PromQL</th>
+<th>Alert (shipped rule)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output tok/s</td>
+<td><code>sum(rate(vllm:generation_tokens_total[1m]))</code></td>
+<td>per-session &lt; 10 tok/s while busy for 10 m (<code>DesksidePerSessionBelowFloor</code>)</td>
+</tr>
+<tr>
+<td>TTFT p95</td>
+<td><code>histogram_quantile(0.95, sum by (le)(rate(vllm:time_to_first_token_seconds_bucket[5m])))</code></td>
+<td>&gt; 2 s for 10 m (<code>DesksideTTFTHigh</code>)</td>
+</tr>
+<tr>
+<td>Waiting requests</td>
+<td><code>vllm:num_requests_waiting</code></td>
+<td>&gt; 0 for 5 m = capacity exceeded (<code>DesksideQueueBuilding</code>)</td>
+</tr>
+<tr>
+<td>KV cache</td>
+<td><code>vllm:kv_cache_usage_perc</code></td>
+<td>&gt; 90 % for 5 m (<code>DesksideKVCacheHigh</code>)</td>
+</tr>
+<tr>
+<td>Target down</td>
+<td><code>up{job="deskside-vllm"}</code></td>
+<td>== 0 for 2 m (<code>DesksideTargetDown</code>)</td>
+</tr>
+<tr>
+<td>GPU memory (discrete GPUs only)</td>
+<td><code>DCGM_FI_DEV_FB_USED</code> (dcgm-exporter)</td>
+<td>&gt; 90 % of total; <strong>not available on GB10</strong> (unified memory) -- use node memory</td>
+</tr>
+</tbody>
+</table>
+<p><em>Running requests</em> is capped by <code>--max-num-seqs</code>, so "running &gt; max-num-seqs" can never fire; alert on <strong>waiting</strong> instead.</p>
+<h3 id="grafana-dashboard">Grafana dashboard</h3>
+<p>The <strong>Deskside Tokenomics</strong> dashboard is provisioned automatically (uid <code>deskside-tokenomics</code>): tokens served,
+cloud-equivalent spend vs amortised on-prem cost, $ per 1M output tokens, platform utilisation, per-session tok/s vs
+the floor, TTFT/ITL, prefix-cache hit rate, KV usage, queue depth. The recipe prints the URL (Grafana moves to the next
+free port if 3000 is taken) and the admin-password file. It reads only vLLM counters/gauges — no prompts or completions.
+Cost inputs are assumptions you edit in the dashboard header. GPU-health panels need dcgm-exporter (not provided).</p>
+<h2 id="5-identity-access-control">5. Identity &amp; access control</h2>
+<blockquote>
+<p>By default a recipe publishes the endpoint on all interfaces without authentication (and prints a warning).
+Restrict it with <code>--bind 127.0.0.1</code> (or a specific address), require a key with <code>DESKSIDE_API_KEY</code> /
+<code>--api-key-file</code> (enforced by vLLM via <code>VLLM_API_KEY</code>), or front it with the LiteLLM gateway, which is always keyed.
+Terminate TLS and apply identity, per-user keys and rate limits in your own gateway.</p>
+</blockquote>
+<p>Do <strong>not</strong> expose <code>:8000</code> directly to end users. Front it with a reverse proxy or
+API gateway that enforces authentication:</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>When to use</th>
+<th>Setup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nginx reverse proxy</strong></td>
+<td>Single-user or small team</td>
+<td><code>proxy_pass http://localhost:8000;</code> with basic auth or mTLS</td>
+</tr>
+<tr>
+<td><strong>API gateway (Kong / Envoy)</strong></td>
+<td>Enterprise, multi-user</td>
+<td>AD/LDAP integration, API key management, rate limiting</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.litellm.ai/">LiteLLM</a> proxy</strong></td>
+<td>Multi-model, load balancing</td>
+<td>Built-in key management</td>
+</tr>
+</tbody>
+</table>
+<p>The recipes start the serving containers with <code>--restart unless-stopped</code>: the
+deployed stack fully resumes on boot, locked to the recipe's pinned model and
+serving flags. Apply the same policy to the monitoring/gateway containers
+(Prometheus, Grafana, LiteLLM/Nginx) so the whole stack comes back unattended.
+To keep a node down through a maintenance window:</p>
+<pre><code class="language-bash">docker update --restart=no lightning-3.5-gb10   # restore: --restart=unless-stopped
+</code></pre>
+<h2 id="6-lifecycle-management">6. Lifecycle management</h2>
+<ul>
+<li><strong>Upgrade:</strong> pull the new vLLM image tag and re-run the recipe.
+  The recipe removes the old container automatically.</li>
+<li><strong>Boot resume:</strong> every recipe runs <code>docker run --restart unless-stopped</code>, so a
+  reboot (or docker daemon restart) brings the serving container back
+  automatically with the pinned model — no re-deploy. Verify with the check in
+  §3C. (Manual containers started without the policy must be opted in via
+  <code>docker update --restart=unless-stopped &lt;container&gt;</code>.)</li>
+<li><strong>Rollback:</strong> re-run the recipe with the previous image tag
+  (<code>NEMOTRON_LIGHTNING_IMAGE=&lt;old-tag&gt; recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code>).</li>
+<li><strong>Log rotation:</strong> configure via Docker daemon (<code>max-size</code>, <code>max-file</code>) or
+  use <code>docker logs --since</code> for bounded queries.</li>
+<li><strong>Backup:</strong> the only stateful data is the HF model cache (<code>~/.cache/huggingface</code>).
+  Back it up for air-gapped recovery.</li>
+</ul>
+<h2 id="7-scale-dev-prod">7. Scale (dev → prod)</h2>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Trigger (measured)</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single dev (<strong>S</strong>)</td>
+<td>Small team (<strong>M</strong>, T4)</td>
+<td>TTFT p95 &gt; 1 s at your concurrent user count</td>
+<td>TP=2 on T4 (2 GPUs); gateway for round-robin if running 2 instances</td>
+</tr>
+<tr>
+<td>Team (<strong>M</strong>)</td>
+<td>App host (<strong>L</strong>, GB300/T6)</td>
+<td>TTFT p95 &gt; 2 s at M-tier, or &gt; 8 concurrent devs</td>
+<td>Multi-instance on T6 (1 vLLM per GPU, LiteLLM proxy) or single instance on GB300</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Measured scaling for your configuration.</strong> Pick a platform and model in <strong>Recipe Configuration</strong> at the top of this page; the table
+below shows the aiperf results measured for that exact combination (source: <code>tests/data/</code>). Rows in amber are below the 20 tok/s
+per-session responsiveness floor. The table reports measured concurrency directly; turning sessions into seats is a team-shape
+planning call for your pilot, not a measured figure.</p>
+<div class="ds-measured"><p>Select a platform and model in Recipe Configuration to see measured scaling here.</p></div>
+
+<p><strong>Rule of thumb:</strong> move to the next tier when your sustained concurrent user count
+causes TTFT p95 &gt; 1 second or the waiting-requests queue is non-empty.</p>
+<p>Right-size with measured data — run the aiperf sweep per tier (see the template
+<a href="../#validation-aiperf">Validation</a>) and pick the instance count that holds
+your target TTFT at peak concurrency.</p>
+<h2 id="8-security-isolation">8. Security &amp; isolation</h2>
+<h3 id="network-exposure-audit">Network exposure audit</h3>
+<pre><code class="language-bash"># Verify only expected ports are open
+ss -tlnp | grep -E ':(8000|9090|3000)\b'
+# Expected: 8000 (vLLM), 9090 (Prometheus), 3000 (Grafana — container default)
+# No other services should be listening externally. SSH (22) is not part of
+# this solution's footprint — host administration policy is yours to set, and
+# fleet serving-recipe rollouts run without SSH (see landscape-fleet-deploy.md).
+</code></pre>
+<h3 id="secrets-management">Secrets management</h3>
+<ul>
+<li>Never commit HuggingFace tokens, API keys, or credentials to the repository.</li>
+<li>Use environment variables or a secrets manager for tokens.</li>
+<li>The vLLM endpoint does not require an API key by default; add one via the
+  gateway/proxy layer.</li>
+</ul>
+<h3 id="docker-socket">Docker socket</h3>
+<ul>
+<li>Do <strong>not</strong> expose the Docker socket to non-root users in production.</li>
+<li>Use rootless Docker on Precision towers (T2/T4/T6) where supported.</li>
+</ul>
+<h2 id="9-teardown">9. Teardown</h2>
+<pre><code class="language-bash">docker rm -f lightning-3.5-gb10
+# Optionally remove the model cache (root-owned blobs if the container
+# downloaded as root — use sudo):
+# sudo rm -rf ~/.cache/huggingface/hub/models--nvidia--NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4/
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nvidia-smi</code> not found</td>
+<td>NVIDIA driver not installed</td>
+<td>Install driver: <code>sudo apt install nvidia-driver-570</code> (Ubuntu) or reinstall DGX OS</td>
+</tr>
+<tr>
+<td>Docker <code>nvidia</code> runtime missing</td>
+<td>NVIDIA Container Toolkit not installed</td>
+<td><code>sudo apt install nvidia-container-toolkit &amp;&amp; sudo nvidia-ctk runtime configure --runtime=docker &amp;&amp; sudo systemctl restart docker</code></td>
+</tr>
+<tr>
+<td>Container exits immediately</td>
+<td>OOM or model too large for GPU</td>
+<td>Check <code>docker logs lightning-3.5-gb10</code>; reduce <code>--gpu-memory-utilization</code> to 0.6 or use a smaller model</td>
+</tr>
+<tr>
+<td><code>Free memory on device cuda:0 ... is less than desired GPU memory utilization</code> at startup</td>
+<td>GB10 unified memory already held by other processes (a local ollama/llama-server, leftover benchmark workers — CPU RAM and GPU memory are the same pool)</td>
+<td><code>nvidia-smi</code> process list to find squatters (<code>--query-gpu=memory.used</code> reports N/A on GB10); stop them, or run with <code>--gpu-memory-utilization</code> sized to the free pool</td>
+</tr>
+<tr>
+<td><code>curl /v1/models</code> returns connection refused</td>
+<td>Container still starting / crashed</td>
+<td>Wait up to 5 min; check <code>docker ps</code> and <code>docker logs</code></td>
+</tr>
+<tr>
+<td>500 errors under concurrency</td>
+<td>MoE backend instability</td>
+<td>Ensure <code>--moe-backend marlin</code> is set (default in the GB10/Precision Lightning recipes); reduce <code>--max-num-seqs</code></td>
+</tr>
+<tr>
+<td>Slow TTFT (&gt; 2 s)</td>
+<td>Too many concurrent users for tier</td>
+<td>Check <code>vllm:num_requests_waiting</code> metric; scale to next tier</td>
+</tr>
+<tr>
+<td>Permission denied (rootless Docker)</td>
+<td><code>--ulimit memlock=-1</code> not supported</td>
+<td>Use the Precision recipe (<code>recipes/precision/</code>) which drops this flag</td>
+</tr>
+<tr>
+<td>Model download hangs</td>
+<td>Network/firewall blocking HuggingFace</td>
+<td>Pre-seed the cache (Section 1) or configure <code>HF_HUB_OFFLINE=1</code></td>
+</tr>
+<tr>
+<td>GPU temperature &gt; 85 C</td>
+<td>Sustained load without cooling</td>
+<td>Check airflow; reduce <code>--max-num-seqs</code> to limit concurrency</td>
+</tr>
+</tbody>
+</table>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Video Search &amp; Summarization — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../index.html">
+    <img src="../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../">Overview</a>
+<a href="../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../solutions/agentic-vss/" class="active">Agentic Video Search &amp; Summarization</a>
+<a class="sub active" href="../../solutions/agentic-vss/">Overview</a>
+<a class="sub" href="../../solutions/agentic-vss/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../solutions/agentic-vss/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../solutions/agentic-vss/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../recipes/">Deployment Recipes</a>
+<a href="../../sizing/">S/M/L Sizing</a>
+<a href="../../stack/">Inference Stack &amp; Models</a>
+<a href="../../stack-composition/">Stack Composition</a>
+<a href="../../personas/">Personas</a>
+<a href="../../glossary/">Glossary</a>
+<a href="../../architecture-builder.html">Architecture Builder</a>
+<a href="../../scope/">Scope &amp; Backlog</a>
+<a href="../../operations/">Operations</a>
+<a href="../../topology/">Topology (TP vs DP)</a>
+<a href="../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../index.html">Home</a> / solutions / agentic-vss</div>
+    <article class="article">
+<h1 id="agentic-video-search-summarization">Agentic Video Search &amp; Summarization</h1>
+<p><strong>Turn raw video into searchable, summarized, queryable insight — locally.</strong></p>
+<h2 id="summary">Summary</h2>
+<p>Deploy NVIDIA's Video Search and Summarization (VSS) AI Blueprint on Dell
+deskside systems: a local vision-language model plus a locally-served LLM
+for natural-language search, timestamped summarization, and event detection
+over your own footage — no cloud dependency, no data-residency
+risk. Dell adds S/M/L sizing (GB10 · RTX PRO 6000 towers · GB300), a pinned
+LLM lineup on <a href="https://github.com/vllm-project/vllm">vLLM</a>, recipes, and deployment guides.</p>
+<h2 id="personas">Personas</h2>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>What this solution gives them</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT Admin</strong></td>
+<td>Per-host install, per-tier models, fleet automation, monitoring &amp; storage — <a href="it-admin-guide/">IT-Admin Guide</a>.</td>
+</tr>
+<tr>
+<td><strong>Functional SME</strong></td>
+<td>"Which system for my team / camera count?" — S/M/L tables below.</td>
+</tr>
+<tr>
+<td><strong>AI Engineer</strong></td>
+<td>Nemotron default + tier-scaled alternates, VLM pairing, hybrid vLLM configs — <a href="deploy-guide-dev/">Developer Deploy Guide</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reference-nvidia-playbooks">Reference NVIDIA playbooks</h2>
+<table>
+<thead>
+<tr>
+<th>Playbook</th>
+<th>Platform</th>
+<th>What Dell adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization">VSS Blueprint (NVIDIA-AI-Blueprints)</a></td>
+<td>RTX PRO / DGX-class GPU systems</td>
+<td>S/M/L sizing, per-tier LLM lineup, hybrid vLLM config, fleet guide</td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/rtx">RTX Local AI hub</a></td>
+<td>RTX PRO discrete GPUs (Precision towers)</td>
+<td>vLLM recipes + measured validation for the LLM half</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-cases">Use cases</h2>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Who</th>
+<th>What it looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Security &amp; surveillance review</strong></td>
+<td>Physical security, loss prevention</td>
+<td><em>"Show me anyone approaching the loading dock after 9 PM"</em> → timestamped clips; footage never leaves the site.</td>
+</tr>
+<tr>
+<td><strong>Retail &amp; manufacturing analytics</strong></td>
+<td>Retail ops, QA, plant managers</td>
+<td>Continuous YOLO26 detection + event summarization + aggregate NL questions over the stream.</td>
+</tr>
+<tr>
+<td><strong>Media archive intelligence</strong></td>
+<td>Broadcasters, media, comms</td>
+<td>NL search over large archives, timestamped clip retrieval.</td>
+</tr>
+<tr>
+<td><strong>Compliance &amp; incident review</strong></td>
+<td>Compliance, legal, investigations</td>
+<td>Hours of footage → event timeline; alerts verified against ground truth.</td>
+</tr>
+<tr>
+<td><strong>Multi-modal research</strong></td>
+<td>Research teams</td>
+<td>Vision + audio + language reasoning over recorded content.</td>
+</tr>
+</tbody>
+</table>
+<p>Upstream profiles: <code>base</code> (search, Q&amp;A, clip retrieval),
+<code>alert-verification</code> (compliance), <code>real-time-alerts</code> (continuous ingest +
+alerts). What this solution is <strong>not</strong>: a hosted SaaS; a CCTV replacement
+(consumes existing cameras, doesn't manage them); a general-purpose agent
+runtime (see our <a href="../openclaw-on-nemoclaw">OpenClaw on NemoClaw</a>
+solution);
+face recognition (identity is a per-site policy call).</p>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="Agentic VSS solution architecture" src="../../assets/diagrams/agentic-vss-architecture.svg" /></p>
+<p>Three upstream areas: <strong>real-time video intelligence</strong> (VIOS / VST
+extraction, embeddings → message broker); <strong>downstream analytics</strong>
+(trajectories, incidents, verified alerts); <strong>agentic &amp; offline processing</strong>
+(search, Q&amp;A, summarization, clip retrieval via MCP).</p>
+<pre><code>   User (Web UI, API, or agent)
+             │
+             ▼
+   VSS Agent + VSS Agent UI (Docker Compose)
+             │
+             ├──► VIOS / VST (video ingest + embeddings)
+             │        └──► Message broker + vector / graph DB
+             │                 └──► Analytics (trajectories, incidents, alerts)
+             │
+             ├──► VLM (vision-language) — Nemotron 3 Nano Omni · vLLM
+             │
+             └──► LLM (summarization / Q&amp;A) — Nemotron 3.5 Lightning · vLLM
+
+   Dell deskside system (S: GB10 / T2 · M: Dell Pro Precision 9 T4 · L: Dell Pro Precision with GB300)
+</code></pre>
+<p>Key containers: VSS Agent + UI, VIOS / VST, LLM + VLM (vLLM), Phoenix.
+Mode: <strong>Standard VSS (hybrid)</strong> — both models served as local vLLM
+endpoints on one GPU (<code>--use-remote-llm</code>, <code>--use-remote-vlm</code>).</p>
+<h2 id="s-m-l-sizing">S / M / L sizing</h2>
+<p>Three sizing axes: <strong>LLM concurrency</strong>, <strong>VLM ingestion throughput</strong>,
+<strong>video storage</strong>; YOLO26 per-camera FPS adds a camera-count limit.</p>
+<h3 id="llm-summarization-qa-alert-reasoning">LLM (summarization, Q&amp;A, alert reasoning)</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Dell system</th>
+<th>Model (default · alt)</th>
+<th>vLLM config</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Dell Pro Precision with GB10</strong> (128 GB unified)</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> 30B A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a></td>
+<td>local, co-located at <code>--gpu-memory-utilization 0.35</code></td>
+<td>Comfort c2–c4 at this footprint (planning estimate); prior-model reference (Nano 30B): ~573 agg. @ c128. Lightning default measured cells: <a href="../agentic-coding/">agentic-coding Sizing</a> (<a href="#benchmarks-performance-validation">Benchmarks</a>)</td>
+</tr>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Dell Pro Precision 9 T2</strong> (1× RTX PRO 6000, 96 GB)</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> 30B A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a></td>
+<td>local, co-located at <code>--gpu-memory-utilization 0.35</code></td>
+<td>Comfort c2–c4 at this footprint (planning estimate); prior-model reference (Nano 30B): ~301 out tok/s @ c4. Lightning default measured cells: <a href="../agentic-coding/">agentic-coding Sizing</a> (<a href="#benchmarks-performance-validation">Benchmarks</a>)</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><strong>Dell Pro Precision 9 T4</strong> (2× RTX PRO 6000)</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> · alt <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></td>
+<td>TP or multi-instance; higher concurrency</td>
+<td>Small team — planning estimate (<a href="#benchmarks-performance-validation">Benchmarks</a>)</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Dell Pro Precision with GB300</strong> (252 GB HBM3e, aarch64)</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td>Multi-instance or TP; gateway</td>
+<td>Multi-user / large corpus — planning estimate (<a href="#benchmarks-performance-validation">Benchmarks</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vlm-all-tiers">VLM (all tiers)</h3>
+<p><a href="https://huggingface.co/nvidia/nemotron-3-nano-omni-30b-a3b">Nemotron 3 Nano Omni</a> 30B A3B on local vLLM at every tier (TP /
+multi-instance on M/L).</p>
+<h3 id="object-detection-yolo26-measured">Object detection (YOLO26, measured)</h3>
+<p>All runs FP16 TensorRT; camera counts assume 15 FPS per camera.</p>
+<table>
+<thead>
+<tr>
+<th>Tier / system</th>
+<th>Model</th>
+<th style="text-align: right;">FPS</th>
+<th style="text-align: right;">mAP50-95</th>
+<th style="text-align: right;">Camera capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S — T2</strong></td>
+<td>yolo26n</td>
+<td style="text-align: right;">727</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: right;">~48 cameras</td>
+</tr>
+<tr>
+<td><strong>S — T2</strong></td>
+<td>yolo26m</td>
+<td style="text-align: right;">332</td>
+<td style="text-align: right;">0.518</td>
+<td style="text-align: right;">~22 cameras</td>
+</tr>
+<tr>
+<td><strong>S — T2</strong></td>
+<td>yolo26x</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">0.563</td>
+<td style="text-align: right;">~12 cameras</td>
+</tr>
+<tr>
+<td><strong>S — GB10</strong></td>
+<td>yolo26n</td>
+<td style="text-align: right;">341</td>
+<td style="text-align: right;">0.395</td>
+<td style="text-align: right;">~22 cameras</td>
+</tr>
+<tr>
+<td><strong>S — GB10</strong></td>
+<td>yolo26m</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">0.518</td>
+<td style="text-align: right;">~7 cameras</td>
+</tr>
+<tr>
+<td><strong>S — GB10</strong></td>
+<td>yolo26x</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.563</td>
+<td style="text-align: right;">~3 cameras</td>
+</tr>
+</tbody>
+</table>
+<p>All variants beat real-time (&gt; 30 FPS); T2 ~2× faster than GB10 for pure
+vision, accuracy identical. Pick the smallest variant meeting the accuracy
+floor.</p>
+<h3 id="video-storage-second-sizing-axis">Video storage (second sizing axis)</h3>
+<p>GB/hour depends on your footage — measure early on actual footage. Planning
+bands: local disk for short-retention S tier; NAS for shared 30-day corpora
+and M tier; S3-compatible store for 90+ day / L-tier archives. Index size
+runs 5–15 % of raw video. Tier memory:
+<a href="../../sizing/">S/M/L Sizing</a>.</p>
+<h2 id="model-recommendation">Model recommendation</h2>
+<ul>
+<li><strong>LLM default — Nemotron family, per tier.</strong> <strong>S:</strong>
+  <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4"><code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code></a>
+  (MoE, NVFP4, reasoning + tool calling — give clients <code>max_tokens &gt;= 512</code>).
+  <strong>M/L:</strong> Nemotron 3.5 Super VL.</li>
+<li><strong>Alternatives (one per tier; recipes in
+  <a href="#deployment-recipes">Deployment recipes</a>):</strong></li>
+<li><strong>S — <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4"><code>nvidia/Qwen3.8-27B-NVFP4</code></a>:</strong>
+    dense 27B NVFP4, MTP speculative decode.</li>
+<li><strong>M — <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4"><code>nvidia/Qwen3.8-Flash-Next-NVFP4</code></a>:</strong>
+    MoE, MTP, CPU-offloaded n-gram table (≥128 GB host RAM).</li>
+<li><strong>L — <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4"><code>RedHatAI/GLM-5.3-Flash-NVFP4</code></a>:</strong>
+    320B-total / 18B-active MoE; ~181 GiB NVFP4 fits one 252 GB GB300 with
+    FP8 KV.</li>
+<li><strong>VLM pairing (all tiers):</strong> Nemotron 3 Nano Omni 30B A3B
+  (<a href="https://huggingface.co/nvidia/nemotron-3-nano-omni-30b-a3b"><code>nvidia/nemotron-3-nano-omni-30b-a3b</code></a>), local vLLM — vision + audio +
+  language jointly. Inline commands in
+  <a href="deploy-guide-dev/">Developer Deploy Guide</a>.</li>
+</ul>
+<p>Pin per system for reproducibility; alternatives trade VRAM footprint
+against caption / summary quality.</p>
+<h2 id="inference-stack">Inference stack</h2>
+<p><strong>vLLM-based serving.</strong> LLM and VLM run as containerized vLLM servers
+(public <a href="https://docs.vllm.ai/"><code>vllm/vllm-openai</code></a> image); hybrid mode
+points VSS at them via <code>--use-remote-llm</code> / <code>--use-remote-vlm</code>. NVFP4 MoE
+models need the Marlin pin on public images (<code>--moe-backend marlin</code> +
+<code>VLLM_NVFP4_GEMM_BACKEND=marlin</code>), as the Lightning recipes bake. Domain
+fine-tunes via <code>VLM_CUSTOM_WEIGHTS=&lt;path&gt;</code>. See
+<a href="../../stack/">Inference Stack &amp; Models</a>.</p>
+<h2 id="deployment-recipes">Deployment recipes</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Standalone LLM serving (full-GPU configs baked)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td><code>gb10 · Lightning</code> · <code>gb10 · Qwen3.8-27B</code></td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><code>precision · Lightning</code> · <code>precision · Qwen3.8-Flash-Next</code></td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><code>gb300 · Lightning</code> · <code>gb300 · GLM-5.3-Flash</code></td>
+</tr>
+</tbody>
+</table>
+<p>Inside the VSS hybrid stack the LLM is co-located with the VLM at <code>0.35</code>
+utilization — the inline command in <a href="deploy-guide-dev/">Developer Deploy Guide</a>
+is that variant. Full flow in the developer guide.</p>
+<h2 id="benchmarks-performance-validation">Benchmarks &amp; performance (validation)</h2>
+<h3 id="llm-concurrency-s-tier-measured-prior-reference-models-200-in-1000-out">LLM concurrency — S tier measured (prior reference models, 200 in / 1000 out)</h3>
+<p><strong>Dell Pro Precision 9 T2</strong> (Nemotron 3 Nano 30B A3B NVFP4) — interactive
+comfort <strong>c2–c4</strong>, large TTFT tail at c8:</p>
+<table>
+<thead>
+<tr>
+<th>Concurrency</th>
+<th>TTFT</th>
+<th>Output tok/s</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~29 ms</td>
+<td>80</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~41 ms</td>
+<td>159</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~47 ms</td>
+<td>301</td>
+<td>Good — interactive comfort</td>
+</tr>
+<tr>
+<td>8</td>
+<td>~11,575 ms</td>
+<td>301</td>
+<td><strong>Large TTFT tail; move to c4 or up-tier</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dell Pro Precision with GB10</strong> (Nemotron Nano 9B v2 FP8) — comfort
+<strong>c2–c4</strong>, acceptable through c16 (~16 tok/s per session):</p>
+<table>
+<thead>
+<tr>
+<th>Concurrency</th>
+<th>TTFT</th>
+<th>Aggregate tok/s</th>
+<th>Per-session tok/s</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~72 ms</td>
+<td>23</td>
+<td>23</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~97 ms</td>
+<td>47</td>
+<td>24</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~119 ms</td>
+<td>89</td>
+<td>22</td>
+<td>Good — interactive comfort</td>
+</tr>
+<tr>
+<td>8</td>
+<td>~125 ms</td>
+<td>158</td>
+<td>20</td>
+<td>Acceptable</td>
+</tr>
+<tr>
+<td>16</td>
+<td>~355 ms</td>
+<td>256</td>
+<td>16</td>
+<td>Marginal</td>
+</tr>
+<tr>
+<td>32</td>
+<td>~333 ms</td>
+<td>375</td>
+<td>12</td>
+<td>TTFT still low; per-session degrades</td>
+</tr>
+<tr>
+<td>64</td>
+<td>~752 ms</td>
+<td>491</td>
+<td>8</td>
+<td>Batch-only</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~1,985 ms</td>
+<td>573</td>
+<td>4</td>
+<td>Batch-only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M / L (planning estimate, not benchmarked for VSS):</strong> scale the S envelope — M ~2×, L ~3–4×
+S-tier concurrency at similar TTFT — and confirm with the promotion gates below.</p>
+<h3 id="gpu-memory-co-location-s-tier-measured-on-t2">GPU memory co-location (S tier, measured on T2)</h3>
+<p>Peak co-located GPU memory <strong>68.3 GB of 96 GB</strong> (71.4 %), both containers at
+<code>--gpu-memory-utilization 0.35</code>. <strong>VLM must start first</strong> — vLLM needs free
+GPU at startup.</p>
+<h3 id="planning-notes">Planning notes</h3>
+<p>Plan a <strong>video-ingest headroom</strong> buffer of 20–30 % on peak ingestion.
+Detection capacity is measured — YOLO26 table above.</p>
+<h2 id="management-environment">Management environment</h2>
+<ul>
+<li><strong>Storage:</strong> corpus + vector / graph indices sized against retention;
+  disk, NAS, and S3-compatible stores all supported upstream.</li>
+<li><strong>Monitoring:</strong> <a href="https://prometheus.io/">Prometheus</a> on vLLM <code>/metrics</code> (both containers); DCGM GPU
+  telemetry; Phoenix for VSS ingestion; <a href="https://grafana.com/">Grafana</a> panels for VLM ingest
+  (chunks / sec), summarization latency, storage growth.</li>
+<li><strong>Identity:</strong> org gateway with AD/LDAP-backed auth in front of the VSS UI
+  (port 7777) on multi-user tiers.</li>
+<li><strong>Data handling:</strong> video at rest may be sensitive — document retention,
+  encryption at rest, access control, and audit trail before rollout.</li>
+</ul>
+<h2 id="promotion-gates">Promotion gates</h2>
+<p><strong>Promotion gates (S → M → L)</strong> — promote only when all pass: healthy endpoint through the full sweep; error rate ≤ 1 %;
+p99 latency meets the use-case SLO; sustained tok/s and req/s on target; ≥ 2 consistent runs. A failed gate holds the
+tier and gets documented.</p>
+<h2 id="dependencies-risk-factors">Dependencies &amp; Risk factors</h2>
+<ul>
+<li><strong>Dependencies:</strong> upstream VSS Blueprint (<a href="https://www.docker.com/">Docker</a> Compose; Docker CE
+  version-sensitive); vLLM on GB10 / Precision / GB300; Nemotron LLM + Omni
+  VLM availability; NGC + <a href="https://huggingface.co/">Hugging Face</a> credentials; Container Toolkit.</li>
+<li><strong>Risk factors:</strong> M/L sizing is scaled from S; storage sizing depends on your footage; NVFP4
+  MoE on public images requires the Marlin backend pin.</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="deploy-guide-dev/">Developer Deploy Guide</a> · <a href="it-admin-guide/">IT-Admin Guide</a> · <a href="../agentic-coding">Agentic Coding</a></li>
+<li><a href="../../sizing/">sizing</a> · <a href="../../stack/">stack</a> · <a href="../../personas/">personas</a> · <a href="../../glossary/">glossary</a> · <a href="../../recipes/">recipe catalog</a> · <a href="../../">repo home</a></li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../assets/highlight.js" defer></script>
+<script src="../../assets/anchors.js" defer></script>
+</body>
+</html>

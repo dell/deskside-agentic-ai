@@ -1,0 +1,16 @@
+# local caches / secrets
+.cache/
+*.env
+__pycache__/
+
+# local-only working pages (not part of the published site)
+docs/template-standard.md
+docs/template-standard/
+assets/brand/dell-design-system.md
+docs/assets/brand/dell-design-system.md
+docs/design-system/
+# local-only page
+docs/tests/
+
+# raw aiperf artifacts stay local (ladder.json + MANIFEST.json + commands.txt are the published record)
+tests/data/**/level*/

@@ -1,0 +1,54 @@
+<svg width="1400" height="620" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="620" fill="#ffffff"/>
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Higher Education AI Lab - Usage &amp; Connectivity Architecture</text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">Students and devices reach the lab only through campus identity and a single HTTPS entry point</text>
+
+  <!-- column headers -->
+  <text x="250" y="122" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#1a237e">Students - on-site &amp; remote</text>
+  <text x="700" y="122" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d3c61">Identity &amp; campus edge</text>
+  <text x="1150" y="122" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#1b5e20">Lab LAN (internal)</text>
+
+  <!-- col 1 -->
+  <rect x="60" y="145" width="380" height="110" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="250" y="175" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a237e">On-site seats</text>
+  <text x="250" y="200" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">Dell Pro Precision 9 T2 / existing PCs (S)</text>
+  <text x="250" y="222" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">or dedicated GB10 (M / L)</text>
+  <rect x="60" y="285" width="380" height="96" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="250" y="315" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a237e">Remote student device</text>
+  <text x="250" y="340" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">personal laptop · off campus</text>
+  <rect x="60" y="411" width="380" height="96" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="250" y="441" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a237e">VDI session</text>
+  <text x="250" y="466" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">optional broker for a consistent desktop</text>
+
+  <!-- col 2 -->
+  <rect x="510" y="145" width="380" height="110" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="700" y="175" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#0d3c61">Campus SSO / IdP</text>
+  <text x="700" y="200" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">AD or Entra ID · MFA enforced</text>
+  <rect x="510" y="285" width="380" height="96" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="700" y="315" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#0d3c61">Reverse proxy / gateway</text>
+  <text x="700" y="340" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">HTTPS · single entry point</text>
+  <rect x="510" y="411" width="380" height="96" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="700" y="441" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#0d3c61">Jump box + firewall</text>
+  <text x="700" y="466" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">bastion with session logging · VLAN segmentation</text>
+
+  <!-- col 3 -->
+  <rect x="960" y="145" width="380" height="110" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1150" y="175" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1b5e20">GB10 AI compute</text>
+  <text x="1150" y="200" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">S: shared pool (2-3:1) · M/L: 1:1 per seat</text>
+  <text x="1150" y="222" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">L: + GB300 / Precision 9 pool</text>
+  <rect x="960" y="285" width="380" height="96" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1150" y="315" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1b5e20">JupyterHub / OpenWebUI</text>
+  <text x="1150" y="340" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">SSO-tied dev env · LiteLLM routing</text>
+  <rect x="960" y="411" width="380" height="96" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1150" y="441" font-family="Arial" font-size="15" font-weight="bold" text-anchor="middle" fill="#1b5e20">NAS + model proxy</text>
+  <text x="1150" y="466" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">course recipes · snapshots &amp; backup · optional DR</text>
+
+  <path d="M440 200 h70 M440 333 h70 M440 459 h70" stroke="#0672CB" stroke-width="3" marker-end="url(#b)"/>
+  <path d="M890 200 h70 M890 333 h70 M890 459 h70" stroke="#2e7d32" stroke-width="3" marker-end="url(#g)"/>
+  <text x="700" y="565" font-family="Arial" font-size="13" text-anchor="middle" fill="#616161">same five layers at every tier - only the AI compute layer changes</text>
+  <defs>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0672CB"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2e7d32"/></marker>
+  </defs>
+</svg>

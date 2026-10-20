@@ -1,0 +1,67 @@
+{
+ "manifest": "MANIFEST.json",
+ "ladders": {
+  "agent_60k_1k": {
+   "platform": "t6-gpu01-tp2",
+   "model": "nvidia/nemotron-3.5-super-vl",
+   "isl": 60000,
+   "osl": 1024,
+   "points": [
+    {
+     "c": 1,
+     "aggregate_tok_s": 65.37054414436138,
+     "per_session_tok_s": 65.37054414436138,
+     "ttft_ms_avg": 4595.74524459375,
+     "itl_ms_avg": 8.290383769549814,
+     "request_throughput": 0.07680486901966382,
+     "source": "levelC1/profile_c1.json"
+    },
+    {
+     "c": 2,
+     "aggregate_tok_s": 94.63821808871337,
+     "per_session_tok_s": 47.319109044356686,
+     "ttft_ms_avg": 6760.413831984375,
+     "itl_ms_avg": 12.780721254200428,
+     "request_throughput": 0.10262187963060022,
+     "source": "levelC2/profile_c2.json"
+    },
+    {
+     "c": 4,
+     "aggregate_tok_s": 110.95453420327071,
+     "per_session_tok_s": 27.738633550817678,
+     "ttft_ms_avg": 7822.17019884375,
+     "itl_ms_avg": 22.932834566396565,
+     "request_throughput": 0.13348666633474304,
+     "source": "levelC4/profile_c4.json"
+    },
+    {
+     "c": 8,
+     "aggregate_tok_s": 137.2097665709067,
+     "per_session_tok_s": 17.15122082136334,
+     "ttft_ms_avg": 9054.468305484375,
+     "itl_ms_avg": 39.248344014556125,
+     "request_throughput": 0.15825809293068824,
+     "source": "levelC8/profile_c8.json"
+    },
+    {
+     "c": 16,
+     "aggregate_tok_s": 157.34443021534426,
+     "per_session_tok_s": 9.834026888459016,
+     "ttft_ms_avg": 14931.550597296875,
+     "itl_ms_avg": 68.6596056476238,
+     "request_throughput": 0.180256753491131,
+     "source": "levelC16/profile_c16.json"
+    },
+    {
+     "c": 32,
+     "aggregate_tok_s": 168.42162344045616,
+     "per_session_tok_s": 5.263175732514255,
+     "ttft_ms_avg": 40303.71245098437,
+     "itl_ms_avg": 126.21871354945532,
+     "request_throughput": 0.19410750572093416,
+     "source": "levelC32/profile_c32.json"
+    }
+   ]
+  }
+ }
+}

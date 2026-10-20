@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/" class="active">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / glossary</div>
+    <article class="article">
+<h1 id="glossary">Glossary</h1>
+<p>Each entry says what the term is and why it matters when you size, deploy or operate a solution.</p>
+<h2 id="solutions-and-sizing">Solutions and sizing</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Solution (template)</strong></td>
+<td>An open-source reference architecture and deployment guide for one use case, with S/M/L sizing; lives in <a href="../solutions"><code>solutions/</code></a>.</td>
+<td>The unit you pick and deploy; every solution shares the same structure so they are comparable.</td>
+</tr>
+<tr>
+<td><strong>S / M / L</strong></td>
+<td>Sizing tiers mapped to Dell deskside systems (S = GB10 / T2, M = T4, L = GB300 / T6). See <a href="../sizing/">S/M/L Sizing</a>.</td>
+<td>Lets you choose a scale (users, concurrency) without changing the stack.</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision (GB10)</strong></td>
+<td>Dell deskside system powered by NVIDIA GB10 (Grace Blackwell, DGX Spark class), 128 GB unified memory, aarch64.</td>
+<td>CPU and GPU share one memory pool, so every process on the box counts against model memory.</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision (GB300)</strong></td>
+<td>High-end Dell deskside system powered by NVIDIA GB300 (252 GB HBM3e), aarch64.</td>
+<td>The L-tier single-system option; fits the largest models and highest concurrency.</td>
+</tr>
+<tr>
+<td><strong>Dell Pro Precision 9 T2 / T4 / T6</strong></td>
+<td>Dell tower workstations powered by 1 / 2 / 5 × NVIDIA RTX PRO 6000 Blackwell GPUs.</td>
+<td>Discrete GPUs connected over PCIe: shapes how multi-GPU serving (TP vs replicas) performs.</td>
+</tr>
+<tr>
+<td><strong>Max-Q</strong></td>
+<td>The lower-power (300 W) edition of the RTX PRO 6000 used in T4/T6.</td>
+<td>Sustained throughput and thermals differ from the 600 W Workstation Edition in T2.</td>
+</tr>
+<tr>
+<td><strong>Playbooks</strong></td>
+<td>NVIDIA's open-source deployment guides (build.nvidia.com Spark, Station and RTX hubs) that solutions build on.</td>
+<td>The upstream reference each solution starts from.</td>
+</tr>
+<tr>
+<td><strong>Personas</strong></td>
+<td>IT Admin, functional SME, AI engineer. See <a href="../personas/">Personas</a>.</td>
+<td>Each guide is written for one of them.</td>
+</tr>
+<tr>
+<td><strong>Seed-to-Scale</strong></td>
+<td>The gap between evaluating AI on a workstation and operating it in production.</td>
+<td>The reason each solution gives a path from one box to a fleet.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="serving-and-models">Serving and models</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://github.com/vllm-project/vllm">vLLM</a></strong></td>
+<td>Open-source LLM inference server with an OpenAI-compatible API.</td>
+<td>The supported serving engine; clients just need a base URL, and its metrics feed the dashboards.</td>
+</tr>
+<tr>
+<td><strong>NIM</strong></td>
+<td>NVIDIA Inference Microservice, a containerized model server.</td>
+<td>An alternative packaging for supported models.</td>
+</tr>
+<tr>
+<td><strong>Nemotron</strong></td>
+<td>NVIDIA's open model family (Lightning for S, Super VL for M/L).</td>
+<td>The default model recommendation in every solution.</td>
+</tr>
+<tr>
+<td><strong>NVFP4</strong></td>
+<td>NVIDIA 4-bit floating-point quantization (about 4.5 bits per weight including scales).</td>
+<td>Roughly quarters weight memory versus bf16, which is what lets 30B–120B models fit a deskside system.</td>
+</tr>
+<tr>
+<td><strong>MoE (mixture of experts)</strong></td>
+<td>A model where only some "expert" layers run per token (e.g. 30B total / 3B active).</td>
+<td>Fast like a small model but all experts must still fit in memory, so size by total parameters.</td>
+</tr>
+<tr>
+<td><strong>Reasoning model / reasoning parser</strong></td>
+<td>A model that emits a thinking trace before the answer; the server separates it with a parser.</td>
+<td>Small <code>max_tokens</code> budgets are consumed by thinking and return empty answers; use ≥ 512.</td>
+</tr>
+<tr>
+<td><strong>Tool-call parser</strong></td>
+<td>The server setting that turns the model's tool-call text into structured <code>tool_calls</code>.</td>
+<td>Wrong or missing parser silently breaks agents; recipes set the right one per model.</td>
+</tr>
+<tr>
+<td><strong>MTP / DFlash (speculative decoding)</strong></td>
+<td>Extra draft heads or draft models that propose several tokens per step.</td>
+<td>Raises single-stream speed; helps low concurrency more than high.</td>
+</tr>
+<tr>
+<td><strong>Engram</strong></td>
+<td><a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a>'s large n-gram embedding table, offloaded to host RAM.</td>
+<td>Explains its ≥ 128 GB host-RAM requirement.</td>
+</tr>
+<tr>
+<td><strong>KV cache</strong></td>
+<td>Per-request attention memory the server keeps while generating.</td>
+<td>Limits context length times concurrency; "GPU KV cache size" in the server log is the real capacity.</td>
+</tr>
+<tr>
+<td><strong>Prefix caching</strong></td>
+<td>Reusing the KV cache of a shared prompt prefix.</td>
+<td>Agents resend long histories; hits are free capacity (tracked on the dashboard).</td>
+</tr>
+<tr>
+<td><strong>Context window (<code>--max-model-len</code>)</strong></td>
+<td>The maximum prompt plus output tokens a recipe serves.</td>
+<td>Clients must stay inside it or get errors; <code>recipes/lib/client-config.sh</code> derives safe limits.</td>
+</tr>
+<tr>
+<td><strong>Unified memory</strong></td>
+<td>GB10's single CPU+GPU memory pool.</td>
+<td><code>nvidia-smi</code> shows no GPU memory figure; use host memory tools.</td>
+</tr>
+<tr>
+<td><strong>TP / DP / EP</strong></td>
+<td>Tensor, data and expert parallelism: split one model across GPUs, run independent replicas, or spread MoE experts.</td>
+<td>TP lowers latency per request; DP raises aggregate throughput. See <a href="../topology/">topology</a>.</td>
+</tr>
+<tr>
+<td><strong>LiteLLM</strong></td>
+<td>Open-source router/gateway that fronts several OpenAI-compatible backends.</td>
+<td>Gives one endpoint over replicas, with keys, retries and failover.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="measurement">Measurement</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://github.com/ai-dynamo/aiperf">AIPerf</a> (<code>aiperf</code>)</strong></td>
+<td>NVIDIA's open-source benchmarking tool for OpenAI-compatible inference endpoints.</td>
+<td>Used for measurement and sizing characterization: it drives a fixed synthetic workload at a chosen concurrency and reports throughput and latency, so numbers are repeatable and comparable across platforms. See <code>tests/</code>.</td>
+</tr>
+<tr>
+<td><strong>ISL / OSL</strong></td>
+<td>Input / Output Sequence Length: prompt tokens in, tokens generated.</td>
+<td>Sets the workload shape: short chat (200/200) and long-context agents (60k/1k) behave very differently, so every number is quoted with its shape.</td>
+</tr>
+<tr>
+<td><strong>Concurrency (C)</strong></td>
+<td>Number of requests in flight at once.</td>
+<td>The x-axis of a capacity ladder; developer counts are derived from it.</td>
+</tr>
+<tr>
+<td><strong>TTFT</strong></td>
+<td>Time to first token.</td>
+<td>The wait before anything appears; includes thinking tokens on reasoning models.</td>
+</tr>
+<tr>
+<td><strong>ITL</strong></td>
+<td>Inter-token latency.</td>
+<td>Sets the streaming speed a user feels (1/ITL tok/s per session).</td>
+</tr>
+<tr>
+<td><strong>Aggregate vs per-session tok/s</strong></td>
+<td>Total output tokens per second across all sessions, versus aggregate divided by C.</td>
+<td>Aggregate sizes the machine; per-session is what each user experiences and is compared with the responsiveness floor.</td>
+</tr>
+<tr>
+<td><strong>Responsiveness floor</strong></td>
+<td>Minimum per-session tok/s a user should see the Dell capacity tables size sessions at 20 tok/s.</td>
+<td>The threshold that turns a concurrency ladder into a usable-session count.</td>
+</tr>
+<tr>
+<td><strong>Tokenomics</strong></td>
+<td>Token throughput and utilisation expressed as cost versus an equivalent cloud API.</td>
+<td>The economics view of the platform; see <a href="../monitoring/"><code>monitoring/</code></a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="agents-and-operations">Agents and operations</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a> / <a href="https://openclaw.ai/">OpenClaw</a> / <a href="https://github.com/NVIDIA/OpenShell">OpenShell</a></strong></td>
+<td>NVIDIA's agent runtime (NemoClaw) that onboards agents such as OpenClaw and Hermes Agent and runs them in OpenShell sandboxes.</td>
+<td>Gives agents policy-bounded filesystem, network and subprocess access.</td>
+</tr>
+<tr>
+<td><strong>Hermes Agent</strong></td>
+<td>Nous Research's tool-using agent harness.</td>
+<td>The agent the Hermes solution runs on NemoClaw.</td>
+</tr>
+<tr>
+<td><strong>MCP</strong></td>
+<td>Model Context Protocol for connecting agents to tools.</td>
+<td>Tools run outside the sandbox with scoped credentials.</td>
+</tr>
+<tr>
+<td><strong>Policy tier (strict / standard / permissive)</strong></td>
+<td>NemoClaw sandbox policy presets.</td>
+<td>Decides what an agent may touch; use standard in production.</td>
+</tr>
+<tr>
+<td><strong>VSS</strong></td>
+<td>NVIDIA's Video Search and Summarization blueprint.</td>
+<td>The base of the video solution; needs its own LLM and VLM.</td>
+</tr>
+<tr>
+<td><strong>Landscape</strong></td>
+<td>Canonical's fleet-management service; script execution deploys recipes without SSH.</td>
+<td>The documented way to roll recipes out to many machines.</td>
+</tr>
+<tr>
+<td><strong>Readiness contract</strong></td>
+<td>Every recipe blocks until the endpoint serves a real completion, then prints one <code>READY</code> line.</td>
+<td>Automation and agents can trust "exit 0 means serving".</td>
+</tr>
+</tbody>
+</table>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

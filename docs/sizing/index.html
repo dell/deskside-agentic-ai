@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S/M/L Sizing — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/" class="active">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / sizing</div>
+    <article class="article">
+<h1 id="s-m-l-sizing-framework">S / M / L Sizing Framework</h1>
+<p>The sizing framework maps Dell deskside systems to workload scale. Every solution
+offers at least two tiers so you <strong>choose your scale, not your stack</strong>.</p>
+<h2 id="tier-system-mapping">Tier → system mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Dell system(s)</th>
+<th>GPU / memory</th>
+<th>Typical scale</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Dell Pro Precision with GB10</strong> · <strong>Dell Pro Precision 9 T2</strong></td>
+<td>GB10 (128 GB unified) · 1× RTX PRO 6000 Blackwell Workstation Edition (96 GB)</td>
+<td>Single user / developer</td>
+<td>DGX OS · Ubuntu 24.04+</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><strong>Dell Pro Precision 9 T4</strong></td>
+<td>2× RTX PRO 6000 Blackwell Max-Q (192 GB)</td>
+<td>Small team</td>
+<td>Ubuntu 24.04+</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Dell Pro Precision with GB300</strong> · <strong>Dell Pro Precision 9 T6</strong></td>
+<td>GB300 (252 GB HBM3e + 496 GB LPDDR5X) · 5× RTX PRO 6000 Blackwell Max-Q (480 GB)</td>
+<td>Multi-user / app host</td>
+<td>DGX OS · Ubuntu 24.04+</td>
+</tr>
+</tbody>
+</table>
+<p>The tiers above are the default sizing. A solution may specialize them where its use case calls for it; for example the Higher Education AI Lab defines its own S/M/L around seats and shared pools (see its README).</p>
+<h2 id="tier-memory-budgets-for-model-fit">Tier memory budgets (for model fit)</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th style="text-align: right;">Usable memory</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S (GB10)</td>
+<td style="text-align: right;">128 GB unified</td>
+<td>Shared CPU+GPU; <code>--gpu-memory-utilization</code> carves the GPU share</td>
+</tr>
+<tr>
+<td>S (T2)</td>
+<td style="text-align: right;">96 GB GDDR7</td>
+<td>RTX PRO 6000 Blackwell Workstation Edition [600W]</td>
+</tr>
+<tr>
+<td>M (T4)</td>
+<td style="text-align: right;">192 GB GDDR7</td>
+<td>2× RTX PRO 6000 Blackwell Max-Q [300W]; multi-instance or TP=2</td>
+</tr>
+<tr>
+<td>L (T6)</td>
+<td style="text-align: right;">480 GB GDDR7</td>
+<td>5× RTX PRO 6000 Blackwell Max-Q [300W]; multi-instance or TP</td>
+</tr>
+<tr>
+<td>L (GB300)</td>
+<td style="text-align: right;">252 GB + 496 GB</td>
+<td>HBM3e / LPDDR5X</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-choose-a-tier-per-solution">How to choose a tier (per solution)</h2>
+<p>A solution's S/M/L rows answer: <em>for this use case and this user count, which
+system, model, quant, and inference config — and what performance to expect?</em></p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>How many concurrent users?</td>
+<td>Tier (S→single, M→team, L→multi-user)</td>
+</tr>
+<tr>
+<td>Latency vs. throughput priority?</td>
+<td>Model size, quant, concurrency settings</td>
+</tr>
+<tr>
+<td>Context length needed?</td>
+<td><code>--max-model-len</code>, KV cache dtype, memory budget</td>
+</tr>
+<tr>
+<td>On-prem / air-gapped?</td>
+<td>OS, container registry, model caching strategy</td>
+</tr>
+</tbody>
+</table>
+<p>Each sizing table cell carries a <strong>status</strong> — <em>measured</em>, <em>spot-check</em>, <em>doc-reported</em> (raw data not in the repo)
+or <em>retired-model</em>. The machine-readable record of every number, with provenance, is
+<code>tests/data/latest/sizing.yaml</code>.</p>
+<h2 id="model-fit-rule-weights-kv-cache-headroom">Model-fit rule (weights, KV cache, headroom)</h2>
+<p>Use the <strong>checkpoint size on disk</strong> when you have it; otherwise estimate weights as
+<code>params_total × bits/8</code> with <strong>bf16 = 16, fp8 ≈ 8.5, NVFP4 ≈ 4.5 bits</strong> (4-bit values + block scales; <em>not</em> a flat ÷4).
+MoE models load <strong>all</strong> experts, so use total — not active — parameters.</p>
+<pre><code>budget  = memory_gb × gpu_memory_utilization − overhead        # overhead ≈ 3–6 GB (CUDA graphs, activations)
+          (GB10: unified pool shared with the OS and every other process — subtract what is already resident)
+weights = measured checkpoint GB   (or params_total × bits / 8)
+fit     = weights / budget
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>fit</th>
+<th>verdict</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≤ 60 %</td>
+<td>comfortable</td>
+<td>full context and high concurrency possible</td>
+</tr>
+<tr>
+<td>60–85 %</td>
+<td><strong>tight</strong></td>
+<td>cap <code>--max-model-len</code> / <code>--max-num-seqs</code>, FP8 KV cache; confirm with the vLLM startup lines <code>GPU KV cache size</code> / <code>Maximum concurrency</code></td>
+</tr>
+<tr>
+<td>&gt; 85 %</td>
+<td>does not leave usable KV cache</td>
+<td>add GPUs (TP), offload (e.g. engram), or pick a smaller model</td>
+</tr>
+</tbody>
+</table>
+<p>KV + Mamba/SSM state need real room, not leftovers: <strong>check <code>GPU KV cache size</code> in the server log and divide by
+(sessions × context)</strong> before promising concurrency.</p>
+<p>Worked examples (budget = memory × util − ~4 GB):</p>
+<table>
+<thead>
+<tr>
+<th>Model (checkpoint)</th>
+<th>System</th>
+<th style="text-align: right;">Budget</th>
+<th style="text-align: right;">Fit</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lightning NVFP4 (~21 GB)</td>
+<td>GB10, util 0.70 (128 GB pool)</td>
+<td style="text-align: right;">~86 GB</td>
+<td style="text-align: right;">24 %</td>
+<td>comfortable</td>
+</tr>
+<tr>
+<td>Super VL NVFP4 (~62 GB)</td>
+<td>T4, TP=2, util 0.9 (192 GB)</td>
+<td style="text-align: right;">~169 GB</td>
+<td style="text-align: right;">37 %</td>
+<td>comfortable (≈31 GB/GPU)</td>
+</tr>
+<tr>
+<td>Super VL NVFP4 (~62 GB)</td>
+<td>T2 single 96 GB, util 0.9</td>
+<td style="text-align: right;">~82 GB</td>
+<td style="text-align: right;">76 %</td>
+<td><strong>tight</strong> — short context, few sequences</td>
+</tr>
+<tr>
+<td>Super VL NVFP4 (~62 GB)</td>
+<td>GB300, util 0.85</td>
+<td style="text-align: right;">see note</td>
+<td style="text-align: right;">well under 60 %</td>
+<td>comfortable (memory figure approximate)</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> NVFP4 (~181 GiB ≈ 194 GB)</td>
+<td>GB300 252 GB, util 0.9</td>
+<td style="text-align: right;">~223 GB</td>
+<td style="text-align: right;">~87 %</td>
+<td><strong>over the line</strong> — works only with FP8 KV and ~45 GB left for KV (the recipe ships it; treat as exceptional)</td>
+</tr>
+</tbody>
+</table>
+<p>The previous "weights ≤ 60 % of budget, NVFP4 = bf16 ÷ 4" rule contradicted the shipped GLM and Flash-Next recipes; this
+table is the corrected rule.</p>
+<h2 id="precision-tower-coverage">Precision tower coverage</h2>
+<p>Dell Pro Precision 9 T2/T4/T6 (RTX PRO discrete GPUs) are covered at the solution level by the <code>precision</code> recipes
+(Lightning, <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a>, <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a>), health wrappers and the DP/TP launcher
+(<a href="../topology/">topology</a>). <strong>Measured</strong> tower numbers cover T2, a T4-equivalent TP=2 pair and a T6 2 × TP=2 layout (see <code>sizing.yaml</code>).
+NVIDIA's Spark/Station/RTX playbooks remain the upstream references.</p>
+<h2 id="validation-platforms">Validation platforms</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Platform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>Dell Pro Precision with GB10; Dell Pro Precision 9 T2</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Dell Pro Precision 9 T4</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Dell Pro Precision with GB300; Dell Pro Precision 9 T6</td>
+</tr>
+</tbody>
+</table>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

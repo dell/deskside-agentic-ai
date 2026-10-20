@@ -1,0 +1,14 @@
+# Image pin lock for every recipe.  Resolution priority (policy D2):
+#   1. release  a released vLLM version tag      -- used ONLY when release_validated=yes
+#   2. digest   an immutable image digest         -- per CPU arch (uname -m); '-' when not recorded
+#   3. nightly  moving/pinned-nightly tag         -- last resort; a warning is printed
+# Override per run: DESKSIDE_IMAGE_CHANNEL=release|digest|nightly, or the recipe's *_IMAGE env var.
+# 'release' candidates are NOT validated yet: validating one = run the recipe + tests/aiperf on hardware,
+# then flip release_validated=yes. Digests below record the images that ran on the validation hosts (aarch64 and x86_64).
+# id|release|release_validated|digest_aarch64|digest_x86_64|nightly|notes
+lightning|v0.30.0|no|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai:nightly|older release tags fail Lightning weight load (v0.22.0 vocab mismatch); v0.30.0 untested for Lightning
+qwen27b|v0.30.0|no|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai:nightly|needs qwen3_5 + mtp support; release untested
+flashnext|-|no|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai:nightly|needs qwen4_exp/engram flags -> nightly-only so far
+glm53|-|no|vllm/vllm-openai@sha256:819ec9c063412e5730d1b0e82046ba540d1bf991f3c4f661a849aae8a0c52374|-|vllm/vllm-openai:glm53-flash-arm64-cu130|day-0 arm64 build tag; two digests exist locally (index vs manifest) -- first recorded
+supervl|v0.32.0|no|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd|vllm/vllm-openai:nightly-3f1bcfd82bb2e93fcd364fc7a5491718453a77e2|validated 2026-10-19 on a T6 tower (TP=2, two GPUs) with the pinned nightly tag, which resolves to this digest; model card also allows release v0.32.0
+litellm|-|no|ghcr.io/berriai/litellm@sha256:2e4c0371f3a8c28e4da131d77abaa8341cd3b0c2fcc4d34d7c5900431af7b9d0|ghcr.io/berriai/litellm@sha256:2e4c0371f3a8c28e4da131d77abaa8341cd3b0c2fcc4d34d7c5900431af7b9d0|ghcr.io/berriai/litellm:main-stable|router; main-stable multi-arch index digest (covers arm64 and amd64); x86_64 router validated 2026-10-19 with 2 x TP=2 replicas

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Coding — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../index.html">
+    <img src="../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../">Overview</a>
+<a href="../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../solutions/agentic-coding/" class="active">Agentic Coding</a>
+<a class="sub active" href="../../solutions/agentic-coding/">Overview</a>
+<a class="sub" href="../../solutions/agentic-coding/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub" href="../../solutions/agentic-coding/ide-integration/">IDE Integration</a>
+<a class="sub" href="../../solutions/agentic-coding/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../recipes/">Deployment Recipes</a>
+<a href="../../sizing/">S/M/L Sizing</a>
+<a href="../../stack/">Inference Stack &amp; Models</a>
+<a href="../../stack-composition/">Stack Composition</a>
+<a href="../../personas/">Personas</a>
+<a href="../../glossary/">Glossary</a>
+<a href="../../architecture-builder.html">Architecture Builder</a>
+<a href="../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../changelog/">Changelog</a>
+<a href="../../scope/">Scope &amp; Backlog</a>
+<a href="../../operations/">Operations</a>
+<a href="../../topology/">Topology (TP vs DP)</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../index.html">Home</a> / solutions / agentic-coding</div>
+    <article class="article">
+<h1 id="agentic-coding-solution">Agentic Coding Solution</h1>
+<blockquote>
+<p>A private, on-deskside AI coding assistant — code generation, explanation,
+refactoring, and agentic CLI/IDE workflows served locally on Dell hardware
+behind an OpenAI-compatible API.</p>
+</blockquote>
+<h2 id="summary">Summary</h2>
+<p>Developers and data scientists want fast, private code assistance without sending
+source code to a public cloud. This solution serves a coding-capable LLM on a Dell
+deskside system (GB10 / Precision / GB300) and integrates with CLI agents and IDEs
+(VS Code, JetBrains) through the standard OpenAI-compatible endpoint. It wraps
+NVIDIA's CLI Coding Agent, Vibe Coding, and Local Coding Agent playbooks
+and the RTX Local AI playbook hub, with Dell S/M/L sizing and an IT-Admin deployment + management guide.</p>
+<h2 id="personas">Personas</h2>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>What this solution gives them</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT Admin</strong></td>
+<td>One-command deploy, fleet/management guidance, identity &amp; monitoring hooks, dev→prod scaling — see <a href="it-admin-guide/">IT-Admin Guide</a>.</td>
+</tr>
+<tr>
+<td><strong>Functional SME</strong></td>
+<td>"Which system for my team size?" — the S/M/L table below with expected throughput / concurrency.</td>
+</tr>
+<tr>
+<td><strong>AI Engineer</strong></td>
+<td>Nemotron default + tier-scaled alternative models, <a href="https://github.com/vllm-project/vllm">vLLM</a> config, and IDE/CLI integration — see <a href="ide-integration/">IDE Integration</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reference-nvidia-playbooks">Reference NVIDIA playbooks</h2>
+<table>
+<thead>
+<tr>
+<th>Playbook</th>
+<th>Platform</th>
+<th>What Dell adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://build.nvidia.com/spark/cli-coding-agent">CLI Coding Agent</a></td>
+<td>DGX Spark (GB10)</td>
+<td>Dell system sizing, vLLM production config, fleet mgmt</td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/spark/vibe-coding">Vibe Coding in VS Code</a></td>
+<td>DGX Spark (GB10)</td>
+<td>IDE integration guide for enterprise dev environments</td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/station/local-coding-agent">Local Coding Agent</a></td>
+<td>DGX Station (GB300)</td>
+<td>L-tier sizing, multi-user app-host configuration</td>
+</tr>
+<tr>
+<td><a href="https://build.nvidia.com/rtx">RTX Local AI hub</a></td>
+<td>RTX PRO discrete GPUs (Precision towers)</td>
+<td>T2/T4/T6 tier recipes and validation (vLLM, multi-GPU, fine-tuning playbooks)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="architecture">Architecture</h2>
+<p><img alt="Agentic Coding solution architecture" src="../../assets/diagrams/agentic-coding-architecture.svg" /></p>
+<p>This solution runs on the common deskside base — the Hardware, OS, NVIDIA
+software, container-runtime, and integration layers are identical to the
+<a href="../../assets/diagrams/deskside-agentic-ai-architecture.svg">base architecture</a>.
+Agentic Coding specializes only the top two layers:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>In this solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integration</td>
+<td>Source control (Git/Gitea) + enterprise identity (AD/LDAP) via the optional gateway; storage for model weights</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>OpenAI-compatible coding assistant: IDE/CLI clients (VS Code, JetBrains, <a href="https://opencode.ai/">OpenCode</a>, <a href="https://claude.com/claude-code">Claude Code</a>, Copilot CLI, <a href="https://github.com/openai/codex">Codex CLI</a>) → vLLM serving <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning NVFP4</a> (S-tier default; <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> is the M/L default), with per-tier alternatives</td>
+</tr>
+<tr>
+<td>Management</td>
+<td><a href="https://prometheus.io/">Prometheus</a> <code>:9090</code> + <a href="https://grafana.com/">Grafana</a> <code>:3000</code> serving dashboards, pinned-image recipe rollouts, <a href="https://ubuntu.com/landscape">Canonical Landscape</a> fleet ops — see <a href="it-admin-guide/">IT-Admin Guide</a></td>
+</tr>
+<tr>
+<td>Container</td>
+<td><a href="https://www.docker.com/">Docker</a> Engine (serving recipes); common runtime</td>
+</tr>
+<tr>
+<td>NVIDIA</td>
+<td>GPU drivers, CUDA, cuDNN, NGC containers; common stack</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>DGX OS (GB10) / Ubuntu 24.04+; common</td>
+</tr>
+<tr>
+<td>Hardware</td>
+<td>S: Dell Pro Precision with GB10 / 9 T2 · M: 9 T4 · L: Dell Pro Precision with GB300 / 9 T6</td>
+</tr>
+</tbody>
+</table>
+<p>A single vLLM container serves a coding model on the Dell deskside system, exposing
+<code>/v1/chat/completions</code> and <code>/v1/completions</code>. CLI agents and IDE extensions connect
+via the OpenAI client. Higher tiers add instances / tensor-parallelism and an
+optional gateway for multi-user serving.</p>
+<pre><code>Developer IDE / CLI agent
+        │  (OpenAI-compatible API, :8000)
+        ▼
+   vLLM container  ──►  Coding model (Nemotron default)
+        │
+   Dell deskside system (S: GB10/T2 · M: T4 · L: GB300/T6)
+</code></pre>
+<h2 id="s-m-l-sizing">S / M / L sizing</h2>
+<p>Two axes wear the S/M/L label: the <strong>sizing</strong> tier (system) and the <strong>model pick</strong>
+for that tier. Each sizing tier pins one <strong>default model</strong> and carries one
+<strong>tier-scaled alternative</strong> — a larger, same-API model swapped in per workload
+(see <a href="#model-recommendation">Model recommendation</a> for recipes and numbers).</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Dell system</th>
+<th>Model (default · alt)</th>
+<th>Quant</th>
+<th>vLLM config</th>
+<th>Expected (200/200 chat)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Dell Pro Precision with GB10</strong> (128 GB)</td>
+<td>Nemotron-3.5-Lightning-30B-A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a> (+ MTP)</td>
+<td>NVFP4</td>
+<td><code>--moe-backend marlin</code> + <code>VLLM_NVFP4_GEMM_BACKEND=marlin</code> + <code>--kv-cache-dtype fp8 --max-model-len 200000 --max-num-seqs 32 --gpu-memory-utilization 0.7</code></td>
+<td><strong>validated on GB10:</strong> ~66 out tok/s @ c20 (agent-workflow shape, ISL 60k/OSL 1k); chat-shape reference sweep in Validation</td>
+</tr>
+<tr>
+<td><strong>S</strong></td>
+<td><strong>Precision T2</strong> (1× RTX PRO 6000)</td>
+<td>Nemotron-3.5-Lightning-30B-A3B · alt <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B</a> (+ MTP)</td>
+<td>NVFP4</td>
+<td><code>--moe-backend marlin</code> + <code>VLLM_NVFP4_GEMM_BACKEND=marlin</code> + <code>--kv-cache-dtype fp8 --max-model-len 200000 --max-num-seqs 512 --gpu-memory-utilization 0.9</code></td>
+<td><strong>5,352 chat / 399 agent tok/s</strong> (doc-reported; peak chat / agent @ c20)</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td><strong>Precision T4</strong> (2× RTX PRO 6000, 192 GB)</td>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> · alt <a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></td>
+<td>NVFP4</td>
+<td>multi-instance or TP=2; higher concurrency</td>
+<td><strong>168 agent / 1,814 chat tok/s @ c32 / c64</strong> (Super VL TP=2, measured on a T6 host — same GPU pairing) — small team (handful of concurrent devs)</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Dell Pro Precision with GB300</strong> (252 GB HBM3e)</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td>NVFP4</td>
+<td>single instance, <code>--gpu-memory-utilization 0.85 --max-model-len 262144 --max-num-seqs 128</code></td>
+<td>team / app-host — <strong>225 agent / 3,694 chat tok/s @ c32 / c64</strong> (measured, Super VL)</td>
+</tr>
+<tr>
+<td><strong>L</strong></td>
+<td><strong>Precision T6</strong> (5× RTX PRO 6000, 480 GB)</td>
+<td>Nemotron 3.5 Super VL · alt <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td>NVFP4</td>
+<td>2 × TP=2 behind LiteLLM (the measured configuration) or 1 instance per GPU + gateway</td>
+<td>team / app-host — <strong>252 agent / 2,020 chat tok/s @ c32 / c64</strong> (measured, 2 × TP=2)</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>S</strong> row is backed by a measured vLLM benchmark on a GB10 system — see
+<strong>Validation</strong> below. M/L rows carry measured serving numbers for the models
+they name; the concurrency figures are planning guidance for your pilot to
+tune.</p>
+<h3 id="scaling-decision-table">Scaling decision table</h3>
+<p>When to move to the next tier — based on measured S-tier performance:</p>
+<table>
+<thead>
+<tr>
+<th>Condition (observed at current tier)</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTFT p95 &lt; 500 ms at your peak concurrency</td>
+<td><strong>Stay</strong> — current tier has headroom</td>
+</tr>
+<tr>
+<td>TTFT p95 &gt; 1 s at peak concurrency</td>
+<td><strong>Scale up</strong> — move to next tier</td>
+</tr>
+<tr>
+<td>Waiting-request queue sustained &gt; 0</td>
+<td><strong>Scale up</strong> — requests are queuing</td>
+</tr>
+<tr>
+<td>Need &gt; 8 concurrent coding sessions</td>
+<td><strong>Move S → M</strong> (multi-instance or TP=2 on 2× RTX PRO 6000)</td>
+</tr>
+<tr>
+<td>Need &gt; 16 concurrent coding sessions</td>
+<td><strong>Move M → L</strong> (multi-instance or GB300)</td>
+</tr>
+<tr>
+<td>Need more context than 200K, or a larger model</td>
+<td><strong>Move to L</strong> (GB300 Super VL serves a 262K window; GLM-5.3-Flash alternative on GB300/T6)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>S-tier reference data</strong> (GB10, 200/200 chat shape on the prior reference model):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Concurrent devs</th>
+<th style="text-align: right;">TTFT (ms)</th>
+<th style="text-align: right;">ITL (ms)</th>
+<th style="text-align: right;">Per-session output tok/s</th>
+<th style="text-align: right;">Aggregate output tok/s</th>
+<th>UX quality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">~113</td>
+<td style="text-align: right;">~16.7</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">58</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">~267</td>
+<td style="text-align: right;">~24.1</td>
+<td style="text-align: right;">~40</td>
+<td style="text-align: right;">158</td>
+<td>Good</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">~348</td>
+<td style="text-align: right;">~33.5</td>
+<td style="text-align: right;">~29</td>
+<td style="text-align: right;">228</td>
+<td>Acceptable</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">~583</td>
+<td style="text-align: right;">~47.1</td>
+<td style="text-align: right;">~20</td>
+<td style="text-align: right;">321</td>
+<td>Marginal (move to M)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Multi-instance guidance (L tier):</strong> on the Precision T6 (5× RTX PRO 6000),
+run one vLLM instance per GPU behind a <a href="https://www.litellm.ai/">LiteLLM</a> proxy for load balancing.
+This avoids tensor-parallelism over PCIe (slow) and gives 5× the
+single-GPU capacity. See <a href="it-admin-guide/">IT-Admin Guide</a>.</p>
+<h3 id="measured-agentic-capacity-by-tier-agent-shape-60k-token-prompts-1k-output">Measured agentic capacity by tier (agent shape: 60k-token prompts, 1k output)</h3>
+<p>Every tier-and-model combination with a measured agent-shape ladder, one row each.
+The sessions columns give the concurrency at which per-session output (aggregate / C,
+log-log interpolated on the measured ladder) crosses the stated floor; aggregate is
+quoted at c32 unless noted. Raw ladders in <code>tests/data/</code>,
+machine-readable record <code>tests/data/latest/sizing.yaml</code>;
+the Recipe Configuration panel in the <a href="it-admin-guide/">IT-Admin Guide</a> shows the
+full ladder for any platform and model.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Platform and topology</th>
+<th>Model</th>
+<th style="text-align: right;">Sessions at 20 tok/s</th>
+<th style="text-align: right;">Sessions at 10 tok/s</th>
+<th style="text-align: right;">Aggregate tok/s at c32</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>GB10, 1 instance</td>
+<td>Nemotron 3.5 Lightning</td>
+<td style="text-align: right;">~1.9</td>
+<td style="text-align: right;">~3.8</td>
+<td style="text-align: right;">38 at c4 (ladder ended at c4)</td>
+</tr>
+<tr>
+<td>M</td>
+<td>T4 (2 GPUs), 1 instance TP=2</td>
+<td>Nemotron 3.5 Super VL</td>
+<td style="text-align: right;">~6</td>
+<td style="text-align: right;">~15</td>
+<td style="text-align: right;">168</td>
+</tr>
+<tr>
+<td>L</td>
+<td>T6 (4 of 5 GPUs), 2 × TP=2 behind LiteLLM</td>
+<td>Nemotron 3.5 Super VL</td>
+<td style="text-align: right;">~11</td>
+<td style="text-align: right;">~24</td>
+<td style="text-align: right;">252</td>
+</tr>
+<tr>
+<td>L</td>
+<td>GB300, 1 instance</td>
+<td>Nemotron 3.5 Super VL</td>
+<td style="text-align: right;">~10</td>
+<td style="text-align: right;">~22</td>
+<td style="text-align: right;">225</td>
+</tr>
+<tr>
+<td>L</td>
+<td>GB300, 1 instance</td>
+<td>Nemotron 3.5 Lightning</td>
+<td style="text-align: right;">~17</td>
+<td style="text-align: right;">~33</td>
+<td style="text-align: right;">332</td>
+</tr>
+</tbody>
+</table>
+<p>Agent-shape prompts are prefill-heavy, so a GB300 instance is no faster than two TP=2 replicas on a tower for this shape;
+pick the topology per workload (<a href="../../topology/">topology</a>).</p>
+<p><strong>How to read these numbers.</strong> They are hardware concurrency at a responsiveness
+floor — how many simultaneous agent sessions a platform sustains above the floor.
+Translating sessions into seats is a team-shape judgement (desk coverage,
+utilisation, sessions per person), not a measured figure: make it in your pilot
+plan, and compute cost from your own cloud rate, hardware price, and the
+utilisation the tokenomics dashboard measures
+(<a href="../../monitoring/"><code>monitoring/</code></a>, included with every recipe).
+Alternative models (Qwen3.8-Flash-Next, GLM-5.3-Flash, Qwen3.8 27B) publish their
+serving-verification numbers in the <a href="../../stack/">Inference Stack</a>.</p>
+<p><strong>Traceability.</strong> Scripts, data, and tests are in <code>tests/</code>;
+<code>tests/aiperf/</code> holds the ladder configuration and the exact commands.</p>
+<h2 id="model-recommendation">Model recommendation</h2>
+<ul>
+<li><strong>Default:</strong> <strong>Nemotron family</strong>, scaled per tier. On <strong>S</strong>:
+  <code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code>
+  (validated on GB10: marlin MoE + NVFP4 GEMM backends, ~66 out tok/s @ c20 on
+  agent-workflow load). On <strong>M and L</strong>: <strong>Nemotron 3.5 Super VL</strong> (default;
+  <code>recipes/precision/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh</code>,
+  <code>recipes/gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh</code>; Lightning at higher concurrency /
+  multi-instance is the measured alternative). MoE, NVFP4, tool-calling capable, reasoning model —
+  give clients <code>max_tokens &gt;= 512</code> (smaller budgets are eaten by the thinking
+  trace).</li>
+<li><strong>Alternatives (one per tier, same OpenAI-compatible API):</strong></li>
+<li><strong>Qwen3.8 27B (NVFP4 + MTP)</strong> — S-tier alternative on GB10: dense 27B
+    NVFP4 with MTP speculative decode baked in
+    (<code>--speculative-config '{"method":"mtp","num_speculative_tokens":2}'</code>),
+    full 262K context with FP8 KV; ~62–65 out tok/s single-stream measured
+    on GB10. Recipe:
+    <code>recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh</code>. Same reasoning-model
+    client rule: <code>max_tokens &gt;= 512</code>.</li>
+<li><strong>Qwen3.8-Flash-Next (NVFP4)</strong> — M-tier alternative: 125B-total / ~6B-active
+    MoE with MTP ×3 and the 51B n-gram table CPU-offloaded
+    (<code>--engram-config '{"cpu_offload":true}'</code>, needs ≥128 GB host RAM), native
+    262K context. Serving verified (chat + tool calling pass; ~310 out tok/s
+    single-stream spot check on a warm instance). Recipe:
+    <code>recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh</code>.</li>
+<li><strong>GLM-5.3-Flash (NVFP4)</strong> — L-tier alternative on GB300: 320B-total /
+    18B-active MoE, ~181 GiB NVFP4 on one 252 GB GB300 with FP8 KV, 262K
+    context, <code>glm47</code> tool + <code>glm45</code> reasoning parsers. Serving verified (chat +
+    tool calling pass; ~111 out tok/s single-stream spot check). Recipe:
+    <code>recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh</code>.</li>
+</ul>
+<p>Refreshed as new open-weight coding models are released. Last updated 10/16/2026.</p>
+<h2 id="inference-stack">Inference stack</h2>
+<p><strong>vLLM (preferred).</strong> OpenAI-compatible, production-grade, the basis for all
+sizing benchmarks. Ollama is the developer quick-start reference; NIM is the
+containerized/enterprise-support option. See <a href="../../stack/">Inference Stack &amp; Models</a>.</p>
+<h2 id="deployment">Deployment</h2>
+<p>S-tier (GB10), one command:</p>
+<pre><code class="language-bash"># Serve the default coding model on a Dell deskside system powered by NVIDIA GB10
+recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh --port 8000
+
+# Verify
+curl -s http://localhost:8000/v1/models
+
+# Smoke-test a completion (reasoning model: keep max_tokens &gt;= 512)
+curl -s http://localhost:8000/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{&quot;model&quot;:&quot;nvidia/nemotron-3.5-lightning&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Write a Python function to reverse a string.&quot;}],&quot;max_tokens&quot;:1024}'
+</code></pre>
+<p>Other platforms (Precision T2/T4, GB300): see the
+<a href="../../recipes/">recipe catalog</a>.</p>
+<p>Full setup/management/scaling: <a href="it-admin-guide/">IT-Admin Guide</a>.
+IDE &amp; CLI agent integration: <a href="ide-integration/">IDE Integration</a>.
+Fleet rollout without SSH (Canonical Landscape): <a href="landscape-fleet-deploy/">Fleet Deploy via Landscape</a>.</p>
+<h2 id="management-environment">Management environment</h2>
+<ul>
+<li><strong>Identity:</strong> front the endpoint with the org's gateway / reverse proxy for
+  AD/LDAP-backed auth (app-host / multi-user tiers).</li>
+<li><strong>Monitoring:</strong> scrape vLLM <code>/metrics</code> with Prometheus; Grafana dashboards for
+  tokens/sec, TTFT, queue depth.</li>
+<li><strong>Fleet:</strong> containerized deploy (Docker/Podman or NIM) for reproducibility;
+  scale dev→prod by adding instances (M/L) behind the gateway. For fleets of
+  enrolled Ubuntu machines, roll the recipes out centrally with
+  <a href="landscape-fleet-deploy/">Fleet Deploy via Landscape</a> (SSH-less, audited via Landscape activity log).</li>
+</ul>
+<h2 id="validation-aiperf">Validation (aiperf)</h2>
+<p><strong>S tier chat validated on a Dell Pro Precision with GB10 with the prior reference
+model</strong> (the shipping default is Lightning —
+its GB10-validated config and agent-shape numbers are in the recipe header) —
+a clean interactive-chat (200/200) sweep across the 1→16 concurrency ladder,
+<strong>0 errors</strong>, using the stable serving config (<code>--moe-backend cutlass</code> +
+<code>--max-num-seqs 16</code> + prefix caching on the Dell GB10 vLLM build):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Concurrency</th>
+<th style="text-align: right;">TTFT (ms)</th>
+<th style="text-align: right;">ITL (ms)</th>
+<th style="text-align: right;">Per-session output tok/s</th>
+<th style="text-align: right;">Aggregate output tok/s</th>
+<th style="text-align: right;">Req/s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.29</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">267</td>
+<td style="text-align: right;">24.1</td>
+<td style="text-align: right;">~40</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">0.79</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">583</td>
+<td style="text-align: right;">47.1</td>
+<td style="text-align: right;">~20</td>
+<td style="text-align: right;">321</td>
+<td style="text-align: right;">1.61</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Resolved:</strong> the earlier stock-image NVFP4 MoE instability under concurrency is
+  fixed by pinning the MoE backend (<code>cutlass</code> on the Dell GB10 build used for
+  this sweep; the shipping Lightning recipes use <code>marlin</code> on public images).</li>
+</ul>
+<h2 id="dependencies-risk-factors">Dependencies &amp; Risk factors</h2>
+<ul>
+<li><strong>Dependencies:</strong> NVIDIA
+  CLI Coding Agent playbook; vLLM on GB10; Nemotron coding model
+  availability; Dell GB10 hardware.</li>
+<li><strong>Risk factors:</strong> vLLM-on-GB10 NVFP4 stability requires an explicit MoE backend
+  pin (<code>cutlass</code> on the Dell GB10 build; <code>marlin</code> on the public-image Lightning
+  recipes);
+  model recommendations evolve with the Nemotron family and new open-weights
+  coding models.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../assets/highlight.js" defer></script>
+<script src="../../assets/anchors.js" defer></script>
+</body>
+</html>

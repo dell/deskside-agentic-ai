@@ -1,0 +1,63 @@
+<svg width="1400" height="660" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="660" fill="#ffffff"/>
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Dell Deskside Agentic AI - Agentic Video Search &amp; Summarization Architecture</text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">Video ingest, embeddings, and agentic search served entirely on one Dell deskside system</text>
+
+  <!-- Row 1: ingest -->
+  <rect x="50" y="120" width="340" height="110" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="220" y="150" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#0d3c61">Video sources</text>
+  <text x="220" y="176" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">IP cameras · stored files</text>
+  <text x="220" y="198" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Dell VST / VIOS connectors</text>
+
+  <rect x="530" y="120" width="340" height="110" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="700" y="150" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#0d3c61">Extraction + embeddings</text>
+  <text x="700" y="176" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Object / event detection</text>
+  <text x="700" y="198" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">VLM captions → vector space</text>
+
+  <rect x="1010" y="120" width="340" height="110" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="1180" y="150" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#0d3c61">Index store</text>
+  <text x="1180" y="176" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Message broker</text>
+  <text x="1180" y="198" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Vector / graph databases</text>
+
+  <path d="M390 175 h140" stroke="#0672CB" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M870 175 h140" stroke="#0672CB" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- Row 2: agent -->
+  <rect x="50" y="310" width="340" height="110" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="220" y="340" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">User</text>
+  <text x="220" y="366" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Web UI · OpenAI-compatible API</text>
+  <text x="220" y="388" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">or tool-using agent</text>
+
+  <rect x="530" y="310" width="340" height="110" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="700" y="340" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">VSS Agent + Agent UI</text>
+  <text x="700" y="366" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Docker Compose stack</text>
+  <text x="700" y="388" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">MCP tools over the index</text>
+
+  <rect x="1010" y="310" width="340" height="110" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="1180" y="340" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">Agentic outputs</text>
+  <text x="1180" y="366" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Natural-language search · Q&amp;A</text>
+  <text x="1180" y="388" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Summaries · clip retrieval</text>
+
+  <path d="M390 365 h140" stroke="#1a237e" stroke-width="3" marker-end="url(#b)"/>
+  <path d="M870 365 h140" stroke="#1a237e" stroke-width="3" marker-end="url(#b)"/>
+  <path d="M1180 230 v80" stroke="#0672CB" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- Row 3: serving -->
+  <rect x="50" y="500" width="620" height="110" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="360" y="530" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1b5e20">Local model serving - vLLM (recipes/)</text>
+  <text x="360" y="556" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Nemotron 3.5 Super VL NVFP4 (LLM) + vision-language model</text>
+  <text x="360" y="578" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Co-located on one system; OpenAI-compatible /v1 endpoints</text>
+
+  <rect x="730" y="500" width="620" height="110" rx="8" fill="#f5f5f5" stroke="#616161" stroke-width="2"/>
+  <text x="1040" y="530" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#212121">Observability + platform</text>
+  <text x="1040" y="556" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Prometheus + Grafana (started with every recipe)</text>
+  <text x="1040" y="578" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Dell Pro Precision with GB10 / GB300 · Precision 9 towers</text>
+
+  <path d="M700 420 v80" stroke="#2e7d32" stroke-width="3" marker-end="url(#g)"/>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0672CB"/></marker>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#1a237e"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2e7d32"/></marker>
+  </defs>
+</svg>

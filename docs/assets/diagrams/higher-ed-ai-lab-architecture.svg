@@ -1,0 +1,38 @@
+<svg width="1400" height="700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="700" fill="#ffffff"/>
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Dell Deskside Agentic AI - Higher Education AI Lab Architecture</text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">Workstations serve models over the lab LAN; the same services run at every tier (S · M · L)</text>
+
+  <rect x="60" y="115" width="1280" height="96" rx="8" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="700" y="147" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1a237e">Students</text>
+  <text x="700" y="173" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">thin clients (S) · Dell Pro Precision with GB10 seats (M / L - the seat is the workstation)</text>
+  <text x="700" y="196" font-family="Arial" font-size="13" text-anchor="middle" fill="#616161">lab LAN 203.0.113.0/24 (documentation example; real deployments use the campus address plan)</text>
+
+  <rect x="60" y="260" width="1280" height="110" rx="8" fill="#e3f2fd" stroke="#0672CB" stroke-width="2"/>
+  <text x="700" y="292" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#0d3c61">Management node</text>
+  <text x="700" y="318" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">reverse proxy · LiteLLM router · JupyterHub</text>
+  <text x="700" y="342" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">campus SSO / IdP · Canonical Landscape · Prometheus + Grafana :3000</text>
+
+  <rect x="60" y="418" width="620" height="150" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="370" y="450" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#1b5e20">Model-serving workstations</text>
+  <text x="370" y="478" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">S: shared GB10 pool (light seats call the pool)</text>
+  <text x="370" y="502" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">M: dedicated GB10 per seat (1:1)</text>
+  <text x="370" y="526" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">NAS-backed Hugging Face cache · course recipes + seat resets</text>
+
+  <rect x="720" y="418" width="620" height="150" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="1030" y="450" font-family="Arial" font-size="17" font-weight="bold" text-anchor="middle" fill="#bf360c">Shared frontier pool (L tier only)</text>
+  <text x="1030" y="478" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Dell Pro Precision with GB300 (252 GB HBM3e) · Precision 9 towers</text>
+  <text x="1030" y="502" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">frontier models for demos, fine-tuning, and research projects</text>
+  <text x="1030" y="526" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">~1 frontier node per 10 students</text>
+
+  <path d="M700 211 v49" stroke="#0672CB" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M370 370 v48" stroke="#2e7d32" stroke-width="3" marker-end="url(#g)"/>
+  <path d="M1030 370 v48" stroke="#e65100" stroke-width="3" marker-end="url(#o)"/>
+  <text x="700" y="625" font-family="Arial" font-size="13" text-anchor="middle" fill="#616161">same five layers at every tier - only the AI compute layer changes · fleet managed as one pool via Landscape</text>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#0672CB"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2e7d32"/></marker>
+    <marker id="o" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#e65100"/></marker>
+  </defs>
+</svg>

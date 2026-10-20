@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inference Stack &amp; Models — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/" class="active">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / stack</div>
+    <article class="article">
+<h1 id="inference-stack-models">Inference Stack &amp; Models</h1>
+<p>The single source of truth mapping <strong>serving stack → model → system tier →
+expected performance</strong> for solutions. Defaults are opinionated; alternatives are
+provided as reference.</p>
+<h2 id="inference-serving">Inference serving</h2>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Role</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://github.com/vllm-project/vllm">vLLM</a></strong></td>
+<td><strong>Preferred / production</strong></td>
+<td>First and best for production, multi-session deployments; OpenAI-compatible API; the default for all solutions and all benchmarks</td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>Reference / quick-start</td>
+<td>Developer quick-start, single-user experimentation</td>
+</tr>
+<tr>
+<td>NVIDIA NIM</td>
+<td>Containerized microservice</td>
+<td>Standardized, reproducible packaging; enterprise support</td>
+</tr>
+<tr>
+<td>TensorRT-LLM</td>
+<td>High-performance</td>
+<td>Maximum throughput on specific NVIDIA silicon</td>
+</tr>
+<tr>
+<td>SGLang</td>
+<td>Alternative</td>
+<td>Low-concurrency, deep agentic AI session serving in production; structured generation</td>
+</tr>
+<tr>
+<td>llama.cpp</td>
+<td>Lightweight / GGUF</td>
+<td>CPU-assisted or low-footprint deployments</td>
+</tr>
+</tbody>
+</table>
+<p>All solutions standardize their <strong>benchmarks</strong> on vLLM via the aiperf harness so
+S/M/L numbers are comparable.</p>
+<h2 id="models">Models</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Model</th>
+<th>License</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Default · S</strong></td>
+<td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning NVFP4</a></strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code>; served aliases e.g. <code>nvidia/nemotron-3.5-lightning</code>)</td>
+<td><a href="https://openmdw.ai/license/1-1/">OpenMDW-1.1</a></td>
+</tr>
+<tr>
+<td><strong>Default · M/L</strong></td>
+<td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> NVFP4</strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4</code>) — recipes in <code>recipes/{precision,gb300}/vllm/</code>; Lightning is the measured alternative</td>
+<td><a href="https://openmdw.ai/license/1-1/">OpenMDW-1.1</a></td>
+</tr>
+<tr>
+<td>Alternative · S (GB10)</td>
+<td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8 27B NVFP4</a></strong> (MTP spec-decode baked in)</td>
+<td><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a></td>
+</tr>
+<tr>
+<td>Alternative · M</td>
+<td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next NVFP4</a></strong> (125B/6B-active MoE, MTP ×3, engram CPU offload)</td>
+<td><a href="https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/">NVIDIA Open Model License</a></td>
+</tr>
+<tr>
+<td>Alternative · L (GB300)</td>
+<td><strong><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> NVFP4</strong> (320B/18B-active MoE, 262K ctx)</td>
+<td><a href="https://opensource.org/license/mit">MIT</a></td>
+</tr>
+<tr>
+<td>State-of-the-art reference</td>
+<td>GLM, Qwen, Llama, plus latest open weights</td>
+<td>per model card</td>
+</tr>
+</tbody>
+</table>
+<p>Licenses are those published on each model card; weights are downloaded from Hugging Face and not redistributed by this repository.</p>
+<p>Refreshed as new open-weight coding models are released. Last updated 10/16/2026.</p>
+<h3 id="per-tier-shipping-pick-measured">Per-tier shipping pick (measured)</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Shipping model</th>
+<th>Why (measured)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S · GB10</strong></td>
+<td>Lightning NVFP4</td>
+<td>Highest agent-workflow load among fits (~66 tok/s); agentic eval 100%; tool-calling eval 89%.</td>
+</tr>
+<tr>
+<td><strong>S · T2</strong></td>
+<td>Lightning NVFP4</td>
+<td>Lightning 5,352 / 399 (chat / agent tok/s).</td>
+</tr>
+<tr>
+<td><strong>M · T4</strong></td>
+<td>Nemotron 3.5 Super VL</td>
+<td>Super VL on one TP=2 instance (2 GPUs): agent shape 168 tok/s aggregate at c32, ≥20 tok/s/session to about 6 concurrent sessions; chat 1,814 tok/s at c64 (TP=2 measured on a T6 host — the same RTX PRO 6000 Max-Q pairing as the T4). Lightning reference: agentic eval 100%.</td>
+</tr>
+<tr>
+<td><strong>L · T6</strong></td>
+<td>Nemotron 3.5 Super VL</td>
+<td>Super VL as 2 × TP=2 replicas behind LiteLLM (4 GPUs): agent shape 252 tok/s at c32 (1.5× a single TP=2 instance), ≥20 tok/s/session to about 11 concurrent sessions; chat 2,020 tok/s at c64. Lightning reference: agentic eval 100% (1 GPU).</td>
+</tr>
+<tr>
+<td><strong>L · GB300</strong></td>
+<td>Nemotron 3.5 Super VL</td>
+<td>Super VL single instance: agent shape 225 tok/s at c32, ≥20 tok/s/session to about 10 concurrent sessions; chat 3,694 tok/s at c64. Lightning reference: agentic eval 100%; agent-workflow load ~335 @ c20; ≥20 tok/s per session up to ~17 concurrent sessions (measured ladder). L-tier alt GLM-5.3-Flash NVFP4 serving-verified (~111 out tok/s single-stream spot check).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="containers-orchestration">Containers &amp; orchestration</h2>
+<ul>
+<li><strong>Containers:</strong> NVIDIA NIM, <a href="https://www.docker.com/">Docker</a> / Podman (container-first; ~90% of GB10 use
+  cases are containerized).</li>
+<li><strong>Orchestration:</strong> Docker Compose (single node), Kubernetes (optional, larger
+  scale / app-host tier).</li>
+</ul>
+<h2 id="os-coverage">OS coverage</h2>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>Systems</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DGX OS (Ubuntu-based Linux)</td>
+<td>Dell Pro Precision with GB10</td>
+</tr>
+<tr>
+<td>Ubuntu 24.04+</td>
+<td>Dell Pro Precision with GB300, Precision Towers</td>
+</tr>
+</tbody>
+</table>
+<h2 id="management-environment">Management environment</h2>
+<ul>
+<li>Enterprise identity (AD/LDAP) integration — primary in ~50% of GB10 use cases.</li>
+<li>Fleet deployment &amp; monitoring (<a href="https://prometheus.io/">Prometheus</a>/<a href="https://grafana.com/">Grafana</a> reference).</li>
+<li>Dev→prod scaling patterns documented per solution.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

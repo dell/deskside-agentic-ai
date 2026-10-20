@@ -1,0 +1,649 @@
+{
+ "uid": "deskside-tokenomics",
+ "title": "Deskside Tokenomics (economics, not payload)",
+ "tags": [
+  "deskside",
+  "tokenomics"
+ ],
+ "timezone": "browser",
+ "schemaVersion": 39,
+ "version": 1,
+ "refresh": "10s",
+ "time": {
+  "from": "now-6h",
+  "to": "now"
+ },
+ "description": "Token economics of a Dell deskside serving platform. Reads only vLLM counters/gauges (no prompts or completions). Cost variables are ASSUMPTIONS -- edit them in the dashboard header; the cloud comparison follows the \"compare against\" model picker (public list prices as of 2026-10-20; Custom (from deploy env) carries the DESKSIDE_CLOUD_*_PER_M defaults).",
+ "templating": {
+  "list": [
+   {
+    "name": "cloud_model",
+    "type": "query",
+    "label": "compare against",
+    "datasource": {
+     "type": "prometheus",
+     "uid": "deskside-prom"
+    },
+    "query": {
+     "query": "label_values(deskside:cloud_price_in_usd_per_m,model)",
+     "refId": "q"
+    },
+    "refresh": 2,
+    "current": {
+     "text": "OpenAI GPT Terra",
+     "value": "OpenAI GPT Terra"
+    }
+   },
+   {
+    "name": "instance",
+    "type": "query",
+    "datasource": {
+     "type": "prometheus",
+     "uid": "deskside-prom"
+    },
+    "query": {
+     "query": "label_values(vllm:num_requests_running,instance_name)",
+     "refId": "q"
+    },
+    "refresh": 2,
+    "includeAll": true,
+    "multi": true,
+    "current": {
+     "text": "All",
+     "value": "$__all"
+    },
+    "allValue": ".+"
+   },
+   {
+    "name": "system_price",
+    "type": "textbox",
+    "label": "system price $",
+    "query": "__SYSTEM_PRICE__",
+    "current": {
+     "text": "__SYSTEM_PRICE__",
+     "value": "__SYSTEM_PRICE__"
+    }
+   },
+   {
+    "name": "amort_months",
+    "type": "textbox",
+    "label": "amortisation (months)",
+    "query": "__AMORT_MONTHS__",
+    "current": {
+     "text": "__AMORT_MONTHS__",
+     "value": "__AMORT_MONTHS__"
+    }
+   },
+   {
+    "name": "watts",
+    "type": "textbox",
+    "label": "avg system watts",
+    "query": "__WATTS__",
+    "current": {
+     "text": "__WATTS__",
+     "value": "__WATTS__"
+    }
+   },
+   {
+    "name": "kwh_price",
+    "type": "textbox",
+    "label": "$/kWh",
+    "query": "__KWH__",
+    "current": {
+     "text": "__KWH__",
+     "value": "__KWH__"
+    }
+   },
+   {
+    "name": "floor",
+    "type": "textbox",
+    "label": "tok/s/session floor",
+    "query": "20",
+    "current": {
+     "text": "20",
+     "value": "20"
+    }
+   }
+  ]
+ },
+ "panels": [
+  {
+   "id": 1,
+   "title": "Output tokens served (selected range)",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(increase(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__range]))",
+     "legendFormat": "output",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Tokens generated in the dashboard time range."
+  },
+  {
+   "id": 2,
+   "title": "Input tokens processed (selected range)",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 4,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(increase(vllm:prompt_tokens_total{instance_name=~\"$instance\"}[$__range]))",
+     "legendFormat": "input",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 3,
+   "title": "Cloud-API equivalent spend (range)",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "(sum(increase(vllm:prompt_tokens_total{instance_name=~\"$instance\"}[$__range]))*scalar(max(deskside:cloud_price_in_usd_per_m{model=\"$cloud_model\"})) + sum(increase(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__range]))*scalar(max(deskside:cloud_price_out_usd_per_m{model=\"$cloud_model\"})))/1e6",
+     "legendFormat": "cloud $",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "ASSUMPTION-DRIVEN: tokens x the $/1M rates of the model selected in \"compare against\" (static assumption series from monitoring/model-prices.yml). For a contracted rate use Custom (from deploy env) or add your own price row."
+  },
+  {
+   "id": 4,
+   "title": "On-prem cost for same window",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "($system_price/($amort_months*730) + ($watts/1000)*$kwh_price)*($__range_s/3600)",
+     "legendFormat": "on-prem $",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Amortised hardware + energy over the window, at the variable assumptions (cost accrues whether or not tokens flow)."
+  },
+  {
+   "id": 5,
+   "title": "Estimated savings (range)",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "((sum(increase(vllm:prompt_tokens_total{instance_name=~\"$instance\"}[$__range]))*scalar(max(deskside:cloud_price_in_usd_per_m{model=\"$cloud_model\"})) + sum(increase(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__range]))*scalar(max(deskside:cloud_price_out_usd_per_m{model=\"$cloud_model\"})))/1e6)-(($system_price/($amort_months*730) + ($watts/1000)*$kwh_price)*($__range_s/3600))",
+     "legendFormat": "savings $",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Cloud-equivalent spend minus on-prem cost. Negative = platform under-utilised for this window."
+  },
+  {
+   "id": 6,
+   "title": "On-prem $ per 1M output tokens (observed)",
+   "type": "stat",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 20,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "(($system_price/($amort_months*730) + ($watts/1000)*$kwh_price))/clamp_min(sum(rate(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__rate_interval]))*3600,1)*1e6",
+     "legendFormat": "$/1M out",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Hourly on-prem cost divided by observed output tokens/hour. Falls as utilisation rises -- the tokenomics lever."
+  },
+  {
+   "id": 7,
+   "title": "Aggregate output tok/s",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 4,
+    "w": 12,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum by (instance_name) (rate(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__rate_interval]))",
+     "legendFormat": "{{instance_name}}",
+     "refId": "A"
+    },
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(rate(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__rate_interval]))",
+     "legendFormat": "TOTAL",
+     "refId": "B"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 8,
+   "title": "Input tok/s (prefill) and cached share",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 4,
+    "w": 12,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(rate(vllm:prompt_tokens_total{instance_name=~\"$instance\"}[$__rate_interval]))",
+     "legendFormat": "input tok/s",
+     "refId": "A"
+    },
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(rate(vllm:prompt_tokens_cached_total{instance_name=~\"$instance\"}[$__rate_interval]))",
+     "legendFormat": "served from prefix cache",
+     "refId": "B"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 9,
+   "title": "Active vs waiting sessions",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 12,
+    "w": 8,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum by (instance_name) (vllm:num_requests_running{instance_name=~\"$instance\"})",
+     "legendFormat": "running {{instance_name}}",
+     "refId": "A"
+    },
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum by (instance_name) (vllm:num_requests_waiting{instance_name=~\"$instance\"})",
+     "legendFormat": "waiting {{instance_name}}",
+     "refId": "B"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "id": 10,
+   "title": "Per-session output tok/s vs floor",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 12,
+    "w": 8,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(rate(vllm:generation_tokens_total{instance_name=~\"$instance\"}[$__rate_interval]))/clamp_min(sum(vllm:num_requests_running{instance_name=~\"$instance\"}),1)",
+     "legendFormat": "tok/s per active session",
+     "refId": "A"
+    },
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "vector($floor)",
+     "legendFormat": "floor ($floor)",
+     "refId": "B"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "lineWidth": 2
+     }
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Aggregate output tok/s divided by active sessions (per-session = aggregate / C). Compare to the responsiveness floor (the capacity tables size sessions at 20 tok/s)."
+  },
+  {
+   "id": 11,
+   "title": "Time-to-first-token p95 / ITL p95",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 12,
+    "w": 8,
+    "h": 8
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "histogram_quantile(0.95,sum by (le) (rate(vllm:time_to_first_token_seconds_bucket{instance_name=~\"$instance\"}[$__rate_interval])))",
+     "legendFormat": "TTFT p95",
+     "refId": "A"
+    },
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "histogram_quantile(0.95,sum by (le) (rate(vllm:inter_token_latency_seconds_bucket{instance_name=~\"$instance\"}[$__rate_interval])))",
+     "legendFormat": "ITL p95",
+     "refId": "B"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "TTFT includes reasoning tokens when a reasoning parser is active."
+  },
+  {
+   "id": 12,
+   "title": "Platform utilisation (share of time with >=1 active session)",
+   "type": "gauge",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 20,
+    "w": 6,
+    "h": 6
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "avg_over_time((clamp_max(sum(vllm:num_requests_running{instance_name=~\"$instance\"}),1))[$__range:15s])",
+     "legendFormat": "utilisation",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit",
+     "min": 0,
+     "max": 1,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "yellow",
+        "value": 0.4
+       },
+       {
+        "color": "green",
+        "value": 0.8
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "The tokenomics planning model assumes 80 % utilisation for the software-development persona; this is the observed counterpart."
+  },
+  {
+   "id": 13,
+   "title": "Prefix-cache hit rate",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 6,
+    "y": 20,
+    "w": 9,
+    "h": 6
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "sum(rate(vllm:prefix_cache_hits_total{instance_name=~\"$instance\"}[$__rate_interval]))/clamp_min(sum(rate(vllm:prefix_cache_queries_total{instance_name=~\"$instance\"}[$__rate_interval])),1)",
+     "legendFormat": "hit rate",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {},
+   "description": "Cached prefill is free capacity -- key for agent loops that resend long histories."
+  },
+  {
+   "id": 14,
+   "title": "KV-cache usage",
+   "type": "timeseries",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "deskside-prom"
+   },
+   "gridPos": {
+    "x": 15,
+    "y": 20,
+    "w": 9,
+    "h": 6
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "prometheus",
+      "uid": "deskside-prom"
+     },
+     "expr": "max by (instance_name) (vllm:kv_cache_usage_perc{instance_name=~\"$instance\"})",
+     "legendFormat": "{{instance_name}}",
+     "refId": "A"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {}
+  }
+ ]
+}

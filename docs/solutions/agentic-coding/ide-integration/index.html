@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Coding — IDE Integration — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/" class="active">Agentic Coding</a>
+<a class="sub" href="../../../solutions/agentic-coding/">Overview</a>
+<a class="sub" href="../../../solutions/agentic-coding/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub active" href="../../../solutions/agentic-coding/ide-integration/">IDE Integration</a>
+<a class="sub" href="../../../solutions/agentic-coding/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / agentic-coding / ide-integration</div>
+    <article class="article" data-picker data-tabs="OpenCode (CLI coding agent)|Claude Code (Anthropic CLI)|Continue.dev (VS Code / JetBrains)|Codex (OpenAI CLI)|GitHub Copilot CLI (BYOK)|Generic CLI agents (OpenAI-compatible)">
+<h1 id="agentic-coding-ide-cli-agent-integration">Agentic Coding — IDE &amp; CLI Agent Integration</h1>
+<p>How AI engineers and developers connect coding tools to the locally-served model.
+The endpoint is <strong>OpenAI-compatible</strong>, so any tool that accepts a custom base URL
+works. This guide covers four validated tools — <a href="https://opencode.ai/">OpenCode</a>, <a href="https://claude.com/claude-code">Claude Code</a>,
+<a href="https://continue.dev/">Continue.dev</a>, and <a href="https://github.com/openai/codex">Codex</a> — plus <a href="https://github.com/features/copilot">GitHub Copilot</a> CLI (BYOK, configured per
+upstream docs) and generic OpenAI-compatible clients.</p>
+<h2 id="connection-details">Connection details</h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Base URL</strong></td>
+<td><code>http://&lt;deskside-host&gt;:8000/v1</code></td>
+</tr>
+<tr>
+<td><strong>Model name</strong></td>
+<td><code>nvidia/nemotron-3.5-lightning</code> (served name; see the recipe)</td>
+</tr>
+<tr>
+<td><strong>API key</strong></td>
+<td>Any non-empty string for direct local use; a real key when fronted by the gateway</td>
+</tr>
+<tr>
+<td><strong>Streaming</strong></td>
+<td>Supported (recommended for interactive coding)</td>
+</tr>
+</tbody>
+</table>
+<p>Replace <code>&lt;deskside-host&gt;</code> with <code>localhost</code> for local use, or the host IP/hostname
+for remote access.</p>
+<h2 id="context-output-limits-align-every-client-to-the-recipe-you-run">Context &amp; output limits — align every client to the recipe you run</h2>
+<p>Agent CLIs send tens of thousands of tokens of system prompt + tool schemas and
+often ask for 16–32K output tokens. A client that does not know the server window
+gets opaque HTTP 400 "maximum context length" errors or compaction loops
+The window is a <strong>recipe setting</strong>, not a model constant:</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Served name(s)</th>
+<th style="text-align: right;"><code>--max-model-len</code> (window)</th>
+<th style="text-align: right;">Recommended client <code>max_output</code> / prompt budget*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gb10</code> Lightning</td>
+<td><code>nvidia/nemotron-3.5-lightning</code> (aliases <code>nemotron-lightning</code>, <code>lightning</code>)</td>
+<td style="text-align: right;">200000</td>
+<td style="text-align: right;">16384 / 182592</td>
+</tr>
+<tr>
+<td><code>precision</code> Lightning (T2/T4/T6)</td>
+<td>same</td>
+<td style="text-align: right;">200000</td>
+<td style="text-align: right;">16384 / 182592</td>
+</tr>
+<tr>
+<td><code>gb300</code> Lightning</td>
+<td>same</td>
+<td style="text-align: right;">200000</td>
+<td style="text-align: right;">16384 / 182592</td>
+</tr>
+<tr>
+<td><code>gb10</code> <a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a></td>
+<td><code>qwen3.8-27b</code></td>
+<td style="text-align: right;">262144</td>
+<td style="text-align: right;">16384 / 244736</td>
+</tr>
+<tr>
+<td><code>precision</code> Flash-Next</td>
+<td><code>qwen3.8-flash-next</code></td>
+<td style="text-align: right;">262144</td>
+<td style="text-align: right;">16384 / 244736</td>
+</tr>
+<tr>
+<td><code>gb300</code> <a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></td>
+<td><code>glm-5.3-flash</code></td>
+<td style="text-align: right;">262144</td>
+<td style="text-align: right;">16384 / 244736</td>
+</tr>
+<tr>
+<td><code>precision</code> <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a></td>
+<td><code>nvidia/nemotron-3.5-super-vl</code> (alias <code>nemotron-3.5-super-vl</code>)</td>
+<td style="text-align: right;">200000</td>
+<td style="text-align: right;">16384 / 182592</td>
+</tr>
+<tr>
+<td><code>gb300</code> Nemotron 3.5 Super VL (L default)</td>
+<td>same</td>
+<td style="text-align: right;">262144</td>
+<td style="text-align: right;">16384 / 244736</td>
+</tr>
+</tbody>
+</table>
+<p>*Rule (<code>recipes/lib/common.sh: ds_client_limits</code>): <code>max_output = min(16384, window/8)</code>
+rounded to 512 (never below 512 — reasoning models need room to answer);
+<code>prompt budget = window − max_output − 1024</code> safety margin. If you override
+<code>--max-model-len</code>, the numbers change — do not copy them from this table.</p>
+<p><strong>Do not hand-copy.</strong> Every recipe prints these limits in its <code>READY {...}</code> line
+(<code>max_model_len</code>, <code>client_max_output_tokens</code>, <code>client_prompt_budget_tokens</code>), and this
+generates paste-ready configs for OpenCode, Codex, Continue, Claude Code and Copilot CLI
+from the <em>running</em> endpoint:</p>
+<pre><code class="language-bash">recipes/lib/client-config.sh --port 8000 --served nvidia/nemotron-3.5-lightning --host &lt;deskside-host&gt;
+# or one tool:  --tool opencode|codex|continue|claude|copilot
+</code></pre>
+<p>The generated key names (<code>limit.context/output</code>, <code>model_context_window</code>,
+<code>defaultCompletionOptions</code>, <code>CLAUDE_CODE_MAX_OUTPUT_TOKENS</code>, <code>COPILOT_PROVIDER_MAX_*</code>)
+come from each client's documentation and are <strong>not validated against client binaries
+here</strong> — confirm against your installed version. Every agentic-coding recipe now
+serves a 200K window (Copilot's recommended ≥128K is covered); raise
+<code>--max-model-len</code> further (costs KV cache, i.e. concurrency) when a task needs it.</p>
+<p>Protocol support observed on the live GLM-5.3-Flash image
+(<code>vllm/vllm-openai:glm53-flash-arm64-cu130</code>, 2026-10-19): <code>/v1/chat/completions</code>,
+<code>/v1/responses</code> (Codex) and <code>/v1/messages</code> (Claude Code) all returned HTTP 200. The
+Lightning and Super VL recipes were not re-probed — check
+<code>curl -s localhost:8000/v1/messages ...</code> on your pinned image before relying on Claude Code.</p>
+
+<h2 id="opencode-cli-coding-agent">OpenCode (CLI coding agent)</h2>
+<p>Reference: <a href="https://build.nvidia.com/spark/cli-coding-agent">CLI Coding Agent (DGX Spark)</a>.</p>
+<h3 id="install">Install</h3>
+<pre><code class="language-bash"># npm (globally)
+npm install -g opencode-ai
+
+# or run directly
+npx opencode-ai
+</code></pre>
+<h3 id="configure">Configure</h3>
+<p>Create <code>~/.config/opencode/config.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://opencode.ai/config.json&quot;,
+  &quot;provider&quot;: {
+    &quot;dell-deskside-agentic&quot;: {
+      &quot;npm&quot;: &quot;@ai-sdk/openai-compatible&quot;,
+      &quot;name&quot;: &quot;Dell Deskside Agentic AI Solutions (local vLLM)&quot;,
+      &quot;options&quot;: {
+        &quot;baseURL&quot;: &quot;http://localhost:8000/v1&quot;,
+        &quot;apiKey&quot;: &quot;local&quot;
+      },
+      &quot;models&quot;: {
+        &quot;nvidia/nemotron-3.5-lightning&quot;: {
+          &quot;name&quot;: &quot;Nemotron 3.5 Lightning - local&quot;
+        }
+      }
+    }
+  },
+  &quot;model&quot;: &quot;dell-deskside-agentic/nvidia/nemotron-3.5-lightning&quot;
+}
+</code></pre>
+<h3 id="verify">Verify</h3>
+<pre><code class="language-bash">opencode
+# In the OpenCode CLI, type: &quot;Write a Python function to reverse a string.&quot;
+# Expected: model generates code using the local vLLM endpoint
+</code></pre>
+
+<h2 id="claude-code-anthropic-cli">Claude Code (Anthropic CLI)</h2>
+<h3 id="install_1">Install</h3>
+<pre><code class="language-bash">npm install -g @anthropic-ai/claude-code
+</code></pre>
+<h3 id="configure_1">Configure</h3>
+<p>Create <code>~/.claude/settings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;env&quot;: {
+    &quot;ANTHROPIC_BASE_URL&quot;: &quot;http://localhost:8000&quot;,
+    &quot;ANTHROPIC_AUTH_TOKEN&quot;: &quot;local&quot;,
+    &quot;ANTHROPIC_MODEL&quot;: &quot;nvidia/nemotron-3.5-lightning&quot;,
+    &quot;ANTHROPIC_SMALL_FAST_MODEL&quot;: &quot;nvidia/nemotron-3.5-lightning&quot;
+  }
+}
+</code></pre>
+<p>Or set environment variables:</p>
+<pre><code class="language-bash">export ANTHROPIC_BASE_URL=&quot;http://localhost:8000&quot;
+export ANTHROPIC_AUTH_TOKEN=&quot;local&quot;
+export ANTHROPIC_MODEL=&quot;nvidia/nemotron-3.5-lightning&quot;
+export ANTHROPIC_SMALL_FAST_MODEL=&quot;nvidia/nemotron-3.5-lightning&quot;
+claude
+</code></pre>
+<h3 id="verify_1">Verify</h3>
+<pre><code class="language-bash">claude &quot;What is 2 + 2?&quot;
+# Expected: response from the local Nemotron model
+</code></pre>
+
+<h2 id="continuedev-vs-code-jetbrains">Continue.dev (VS Code / JetBrains)</h2>
+<p>Reference: <a href="https://build.nvidia.com/spark/vibe-coding">Vibe Coding in VS Code (DGX Spark)</a>.</p>
+<h3 id="install_2">Install</h3>
+<p>Install the <a href="https://continue.dev/">Continue extension</a> from the VS Code or
+JetBrains marketplace.</p>
+<h3 id="configure_2">Configure</h3>
+<p>Create <code>~/.continue/config.yaml</code>:</p>
+<pre><code class="language-yaml">name: Dell Deskside Agentic AI Solutions
+version: 0.0.1
+schema: v1
+models:
+  - name: Nemotron 3.5 Lightning (local vLLM)
+    provider: openai
+    model: nvidia/nemotron-3.5-lightning
+    apiBase: http://localhost:8000/v1
+    apiKey: local
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: Nemotron 3.5 Lightning (autocomplete)
+    provider: openai
+    model: nvidia/nemotron-3.5-lightning
+    apiBase: http://localhost:8000/v1
+    apiKey: local
+    roles:
+      - autocomplete
+</code></pre>
+<p>Or use the JSON format (<code>~/.continue/config.json</code>):</p>
+<pre><code class="language-json">{
+  &quot;models&quot;: [
+    {
+      &quot;title&quot;: &quot;Dell Deskside Agentic Coding&quot;,
+      &quot;provider&quot;: &quot;openai&quot;,
+      &quot;model&quot;: &quot;nvidia/nemotron-3.5-lightning&quot;,
+      &quot;apiBase&quot;: &quot;http://localhost:8000/v1&quot;,
+      &quot;apiKey&quot;: &quot;local&quot;
+    }
+  ]
+}
+</code></pre>
+<h3 id="verify_2">Verify</h3>
+<p>Open VS Code, open the Continue sidebar (Ctrl+L), and ask:
+"Write a unit test for the function under the cursor." A response confirms the
+model, base URL, and streaming are wired correctly.</p>
+
+<h2 id="codex-openai-cli">Codex (OpenAI CLI)</h2>
+<p>Codex — OpenAI's terminal coding agent — speaks the OpenAI <strong>Responses API</strong>.
+The <code>vllm/vllm-openai</code> images serve <code>/v1/responses</code>, so Codex needs only a
+custom provider entry, no proxy.</p>
+<h3 id="configure_3">Configure</h3>
+<pre><code class="language-toml"># ~/.codex/config.toml
+model_provider = &quot;deskside&quot;
+model = &quot;nvidia/nemotron-3.5-lightning&quot;
+
+[model_providers.deskside]
+name = &quot;Dell Deskside vLLM&quot;
+base_url = &quot;http://localhost:8000/v1&quot;
+env_key = &quot;DESKSIDE_API_KEY&quot;
+wire_api = &quot;responses&quot;
+</code></pre>
+<h3 id="run">Run</h3>
+<pre><code class="language-bash">export DESKSIDE_API_KEY=local
+codex exec --skip-git-repo-check &quot;Summarize this repository in 3 bullets&quot;
+</code></pre>
+<h3 id="verify_3">Verify</h3>
+<pre><code class="language-bash"># One-shot round trip — tool calling is exercised automatically
+# (Codex always ships its shell tool in the request).
+DESKSIDE_API_KEY=local codex exec --skip-git-repo-check --sandbox read-only \
+  &quot;Run echo CODEX_OK and report exactly what it printed&quot;
+</code></pre>
+<p>Notes: a <code>Model metadata for ... not found</code> warning is expected for local
+served names and is harmless. The Codex sandbox uses bubblewrap, which needs
+unprivileged user namespaces (enabled by default on Ubuntu 24.04). Recent
+Codex releases require <code>wire_api = "responses"</code>; there is no <code>chat</code> fallback.</p>
+
+<h2 id="github-copilot-cli-byok">GitHub Copilot CLI (BYOK)</h2>
+<p>Reference: <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models">Adding LLM models to GitHub Copilot CLI</a>.</p>
+<p>Copilot CLI supports bring-your-own-key providers; the default <code>openai</code>
+provider type covers <em>any</em> OpenAI Chat Completions-compatible endpoint — <a href="https://github.com/vllm-project/vllm">vLLM</a>
+is explicitly supported. The model must support <strong>tool calling</strong> and
+<strong>streaming</strong> (Lightning does both). GitHub recommends ≥128K context for best
+results; the recipe serves 200K by default — raise <code>--max-model-len</code> further if
+AI memory allows.</p>
+<h3 id="configure_4">Configure</h3>
+<p>Set provider environment variables before starting the CLI. No API key is
+required for an unauthenticated local endpoint; use a real key when fronted
+by the gateway:</p>
+<pre><code class="language-bash">export COPILOT_PROVIDER_BASE_URL=&quot;http://localhost:8000/v1&quot;
+export COPILOT_PROVIDER_API_KEY=&quot;local&quot;   # any non-empty string; omit if truly unauthenticated
+export COPILOT_MODEL=&quot;nvidia/nemotron-3.5-lightning&quot;
+copilot
+</code></pre>
+<h3 id="offline-mode-air-gapped-desks">Offline mode (air-gapped desks)</h3>
+<pre><code class="language-bash">export COPILOT_OFFLINE=true
+</code></pre>
+<p>This keeps the CLI from contacting GitHub's servers. Full network isolation
+holds only when <code>COPILOT_PROVIDER_BASE_URL</code> also points at a local endpoint
+(upstream caveat — a remote base URL still ships prompts off-box).</p>
+<h3 id="verify_4">Verify</h3>
+<p>In the Copilot CLI, ask: "List the files under <code>src/</code> and summarize the entry
+point." A streamed reply that used file tools confirms model, tools, and the
+local endpoint are wired.</p>
+<blockquote>
+<p><strong>IDE extension:</strong> this BYOK path is for the <strong>Copilot CLI</strong>. Copilot inside
+VS Code / JetBrains uses GitHub-hosted models unless your org enables custom
+models there — on locked-down desks use the CLI, or one of the tools above.</p>
+</blockquote>
+
+<h2 id="generic-cli-agents-openai-compatible">Generic CLI agents (OpenAI-compatible)</h2>
+<p>Most CLI agents (Aider, Cline, etc.) read standard OpenAI env vars:</p>
+<pre><code class="language-bash">export OPENAI_BASE_URL=&quot;http://localhost:8000/v1&quot;
+export OPENAI_API_KEY=&quot;local&quot;
+export OPENAI_MODEL=&quot;nvidia/nemotron-3.5-lightning&quot;
+</code></pre>
+<h3 id="jetbrains-ai-assistant">JetBrains AI Assistant</h3>
+<p>Use an OpenAI-compatible AI assistant plugin; set the base URL to
+<code>http://&lt;host&gt;:8000/v1</code> and the model to <code>nvidia/nemotron-3.5-lightning</code>.</p>
+
+<h2 id="agentsmd-skills">AGENTS.md skills</h2>
+<p><code>AGENTS.md</code> is a widely used convention across coding agents. Point coding agents at the
+project's <code>AGENTS.md</code> so they inherit repo conventions and skills.</p>
+
+<h2 id="application-compatibility-matrix">Application compatibility matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Connection method</th>
+<th>Chat</th>
+<th>Autocomplete</th>
+<th>Tool calling</th>
+<th>Validated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenCode</strong></td>
+<td>OpenAI-compatible provider</td>
+<td>Yes</td>
+<td>N/A (CLI)</td>
+<td>Yes</td>
+<td>GB10</td>
+</tr>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td>Anthropic base URL override</td>
+<td>Yes</td>
+<td>N/A (CLI)</td>
+<td>Yes</td>
+<td>GB10</td>
+</tr>
+<tr>
+<td><strong>Continue.dev</strong></td>
+<td>OpenAI provider config</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>GB10</td>
+</tr>
+<tr>
+<td><strong>Codex</strong></td>
+<td>config.toml provider (Responses API)</td>
+<td>Yes</td>
+<td>N/A (CLI)</td>
+<td>Yes</td>
+<td>GB300</td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot CLI</strong></td>
+<td>BYOK env vars (OpenAI-compatible)</td>
+<td>Yes</td>
+<td>N/A (CLI)</td>
+<td>Required</td>
+<td>Upstream docs</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="running-coding-agents-safely-read-before-pointing-an-agent-at-a-shared-box">Running coding agents safely (read before pointing an agent at a shared box)</h2>
+<p>Coding agents run shell commands with <strong>your user's privileges</strong> and read repository content that may carry prompt
+injection. This repo does not (yet) sandbox them for the Agentic Coding solution (the NemoClaw solutions
+use OpenShell policy tiers for this purpose). Until then:
+* keep the client in its <strong>read-only / ask-before-run</strong> permission mode (e.g. Codex <code>--sandbox read-only</code>); do not use
+  "skip permissions" switches on a machine that holds credentials;
+* give each agent/user its <strong>own API key</strong> once you front the endpoint (<code>DESKSIDE_API_KEY</code>, or the LiteLLM front door's keys)
+  so one runaway agent can be identified and revoked — per-key rate limits need a gateway;
+* do not expose the endpoint beyond the LAN segment it is needed on (<code>--bind</code>); it is unauthenticated by default.</p>
+<h2 id="multi-user-note">Multi-user note</h2>
+<p>For shared/team use, point IDEs at the <strong>gateway URL</strong> (not the raw <code>:8000</code>) so
+auth and rate limiting apply. See <a href="../it-admin-guide/">IT-Admin Guide</a>.</p>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/tabs.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

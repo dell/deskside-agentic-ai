@@ -1,0 +1,16 @@
+# Deskside tokenomics monitoring -- Prometheus config.
+# Targets are discovered from ~/.deskside/monitoring/targets/*.json, which each
+# recipe writes via recipes/lib/monitoring.sh (one file per serving container),
+# so any number of recipes/instances on one host share this Prometheus.
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+rule_files:
+  - /etc/prometheus/alerts.yml
+  - /etc/prometheus/model-prices.yml
+scrape_configs:
+  - job_name: deskside-vllm
+    metrics_path: /metrics
+    file_sd_configs:
+      - files: ['/etc/prometheus/targets/*.json']
+        refresh_interval: 10s

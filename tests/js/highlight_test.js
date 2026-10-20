@@ -1,0 +1,13 @@
+global.window={}; global.document=undefined; const {highlight}=require(process.argv[2]||require('path').join(__dirname,'../../docs/assets/highlight.js'));
+let ok=true; const t=(n,c)=>{ if(!c){ok=false;console.log('FAIL',n);} };
+const b=highlight('# note\nrecipes/gb10/vllm/docker-x.sh --port 8000 --tp 2\ncurl -s http://localhost:8000/v1 | python3 -c "x"\nexport FOO="bar"','bash');
+t('comment',b.includes('tok-c">'));t('flag',b.includes('tok-f">--port'));t('cmd path',b.includes('tok-fn">recipes/gb10'));t('cmd curl',b.includes('tok-fn">curl'));t('string',b.includes('tok-s">"x"'));t('export',b.includes('tok-fn">export'));
+const m=highlight('curl \uE000hhttp://\uE001x \"http://\uE000hlocalhost\uE001:\uE000o8000\uE001/v1\"','bash');
+t('marks',m.includes('<mark class="ds-var ds-v-h">localhost</mark>')&&m.includes('ds-v-o">8000</mark>'));
+t('nesting',(m.match(/<mark/g)||[]).length===(m.match(/<\/mark>/g)||[]).length && (m.match(/<span/g)||[]).length===(m.match(/<\/span>/g)||[]).length);
+const j=highlight('{"a": "x", "n": 3, "t": true}','json'); t('json key',j.includes('tok-k">"a"')&&j.includes('tok-n">3')&&j.includes('tok-b">true'));
+const y=highlight('models:\n  - name: x\n    apiBase: http://localhost:8000/v1 # c','yaml'); t('yaml key',y.includes('tok-k">models')&&y.includes('tok-k">apiBase')&&y.includes('tok-c">'));
+const p=highlight('def f(x):\n    return "s" # c','python'); t('py',p.includes('tok-kw">def')&&p.includes('tok-fn">f')&&p.includes('tok-s">"s"'));
+const tm=highlight('model = "x"\n[a.b]\nn = 3','toml'); t('toml',tm.includes('tok-k">model')&&tm.includes('tok-f">[a.b]'));
+t('escape',highlight('a <b> & c','none').includes('&lt;b&gt; &amp;'));
+console.log(ok?'ok':'bad'); process.exit(ok?0:1);

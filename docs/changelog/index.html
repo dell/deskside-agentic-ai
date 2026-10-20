@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../changelog/" class="active">Changelog</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / changelog</div>
+    <article class="article">
+<h1 id="changelog">Changelog</h1>
+<p>Release notes for Dell Deskside Agentic AI Solutions for NVIDIA. Every
+performance figure in a release carries provenance through the machine-readable
+record in <code>tests/data/latest/sizing.yaml</code> and the raw ladder data under
+<code>tests/data/</code>.</p>
+<h2 id="100-october-20-2026">1.0.0 — October 20, 2026</h2>
+<p>First public release: <strong>five Solution Templates</strong> on <strong>five supported Dell
+deskside platforms powered by NVIDIA</strong>, with measured capacity envelopes,
+executable serving recipes, and operator guides.</p>
+<h3 id="solution-templates">Solution Templates</h3>
+<table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Category</th>
+<th>What it delivers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../solutions/agentic-coding/">Agentic Coding</a></td>
+<td>Horizontal</td>
+<td>Private coding assistant — CLI/IDE agents behind an OpenAI-compatible API, with measured per-platform concurrency envelopes</td>
+</tr>
+<tr>
+<td><a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a></td>
+<td>Vertical</td>
+<td>Natural-language search, Q&amp;A, and summarization over local video — LLM + vision-language serving co-located on one system</td>
+</tr>
+<tr>
+<td><a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a></td>
+<td>Horizontal</td>
+<td>The OpenClaw assistant on NVIDIA's NemoClaw runtime — policy engine, OpenShell sandbox, tool-using agents on a locally served LLM</td>
+</tr>
+<tr>
+<td><a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a></td>
+<td>Horizontal</td>
+<td>Nous Research' Hermes Agent harness on the NemoClaw runtime — served and sandboxed fully on Dell deskside hardware</td>
+</tr>
+<tr>
+<td><a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a></td>
+<td>Vertical</td>
+<td>University AI teaching labs — shared serving tiers, per-course provisioning, seat resets, and a curriculum built on the other templates</td>
+</tr>
+</tbody>
+</table>
+<h3 id="supported-platforms">Supported platforms</h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Memory</th>
+<th>Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell Pro Precision with GB10 (DGX Spark class, aarch64)</td>
+<td>128 GB unified</td>
+<td>S · M (1:1 seats)</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T2 (1× RTX PRO 6000 Blackwell)</td>
+<td>96 GB</td>
+<td>S</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T4 (2× RTX PRO 6000 Blackwell)</td>
+<td>192 GB</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Dell Pro Precision 9 T6 (5× RTX PRO 6000 Blackwell)</td>
+<td>480 GB</td>
+<td>L</td>
+</tr>
+<tr>
+<td>Dell Pro Precision with GB300 (DGX Station class, aarch64)</td>
+<td>252 GB HBM3e</td>
+<td>L</td>
+</tr>
+</tbody>
+</table>
+<h3 id="in-this-release">In this release</h3>
+<ul>
+<li><strong>Serving recipes</strong> (<code>recipes/</code>): eight pinned, GPU-tuned vLLM recipes across
+  GB10 / Precision / GB300, all sharing one readiness contract — block until
+  healthy, emit a machine-readable <code>READY</code> line, meaningful exit codes — plus
+  paired health wrappers, a replica launcher, and a LiteLLM router for
+  multi-instance serving.</li>
+<li><strong>Measured envelopes</strong>: agent- and chat-shape throughput ladders
+  (<a href="https://github.com/ai-dynamo/aiperf">AIPerf</a>) per platform, per-session
+  concurrency envelopes at explicit floors, and per-workload TP-vs-DP
+  topology data.</li>
+<li><strong>Fleet and offline tooling</strong>: Canonical Landscape deployment payloads,
+  air-gap image packaging, LAN multicast distribution for large lab assets, and
+  scripted NemoClaw installation.</li>
+<li><strong>Tokenomics monitoring</strong>: Prometheus + Grafana started with every recipe,
+  alert rules, per-session throughput views.</li>
+<li><strong>Architecture views</strong>: every Solution Template's guide opens with an SVG
+  architecture diagram (the Higher Education template adds a campus usage and
+  connectivity view), and the interactive Architecture Builder exports any of
+  them as SVG, PNG, or HTML.</li>
+<li><strong>This docs site</strong>, generated from the Markdown sources in the repo, with the
+  same navigation on every page and a link to the source repository in the
+  header.</li>
+</ul>
+<p>Tagged release: <a href="https://github.com/dell/deskside-agentic-ai/releases/tag/v1.0.0"><code>v1.0.0</code></a>.</p>
+<h2 id="release-policy">Release policy</h2>
+<p>Version bumps here track the Solution Templates and their measured data:
+major = breaking changes to the recipe contract or template structure; minor =
+new templates, platforms, or measured tiers; patch = recipe fixes and
+corrections. Each entry names what was measured and where the raw data lives.</p>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

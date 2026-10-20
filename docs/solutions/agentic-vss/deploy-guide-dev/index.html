@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Video Search &amp; Summarization — Developer Deploy Guide — Dell Deskside Agentic AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../../../index.html">
+    <img src="../../../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../../../">Overview</a>
+<a href="../../../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../../../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../../../solutions/agentic-vss/" class="active">Agentic Video Search &amp; Summarization</a>
+<a class="sub" href="../../../solutions/agentic-vss/">Overview</a>
+<a class="sub" href="../../../solutions/agentic-vss/it-admin-guide/">IT-Admin Guide</a>
+<a class="sub active" href="../../../solutions/agentic-vss/deploy-guide-dev/">Developer Deploy Guide</a>
+<a class="sub" href="../../../solutions/agentic-vss/landscape-fleet-deploy/">Fleet Deploy via Landscape</a>
+<a href="../../../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../../../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../../../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../../../recipes/">Deployment Recipes</a>
+<a href="../../../sizing/">S/M/L Sizing</a>
+<a href="../../../stack/">Inference Stack &amp; Models</a>
+<a href="../../../stack-composition/">Stack Composition</a>
+<a href="../../../personas/">Personas</a>
+<a href="../../../glossary/">Glossary</a>
+<a href="../../../architecture-builder.html">Architecture Builder</a>
+<a href="../../../scope/">Scope &amp; Backlog</a>
+<a href="../../../operations/">Operations</a>
+<a href="../../../topology/">Topology (TP vs DP)</a>
+<a href="../../../monitoring/">Tokenomics Monitoring</a>
+<a href="../../../changelog/">Changelog</a>
+</div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../../../index.html">Home</a> / solutions / agentic-vss / deploy-guide-dev</div>
+    <article class="article" data-picker>
+<h1 id="agentic-vss-developer-quick-start">Agentic VSS — Developer Quick-Start</h1>
+<blockquote>
+<p><strong>Who this is for:</strong> developers standing up the VSS Blueprint on a single
+Dell deskside system for evaluation or a small deployment.</p>
+<p><strong>IT fleet path:</strong> <a href="../it-admin-guide/">IT-Admin Guide</a>.</p>
+</blockquote>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Ubuntu 24.04 LTS or newer on Dell Pro Precision 9 towers and Dell Pro Precision with GB300; GB10 systems ship with DGX OS.</li>
+<li><a href="https://www.docker.com/">Docker</a> CE <code>28.3.3 ≤ version &lt; 29.5.0</code> (upstream VSS is sensitive to
+  Docker versions — 29.5.0+ may fail pulling NGC images).</li>
+<li>NVIDIA Container Toolkit.</li>
+<li>Git LFS.</li>
+<li><strong>NGC API key</strong> (<code>NGC_CLI_API_KEY</code>) — VSS pulls NGC-hosted images.</li>
+<li><strong><a href="https://huggingface.co/">Hugging Face</a> token</strong> (<code>HF_TOKEN</code>) with access to the Nemotron models.</li>
+<li>Enough disk for the VSS containers + LLM + VLM weights (~50–80 GB).</li>
+</ul>
+<h2 id="1-clone-the-upstream-vss-blueprint">1) Clone the upstream VSS blueprint</h2>
+<pre><code class="language-bash">git clone https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization.git
+cd video-search-and-summarization
+git checkout tags/v3.2.0
+git lfs install &amp;&amp; git lfs pull
+</code></pre>
+<h2 id="2-set-credentials">2) Set credentials</h2>
+<pre><code class="language-bash">export NGC_CLI_API_KEY='&lt;your NGC key&gt;'
+export HF_TOKEN='hf_&lt;your HF token&gt;'
+</code></pre>
+<h2 id="3-stand-up-the-local-vllm-servers">3) Stand up the local vLLM servers</h2>
+<p>Both the LLM and VLM run as local <a href="https://github.com/vllm-project/vllm">vLLM</a> containers on the same GPU
+(S-tier co-location). <strong>Startup order matters: start the VLM container
+before the LLM container</strong> — vLLM requires the target GPU to have free
+memory at startup.</p>
+<h3 id="s-dell-pro-precision-with-gb10-128-gb-unified-dell-pro-precision-9-t2-96-gb">S — Dell Pro Precision with GB10 (128 GB unified) · Dell Pro Precision 9 T2 (96 GB)</h3>
+<p>LLM default on both S-tier systems is
+<code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code>. The S-tier
+alternative (<code>nvidia/Qwen3.8-27B-NVFP4</code>) uses the same shape with its own
+serving flags — see the recipe below.</p>
+<pre><code class="language-bash"># VLM server — Nemotron 3 Nano Omni (inline command)
+docker run -d --name vllm-vlm \
+  --gpus all -p 30082:8000 -e HF_TOKEN=$HF_TOKEN \
+  vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd \
+  --model nvidia/nemotron-3-nano-omni-30b-a3b \
+  --tensor-parallel-size 1 --gpu-memory-utilization 0.35 --max-model-len 8192 \
+  --trust-remote-code
+
+# LLM server — Nemotron 3.5 Lightning 30B A3B NVFP4 (start AFTER the VLM)
+docker run -d --name vllm-llm \
+  --gpus all -p 30081:8000 -e HF_TOKEN=$HF_TOKEN \
+  -e VLLM_NVFP4_GEMM_BACKEND=marlin \
+  vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd \
+  --model nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 \
+  --moe-backend marlin --kv-cache-dtype fp8 \
+  --tensor-parallel-size 1 --gpu-memory-utilization 0.35 --max-model-len 8192
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><code>--gpu-memory-utilization 0.35</code> for <strong>each</strong> container is the validated
+  co-location budget on a 96 GB T2 (peak combined use <strong>68.3 GB of 96 GB</strong>,
+  measured). On GB10 unified memory, size the two containers against the
+  free pool the same way.</li>
+<li>The <code>nightly</code> image and the Marlin backend pins are what the shipping
+  Lightning recipes use (older public-image tags fail Lightning weight
+  load).</li>
+<li>To serve the same model <strong>standalone</strong> (outside VSS, full GPU), use the
+  repo recipes instead:
+  <code>recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code> (GB10)
+  or <code>recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh</code>
+  (Precision T2) — they bake full-utilization configs, not the 0.35
+  co-location cap.</li>
+<li>The measured S-tier concurrency sweeps in the
+  <a href="../#benchmarks-performance-validation">README</a> were run with the
+  prior reference models; re-run your sweep after swapping the lineup.</li>
+</ul>
+<h3 id="m-l-tiers">M / L tiers</h3>
+<p>M (Dell Pro Precision 9 T4, RTX PRO 6000 servers) and L (Dell Pro Precision with
+GB300, 252 GB HBM3e) follow the same flow with the tier's model at TP or
+multi-instance (see the <a href="../#s-m-l-sizing">README sizing table</a>).</p>
+<h2 id="4-verify-the-vllm-endpoints">4) Verify the vLLM endpoints</h2>
+<pre><code class="language-bash">export LLM_ENDPOINT_URL=http://localhost:30081/v1
+export VLM_ENDPOINT_URL=http://localhost:30082/v1
+
+curl -s $LLM_ENDPOINT_URL/models
+curl -s $VLM_ENDPOINT_URL/models
+</code></pre>
+<p>Both should list the model loaded above.</p>
+<h2 id="5-deploy-vss-standard-hybrid-mode-base-profile">5) Deploy VSS (Standard hybrid mode, <code>base</code> profile)</h2>
+<h3 id="dell-pro-precision-with-gb10">Dell Pro Precision with GB10</h3>
+<pre><code class="language-bash">deploy/docker/scripts/dev-profile.sh up -p base -H DGX-SPARK \
+  --use-remote-llm --use-remote-vlm \
+  --llm nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 \
+  --vlm nvidia/nemotron-3-nano-omni-30b-a3b
+</code></pre>
+<h3 id="dell-pro-precision-9-t2">Dell Pro Precision 9 T2</h3>
+<pre><code class="language-bash">deploy/docker/scripts/dev-profile.sh up -p base -H RTXPRO6000BW \
+  --use-remote-llm --use-remote-vlm \
+  --llm nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 \
+  --vlm nvidia/nemotron-3-nano-omni-30b-a3b
+</code></pre>
+<h2 id="6-verify-vss">6) Verify VSS</h2>
+<pre><code class="language-bash">curl -I http://localhost:7777       # VSS Agent UI - expect HTTP 200
+curl -fsS http://localhost:8000/health
+</code></pre>
+<p>Open <code>http://localhost:7777</code> in a browser to reach the VSS Agent UI. Try a
+natural-language query against a sample clip to confirm the end-to-end path
+(ingest → embed → search → summarize).</p>
+<h2 id="rollback">Rollback</h2>
+<pre><code class="language-bash">deploy/docker/scripts/dev-profile.sh down
+docker rm -f vllm-llm vllm-vlm
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VSS deploy fails pulling NGC images</td>
+<td>Confirm Docker version is <code>28.3.3 ≤ version &lt; 29.5.0</code>. Newer Docker versions can fail on NGC pulls.</td>
+</tr>
+<tr>
+<td>vLLM container OOM at startup</td>
+<td>Start the VLM container <strong>before</strong> the LLM. vLLM requires free GPU at startup.</td>
+</tr>
+<tr>
+<td>Long TTFT at concurrency 8 on T2</td>
+<td>Prefer concurrency 2–4 for interactive workloads on T2 — see the <a href="../#benchmarks-performance-validation">Benchmarks section</a>.</td>
+</tr>
+<tr>
+<td>NVFP4 MoE serving errors / instability on public images</td>
+<td>Pin the Marlin backend: <code>--moe-backend marlin</code> + <code>VLLM_NVFP4_GEMM_BACKEND=marlin</code> (defaults in the Lightning recipes).</td>
+</tr>
+<tr>
+<td>Lightning weights fail to load on an older image</td>
+<td>Use the pinned image from <code>recipes/versions.lock</code> — older public-image tags reject the Lightning weight layout.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../">Solution overview</a> — sizing, benchmarks.</li>
+<li><a href="../it-admin-guide/">IT-Admin Guide</a> — IT-admin fleet path.</li>
+<li><a href="../../../recipes/">Recipe catalog</a> — standalone serving recipes.</li>
+<li><a href="../../../stack/">Inference stack</a> — why vLLM.</li>
+<li><a href="https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization">Upstream VSS Blueprint</a>.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../../../assets/highlight.js" defer></script>
+<script src="../../../assets/anchors.js" defer></script>
+<script src="../../../assets/picker.js" defer></script>
+</body>
+</html>

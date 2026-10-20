@@ -1,0 +1,27 @@
+{
+ "date": "2026-10-19T19:33:21+0000",
+ "git_sha": "27689d3",
+ "host": "lab host",
+ "platform": "gb300",
+ "model": "nvidia/nemotron-3.5-super-vl",
+ "tokenizer": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+ "url": "http://localhost:8000",
+ "shape": "chat_200_200",
+ "isl": 200,
+ "osl": 200,
+ "request_count": 64,
+ "ladder": [
+  1,
+  2,
+  4,
+  8,
+  16,
+  32,
+  64
+ ],
+ "aiperf": "0.10.0",
+ "gpus": "NVIDIA GB300 (1 GPU, full HBM3e to the container)",
+ "container": "ds-validate-supervl-gb300",
+ "image": "sha256:9dfef102a162fbe71821683e252a1f30454d183fb5ef7c8f9c45886f7e594f04 vllm/vllm-openai@sha256:cb9bc64f0f038c2c2ebf13b31248fb87aca40c356c3d20f363be087cfcff1fcd",
+ "container_args": "serve nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 --served-model-name nvidia/nemotron-3.5-super-vl nemotron-3.5-super-vl auto --host 0.0.0.0 --port 8000 --trust-remote-code --tensor-parallel-size 1 --enable-expert-parallel --gpu-memory-utilization 0.85 --max-model-len 262144 --max-num-seqs 128 --max-cudagraph-capture-size 128 --max-num-batched-tokens 8192 --attention-backend TRITON_ATTN --mamba-backend flashinfer --mamba-ssm-cache-dtype float16 --enable-mamba-cache-stochastic-rounding --mamba-cache-philox-rounds 5 --enable-mamba-shared-prefix-checkpoint --video-pruning-rate 0.5 --media-io-kwargs {\"video\": {\"fps\": 2, \"num_frames\": 256}} --block-size 64 --prefix-match-unit 64 --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3"
+}

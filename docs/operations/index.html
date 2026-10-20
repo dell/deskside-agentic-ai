@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations — Dell Deskside Agentic AI Solutions for NVIDIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/dell.css">
+</head>
+<body>
+<header class="topnav">
+  <a class="topnav-brand" href="../index.html">
+    <img src="../assets/logos/dell-technologies-black.png" alt="Dell Technologies">
+    <span class="topnav-title"><a href="https://www.dell.com/en-us/shop/ai/lp/deskside-agentic-ai" style="color:inherit;text-decoration:none">Dell Deskside Agentic AI</a> Solutions for NVIDIA</span>
+  </a>
+  <div class="topnav-right">
+    
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="nav">
+      <div class="nav-group" data-vis="public"><div class="nav-group-title">Get Started</div>
+<a href="../">Overview</a>
+<a href="../solutions/">Solution Catalog</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Solution Templates</div>
+<a href="../solutions/agentic-coding/">Agentic Coding</a>
+<a href="../solutions/agentic-vss/">Agentic Video Search &amp; Summarization</a>
+<a href="../solutions/openclaw-on-nemoclaw/">OpenClaw on NemoClaw</a>
+<a href="../solutions/hermes-on-nemoclaw/">Hermes on NemoClaw</a>
+<a href="../solutions/higher-ed-ai-lab/">Higher Education AI Lab</a>
+</div>
+<div class="nav-group" data-vis="public"><div class="nav-group-title">Deployment &amp; Reference</div>
+<a href="../recipes/">Deployment Recipes</a>
+<a href="../sizing/">S/M/L Sizing</a>
+<a href="../stack/">Inference Stack &amp; Models</a>
+<a href="../stack-composition/">Stack Composition</a>
+<a href="../personas/">Personas</a>
+<a href="../glossary/">Glossary</a>
+<a href="../architecture-builder.html">Architecture Builder</a>
+<a href="../topology/">Topology (TP vs DP)</a>
+<a href="../scope/">Scope &amp; Backlog</a>
+<a href="../operations/">Operations</a>
+<a href="../monitoring/">Tokenomics Monitoring</a>
+<a href="../changelog/">Changelog</a>
+</div>
+
+
+
+
+
+
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><a href="https://github.com/dell/deskside-agentic-ai" aria-label="GitHub repository" title="View source on GitHub" target="_blank" rel="noopener" style="float:right;color:var(--cosmos);display:inline-flex;align-items:center;margin-top:-1px"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.91 2.33.69.07-.52.28-.91.52-1.13-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.05-.13-.36-.91.08-1.9 0 0 .7-.22 2.3.86a6.8 6.8 0 0 1 2.5-.48c.85 0 1.7.12 2.5.34 1.6-1.08 2.3-.86 2.3-.86.44.99.13 1.77.09 1.9.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.08-.01 1.95-.01 2.21 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a><a href="../index.html">Home</a> / operations</div>
+    <article class="article">
+<h1 id="operations-reference-ports-co-tenancy-resources-prerequisites-air-gap">Operations reference — ports, co-tenancy, resources, prerequisites, air-gap</h1>
+<h2 id="1-port-map-one-scheme">1. Port map (one scheme)</h2>
+<p>Serving endpoints use <strong>base port 8000, counting up</strong> (<code>DESKSIDE_BASE_PORT</code> overrides the base; <code>--port</code>/<code>&lt;PREFIX&gt;_PORT</code> pins one).
+A recipe takes the first free port ≥ base; re-running a recipe reuses <em>its own</em> instance's port.</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Port</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client endpoint (single instance, or LiteLLM front door in DP)</td>
+<td><strong>8000</strong></td>
+<td>what every client/IDE guide uses</td>
+</tr>
+<tr>
+<td>Replica instances behind the front door (<code>recipes/lib/launch-replicas.sh</code>)</td>
+<td>8001, 8002, …</td>
+<td>bound to 127.0.0.1</td>
+</tr>
+<tr>
+<td>Additional recipes on the same host</td>
+<td>next free (8001…)</td>
+<td>e.g. GLM beside Lightning on a GB300</td>
+</tr>
+<tr>
+<td>Prometheus / Grafana (tokenomics)</td>
+<td>9090 / 3000 → next free</td>
+<td>printed by the recipe; <code>health-*.sh</code> shows them</td>
+</tr>
+<tr>
+<td>VSS Agent UI / VSS health</td>
+<td>7777 / <strong>8000</strong></td>
+<td>collides with the default endpoint → on a VSS host start recipes with <code>DESKSIDE_BASE_PORT=8100</code></td>
+</tr>
+<tr>
+<td>VSS-internal vLLMs (dev guide)</td>
+<td>30081 / 30082</td>
+<td>upstream blueprint convention</td>
+</tr>
+<tr>
+<td>JupyterHub / OpenWebUI (Higher-Ed examples)</td>
+<td>8080 / 3100</td>
+<td>OpenWebUI must not use Grafana's 3000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-co-tenancy-matrix-can-these-share-one-box">2. Co-tenancy matrix (can these share one box?)</h2>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coding + Hermes/OpenClaw (Plane 1 shared)</td>
+<td><strong>yes</strong> — one vLLM serves both; agent sandboxes are CPU/RAM</td>
+</tr>
+<tr>
+<td>Coding + VSS</td>
+<td><strong>only with a memory plan</strong>: VSS runs its own LLM + VLM at <code>--gpu-memory-utilization 0.35</code> each, so 0.35 + 0.35 + the coding instance must be ≤ 1.0 of the GPU. The GB10 Lightning default is 0.70 → lower it (<code>--gpu-mem-util 0.25</code>) or use a second GPU. Use <code>DESKSIDE_BASE_PORT=8100</code>. Docker must be in VSS's <code>28.3.3 ≤ v &lt; 29.5.0</code> window.</td>
+</tr>
+<tr>
+<td>Two model recipes on one GPU</td>
+<td>memory budgets must sum ≤ 1.0 — see the fit rule in <a href="../sizing/">sizing</a></td>
+</tr>
+<tr>
+<td>Any recipe + tokenomics monitoring</td>
+<td>yes (host-network Prometheus/Grafana, ≈ 0.5 GB RAM)</td>
+</tr>
+</tbody>
+</table>
+<p>GB10: GPU and CPU share one 128 GB pool — every co-tenant counts against it.</p>
+<h2 id="3-per-recipe-resources">3. Per-recipe resources</h2>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th style="text-align: right;">Weights on disk</th>
+<th style="text-align: right;">Host RAM</th>
+<th>GPU / unified memory used</th>
+<th>Cold start (download + load)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lightning NVFP4 (gb10/precision/gb300)</td>
+<td style="text-align: right;">~21 GB</td>
+<td style="text-align: right;">16 GB+</td>
+<td>util 0.70 (GB10) / 0.9 (towers) / 0.85 (GB300)</td>
+<td>10–30 min first run; &lt; 5 min warm</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a> NVFP4</td>
+<td style="text-align: right;">~18 GB</td>
+<td style="text-align: right;">16 GB+</td>
+<td>util 0.9 of 128 GB (tune <code>QWEN38_27B_GPU_MEM_UTIL</code>)</td>
+<td>like Lightning</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a> NVFP4</td>
+<td style="text-align: right;">~68 GiB experts + ~102 GiB engram table in <strong>host RAM</strong></td>
+<td style="text-align: right;"><strong>≥ 128 GB</strong></td>
+<td>~34 GiB/GPU at TP=2</td>
+<td>long (≈170 GiB)</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a> NVFP4 (GB300)</td>
+<td style="text-align: right;">~181 GiB</td>
+<td style="text-align: right;">32 GB+</td>
+<td>util 0.9 of the GB300's 252 GB HBM3e</td>
+<td>long</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a> NVFP4 (M/L default)</td>
+<td style="text-align: right;">~62 GB</td>
+<td style="text-align: right;">32 GB+</td>
+<td>T4 TP=2: ~31 GB/GPU weights; T2 single: tight</td>
+<td>not measured</td>
+</tr>
+<tr>
+<td>Tokenomics monitoring</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">~0.5 GB</td>
+<td>none</td>
+<td>seconds</td>
+</tr>
+</tbody>
+</table>
+<p>Container images are 22–26 GB each. Free disk before a first run: weights + image + ~10 GB. Numbers come from recipe headers and
+local image sizes, not a fresh measurement.</p>
+<h2 id="4-prerequisites-matrix">4. Prerequisites matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>GB10 (DGX OS)</th>
+<th>GB300</th>
+<th>Towers T2/T4/T6 (Ubuntu 24.04+)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA driver</td>
+<td>preinstalled</td>
+<td>preinstalled</td>
+<td>≥ 570 documented; RTX PRO 6000 Blackwell may require a newer branch — <em>verify on hardware</em></td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>≥ 24 (VSS: 28.3.3 ≤ v &lt; 29.5.0)</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>NVIDIA Container Toolkit</td>
+<td>present on DGX OS; on <code>unknown runtime nvidia</code> run <code>scripts/landscape/fix-docker-nvidia-runtime.sh</code></td>
+<td>same</td>
+<td>install <code>nvidia-container-toolkit</code></td>
+</tr>
+<tr>
+<td>CUDA test image</td>
+<td><code>nvidia/cuda:12.8.0-base-ubuntu24.04</code></td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Python 3 + curl on the host</td>
+<td>required by the recipes' readiness check</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>OS</td>
+<td>DGX OS</td>
+<td>Ubuntu 24.04+</td>
+<td>Ubuntu 24.04+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-air-gapped-hosts">5. Air-gapped hosts</h2>
+<ol>
+<li>Connected host (same CPU arch): <code>scripts/airgap/pack-images.sh save /media/pack</code> (images, pinned per <code>recipes/versions.lock</code>) and
+   <code>huggingface-cli download &lt;model&gt;</code>, then copy <code>~/.cache/huggingface</code> (rsync).</li>
+<li>Air-gapped host: <code>scripts/airgap/pack-images.sh load /media/pack</code>; set <code>HF_HUB_OFFLINE=1</code> for the recipe and
+   <code>NEMOTRON_LIGHTNING_DIR=/path/to/checkpoint</code> (or the matching <code>*_DIR</code>) to serve a pre-copied checkpoint.</li>
+<li>Include the monitoring/LiteLLM ids from <code>versions.lock</code> in the save list (monitoring images are pinned in <code>recipes/lib/monitoring.sh</code>).</li>
+<li>NemoClaw installer: fetch once on a connected host with <code>scripts/nemoclaw/headless-install.sh fetch</code> (hash-pinned) and carry the file.</li>
+</ol>
+<h2 id="6-faq">6. FAQ</h2>
+<ul>
+<li><strong><code>host.docker.internal</code> from an OpenShell sandbox?</strong> Use it as the guides do; on plain Linux Docker the name needs
+  <code>--add-host=host.docker.internal:host-gateway</code> (whether OpenShell injects it was not verified). A recipe bound to <code>127.0.0.1</code>
+  is <em>not</em> reachable that way — bind <code>0.0.0.0</code> or a specific interface.</li>
+<li><strong>GB10 shows <code>N/A</code> for GPU memory.</strong> Expected (unified memory). Use <code>free -g</code> and <code>docker stats</code>; the health scripts handle it.</li>
+<li><strong>Which topology on T4/T6?</strong> Decided per workload by measurement — <a href="../topology/">topology</a>.</li>
+</ul>
+    </article>
+  </main>
+</div>
+<script src="../assets/highlight.js" defer></script>
+<script src="../assets/anchors.js" defer></script>
+</body>
+</html>

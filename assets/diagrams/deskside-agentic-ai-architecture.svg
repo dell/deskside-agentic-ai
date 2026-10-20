@@ -1,0 +1,260 @@
+<svg width="1400" height="1210" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1400" height="1210" fill="#ffffff"/>
+
+  <!-- Title Section -->
+  <rect x="0" y="0" width="1400" height="80" fill="#1a237e"/>
+  <text x="700" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">
+    Dell Deskside Agentic AI - Technical Architecture
+  </text>
+  <text x="700" y="60" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e8eaf6">
+    Common Architecture Across All Deskside Agentic AI Hardware Platforms &amp; Operating Systems
+  </text>
+
+  <!-- Legend -->
+  <rect x="50" y="90" width="300" height="70" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <rect x="60" y="105" width="20" height="20" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="90" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Common (All Platforms)</text>
+  <text x="90" y="140" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Functionally identical across platforms/OS</text>
+
+  <rect x="370" y="90" width="320" height="70" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <rect x="380" y="105" width="20" height="20" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+  <text x="410" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ef6c00">Solution-Specific</text>
+  <text x="410" y="140" font-family="Arial, sans-serif" font-size="10" fill="#ef6c00">Selected per template / deployment</text>
+
+  <rect x="710" y="90" width="300" height="70" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" rx="5"/>
+  <rect x="720" y="105" width="20" height="20" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="750" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1565c0">Container / Runtime</text>
+  <text x="750" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1565c0">Common runtime across platforms</text>
+
+  <rect x="1030" y="90" width="320" height="70" fill="#e8eaf6" stroke="#1a237e" stroke-width="2" rx="5"/>
+  <rect x="1040" y="105" width="20" height="20" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+  <text x="1070" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a237e">Platform / OS Variant</text>
+  <text x="1070" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1a237e">Same role, implemented differently</text>
+
+  <!-- Layer Labels -->
+  <text x="30" y="230" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 230)">INTEGRATION</text>
+  <text x="30" y="350" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 350)">APPLICATION</text>
+  <text x="30" y="470" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 470)">MANAGEMENT</text>
+  <text x="30" y="590" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 590)">CONTAINER</text>
+  <text x="30" y="710" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 710)">NVIDIA</text>
+  <text x="30" y="855" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 855)">OS LAYER</text>
+  <text x="30" y="1025" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333" transform="rotate(-90, 30, 1025)">HARDWARE</text>
+
+  <!-- Integration Layer (TOP) -->
+  <rect x="60" y="180" width="1320" height="100" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <text x="720" y="205" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef6c00">Integration Layer - External System Connectivity</text>
+
+  <rect x="80" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="182" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Source Control (Git/Gitea)</text>
+
+  <rect x="293" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="395" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Enterprise Identity (AD/LDAP)</text>
+
+  <rect x="506" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="608" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Productivity (M365/Google)</text>
+
+  <rect x="719" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="821" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Cloud APIs</text>
+
+  <rect x="932" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1034" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">API Gateway</text>
+
+  <rect x="1145" y="222" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1247" y="247" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Data / Storage Systems</text>
+
+  <!-- Application Layer -->
+  <rect x="60" y="300" width="1320" height="100" fill="#fff3e0" stroke="#ef6c00" stroke-width="2" rx="5"/>
+  <text x="720" y="325" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef6c00">Application Layer - Solution Templates (built on the common base)</text>
+
+  <rect x="80" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="182" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Coding / Dev Agents</text>
+
+  <rect x="293" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="395" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Agentic Workflows</text>
+
+  <rect x="506" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="608" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Video Search &amp; Summ.</text>
+
+  <rect x="719" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="821" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Vision / Inspection</text>
+
+  <rect x="932" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1034" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Healthcare / Imaging</text>
+
+  <rect x="1145" y="342" width="205" height="40" fill="#ffe0b2" stroke="#ef6c00" stroke-width="1" rx="3"/>
+  <text x="1247" y="367" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e65100">Inference Serving APIs</text>
+
+  <!-- Management Layer -->
+  <rect x="60" y="420" width="1320" height="100" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="720" y="445" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7b1fa2">Management &amp; Orchestration Layer</text>
+
+  <rect x="80" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="182" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Monitoring</text>
+
+  <rect x="293" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="395" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Security</text>
+
+  <rect x="506" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="608" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Updates / Patching</text>
+
+  <rect x="719" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="821" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Identity (AD/LDAP)</text>
+
+  <rect x="932" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="1034" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Logging</text>
+
+  <rect x="1145" y="462" width="205" height="40" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="3"/>
+  <text x="1247" y="487" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a148c">Fleet Management</text>
+
+  <!-- Container Runtime Layer -->
+  <rect x="60" y="540" width="1320" height="100" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" rx="5"/>
+  <text x="720" y="565" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Container Runtime Layer</text>
+
+  <rect x="80" y="582" width="248" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="204" y="607" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Docker Engine</text>
+
+  <rect x="336" y="582" width="248" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="460" y="607" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">containerd</text>
+
+  <rect x="592" y="582" width="248" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="716" y="607" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Podman</text>
+
+  <rect x="848" y="582" width="248" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="972" y="607" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Kubernetes</text>
+
+  <rect x="1104" y="582" width="248" height="40" fill="#bbdefb" stroke="#1565c0" stroke-width="1" rx="3"/>
+  <text x="1228" y="607" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0d47a1">Container Registry</text>
+
+  <!-- NVIDIA Stack Layer -->
+  <rect x="60" y="660" width="1320" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">NVIDIA Software Stack</text>
+
+  <rect x="80" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="167" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">GPU Drivers</text>
+
+  <rect x="263" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="350" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">CUDA Toolkit</text>
+
+  <rect x="446" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="533" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">cuDNN</text>
+
+  <rect x="629" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="716" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">AI Frameworks</text>
+
+  <rect x="812" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="899" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">NIM Microservices</text>
+
+  <rect x="995" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1082" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">NGC Containers</text>
+
+  <rect x="1178" y="702" width="175" height="40" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1265" y="727" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">NCCL</text>
+
+  <!-- OS Layer -->
+  <rect x="60" y="780" width="1320" height="150" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="803" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">OS Layer - DGX OS / Ubuntu / Windows  (distinct OSes, shared package set; functionally common, implemented differently)</text>
+
+  <!-- OS Variant chips -->
+  <rect x="80" y="818" width="420" height="34" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="290" y="840" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">DGX OS  (Ubuntu-based - Dell Pro Precision with GB10)</text>
+
+  <rect x="510" y="818" width="420" height="34" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="720" y="840" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Ubuntu  (24.04+ - Dell Pro Precision with GB300 / Precision Towers)</text>
+
+  <rect x="940" y="818" width="420" height="34" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="1150" y="840" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Windows  (Precision Towers)</text>
+
+  <!-- Common OS functional components -->
+  <rect x="80" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="182" y="888" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Kernel</text>
+  <text x="182" y="903" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#1b5e20">(Linux / NT)</text>
+
+  <rect x="293" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="395" y="896" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">System Libraries</text>
+
+  <rect x="506" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="608" y="896" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Security</text>
+
+  <rect x="719" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="821" y="896" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">File System</text>
+
+  <rect x="932" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1034" y="896" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Networking</text>
+
+  <rect x="1145" y="870" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1247" y="888" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Package Manager</text>
+  <text x="1247" y="903" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#1b5e20">(shared Linux pkgs)</text>
+
+  <!-- Hardware Layer (BOTTOM) -->
+  <rect x="60" y="950" width="1320" height="160" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="720" y="973" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Hardware Layer - Dell deskside NVIDIA platforms  (common silicon classes, implemented per platform)</text>
+
+  <!-- Platform chips (order: GB10, T2, T4, T6, GB300) -->
+  <rect x="80" y="988" width="250" height="44" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="205" y="1015" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Dell Pro Precision with GB10</text>
+
+  <rect x="338" y="988" width="250" height="44" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="463" y="1006" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Dell Pro Precision 9 T2</text>
+  <text x="463" y="1022" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#1a237e">1x RTX Pro 6000</text>
+
+  <rect x="596" y="988" width="250" height="44" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="721" y="1006" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Dell Pro Precision 9 T4</text>
+  <text x="721" y="1022" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#1a237e">2x RTX Pro 6000</text>
+
+  <rect x="854" y="988" width="250" height="44" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="979" y="1006" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Dell Pro Precision 9 T6</text>
+  <text x="979" y="1022" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#1a237e">5x RTX Pro 6000</text>
+
+  <rect x="1112" y="988" width="250" height="44" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5" rx="3"/>
+  <text x="1237" y="1015" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a237e">Dell Pro Precision with GB300</text>
+
+  <!-- Common hardware components -->
+  <rect x="80" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="182" y="1068" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">GPU (NVIDIA)</text>
+  <text x="182" y="1083" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#1b5e20">GB10 / GB300 / RTX Pro 6000</text>
+
+  <rect x="293" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="395" y="1068" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">CPU</text>
+  <text x="395" y="1083" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#1b5e20">(Grace Arm / x86)</text>
+
+  <rect x="506" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="608" y="1068" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Memory</text>
+  <text x="608" y="1083" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#1b5e20">(Unified / System + VRAM)</text>
+
+  <rect x="719" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="821" y="1076" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Storage (NVMe)</text>
+
+  <rect x="932" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1034" y="1076" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Networking</text>
+
+  <rect x="1145" y="1050" width="205" height="45" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1" rx="3"/>
+  <text x="1247" y="1076" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#1b5e20">Power &amp; Thermal</text>
+
+  <!-- Summary -->
+  <rect x="60" y="1130" width="1320" height="60" fill="#f5f5f5" stroke="#999" stroke-width="1" rx="3"/>
+  <text x="720" y="1155" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">
+    Hardware: Dell Pro Precision with GB10 • Dell Pro Precision 9 T2 / T4 / T6 (RTX Pro 6000) • Dell Pro Precision with GB300    |    OS: DGX OS (GB10) • Ubuntu • Windows
+  </text>
+  <text x="720" y="1175" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#666">
+    Architecture is functionally common across all platforms and operating systems - differences are implementation details, not structural.
+  </text>
+
+  <!-- Vertical Connectors -->
+  <line x1="720" y1="950" x2="720" y2="930" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="780" x2="720" y2="760" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="660" x2="720" y2="640" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="540" x2="720" y2="520" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="420" x2="720" y2="400" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="720" y1="300" x2="720" y2="280" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- Side Labels -->
+  <text x="1390" y="1030" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 1030)">PER PLATFORM</text>
+  <text x="1390" y="855" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 855)">PER OS</text>
+  <text x="1390" y="710" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 710)">COMMON</text>
+  <text x="1390" y="590" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 590)">COMMON</text>
+  <text x="1390" y="470" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 470)">COMMON</text>
+  <text x="1390" y="350" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 350)">TEMPLATE</text>
+  <text x="1390" y="230" font-family="Arial, sans-serif" font-size="10" fill="#666" transform="rotate(90, 1390, 230)">TEMPLATE</text>
+
+</svg>
