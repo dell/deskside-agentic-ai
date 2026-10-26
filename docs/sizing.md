@@ -38,7 +38,7 @@ system, model, quant, and inference config — and what performance to expect?*
 
 Each sizing table cell carries a **status** — *measured*, *spot-check*, *doc-reported* (raw data not in the repo)
 or *retired-model*. The machine-readable record of every number, with provenance, is
-[`tests/data/latest/sizing.yaml`](../tests/data/latest/sizing.yaml).
+[`tests/data/latest/sizing.yaml`](https://github.com/dell/deskside-agentic-ai/blob/main/tests/data/latest/sizing.yaml).
 
 ## Model-fit rule (weights, KV cache, headroom)
 

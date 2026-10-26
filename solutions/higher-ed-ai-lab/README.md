@@ -166,17 +166,17 @@ quick-start; LiteLLM fronts shared pools for multi-model routing. Reference:
 
 ## Deployment recipes
 
-Catalog: [`docs/recipes/`](../../docs/recipes/) ·
+Catalog: [`docs/recipes/`](../../recipes/README.md) ·
 [Dell Deskside Agentic AI Solutions](../../README.md).
 
 | Platform | Recipe (under `recipes/`) | Lab role |
 |----------|--------|----------|
-| GB10 | [`gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | S pool · M/L seats |
-| GB10 | [`gb10/vllm/docker-qwen3.8-27b-nvfp4.sh`](../../recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) | coding-heavy courses (S alt) |
-| Precision | [`precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | shared amplifier, multi-instance or TP |
-| Precision | [`precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh`](../../recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) | M-tier alt |
-| GB300 | [`gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | L shared pool (measured fallback) |
-| GB300 | [`gb300/vllm/docker-glm-5.3-flash-nvfp4.sh`](../../recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) | L-tier alt (frontier) |
+| GB10 | [`gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | S pool · M/L seats |
+| GB10 | [`gb10/vllm/docker-qwen3.8-27b-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) | coding-heavy courses (S alt) |
+| Precision | [`precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | shared amplifier, multi-instance or TP |
+| Precision | [`precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) | M-tier alt |
+| GB300 | [`gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) | L shared pool (measured fallback) |
+| GB300 | [`gb300/vllm/docker-glm-5.3-flash-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) | L-tier alt (frontier) |
 
 _Commands in this guide run from the repository root (`git clone` this repo and `cd` into it)._
 

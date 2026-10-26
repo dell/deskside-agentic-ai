@@ -7,7 +7,7 @@
 >
 > **Companion docs:** [IT-Admin Guide](it-admin-guide.md) (single-node
 > setup), [Solution overview](README.md) (sizing + recipes),
-> [`scripts/landscape/`](../../scripts/landscape/) (the tooling).
+> [`scripts/landscape/`](https://github.com/dell/deskside-agentic-ai/tree/main/scripts/landscape) (the tooling).
 
 ## How the pieces fit
 
@@ -23,7 +23,7 @@ landscape_client.py  ──HTTPS────►  landscape-client
 * **Landscape picks *who*** (the fleet inventory), *the script says **how***
   (it just runs this repo's recipe). One execution authority per box at a
   time — don't layer a second config manager onto the same ports/compose.
-* The payloads in [`scripts/landscape/`](../../scripts/landscape/) are plain
+* The payloads in [`scripts/landscape/`](https://github.com/dell/deskside-agentic-ai/tree/main/scripts/landscape) are plain
   bash; you can run the identical script by hand over SSH during bring-up —
   the converged state is observationally the same.
 
@@ -40,7 +40,7 @@ landscape_client.py  ──HTTPS────►  landscape-client
 
 ## Step 1 — Enable remote script execution (once per device)
 
-Run [`scripts/landscape/enable-script-execution.sh`](../../scripts/landscape/enable-script-execution.sh)
+Run [`scripts/landscape/enable-script-execution.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/scripts/landscape/enable-script-execution.sh)
 on the device with sudo (`<your-account>` = Landscape account name). Allow one
 client exchange (~4 min). Two traps, both in the script header:
 `--silent` is required without a TTY, and already-registered machines come

@@ -134,8 +134,8 @@ single-GPU capacity. See [IT-Admin Guide](it-admin-guide.md).
 Every tier-and-model combination with a measured agent-shape ladder, one row each.
 The sessions columns give the concurrency at which per-session output (aggregate / C,
 log-log interpolated on the measured ladder) crosses the stated floor; aggregate is
-quoted at c32 unless noted. Raw ladders in [`tests/data/`](../../tests/data/),
-machine-readable record [`tests/data/latest/sizing.yaml`](../../tests/data/latest/sizing.yaml);
+quoted at c32 unless noted. Raw ladders in [`tests/data/`](https://github.com/dell/deskside-agentic-ai/tree/main/tests/data),
+machine-readable record [`tests/data/latest/sizing.yaml`](https://github.com/dell/deskside-agentic-ai/blob/main/tests/data/latest/sizing.yaml);
 the Recipe Configuration panel in the [IT-Admin Guide](it-admin-guide.md) shows the
 full ladder for any platform and model.
 
@@ -160,7 +160,7 @@ utilisation the tokenomics dashboard measures
 Alternative models (Qwen3.8-Flash-Next, GLM-5.3-Flash, Qwen3.8 27B) publish their
 serving-verification numbers in the [Inference Stack](../../docs/stack.md).
 
-**Traceability.** Scripts, data, and tests are in [`tests/`](../../tests/README.md);
+**Traceability.** Scripts, data, and tests are in [`tests/`](https://github.com/dell/deskside-agentic-ai/blob/main/tests/README.md);
 `tests/aiperf/` holds the ladder configuration and the exact commands.
 
 ## Model recommendation

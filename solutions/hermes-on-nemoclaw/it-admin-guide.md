@@ -68,9 +68,9 @@ dtype, tool-call parser) — see
 
 | Platform | Recipe directory |
 |----------|------------------|
-| Dell Pro Precision with GB10 | [`recipes/gb10/vllm/`](../../recipes/gb10/vllm/) |
-| Dell Pro Precision 9 T2 / T4 / T6 (1× / 2× / 5× RTX PRO 6000) | [`recipes/precision/vllm/`](../../recipes/precision/vllm/) |
-| Dell Pro Precision with GB300 | [`recipes/gb300/vllm/`](../../recipes/gb300/vllm/) |
+| Dell Pro Precision with GB10 | [`recipes/gb10/vllm/`](https://github.com/dell/deskside-agentic-ai/tree/main/recipes/gb10/vllm) |
+| Dell Pro Precision 9 T2 / T4 / T6 (1× / 2× / 5× RTX PRO 6000) | [`recipes/precision/vllm/`](https://github.com/dell/deskside-agentic-ai/tree/main/recipes/precision/vllm) |
+| Dell Pro Precision with GB300 | [`recipes/gb300/vllm/`](https://github.com/dell/deskside-agentic-ai/tree/main/recipes/gb300/vllm) |
 
 ### Multi-host fleet
 

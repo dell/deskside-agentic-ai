@@ -116,7 +116,7 @@ Per-platform serving is the same one-command recipes used across the repo —
 `recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`,
 `recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh` (coding courses),
 `recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh` (frontier tier), and
-siblings; catalog at [`docs/recipes/`](../../docs/recipes/).
+siblings; catalog at [`docs/recipes/`](../../recipes/README.md).
 
 Faculty select a course profile at the start of class; Landscape
 pushes the compose file to the appropriate nodes and starts services.

@@ -78,7 +78,7 @@ recipes/&lt;platform&gt;/&lt;server&gt;/serve-&lt;model-slug&gt;.sh    # llama.c
 </ul>
 <h2 id="readiness-contract-health-checks-monitoring-all-recipes">Readiness contract, health checks, monitoring (all recipes)</h2>
 <p>Every <code>docker-*.sh</code> now <strong>builds, monitors and waits</strong> before returning (shared code:
-<code>lib/common.sh</code>, <code>lib/monitoring.sh</code>):</p>
+<a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/lib/common.sh"><code>lib/common.sh</code></a>, <a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/lib/monitoring.sh"><code>lib/monitoring.sh</code></a>):</p>
 <ol>
 <li>pull image, replace the old container, <code>docker run -d --restart unless-stopped</code>;</li>
 <li>start/refresh the shared <strong>tokenomics Prometheus + Grafana</strong> (see <a href="../monitoring/"><code>../monitoring/</code></a>);</li>
@@ -185,31 +185,31 @@ solution columns get added as other templates designate models.</p>
 <td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">Nemotron 3.5 Lightning</a> 30B-A3B</strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</code>)</td>
 <td>NVFP4</td>
 <td><strong>S — default</strong> (measured fallback on M/L)</td>
-<td><code>gb10</code> · <code>precision</code> · <code>gb300</code></td>
+<td><a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh"><code>gb10</code></a> · <a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh"><code>precision</code></a> · <a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh"><code>gb300</code></a></td>
 </tr>
 <tr>
 <td><strong><a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4">Nemotron 3.5 Super VL</a></strong> (<code>nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4</code>, ~62 GB)</td>
 <td>NVFP4</td>
 <td><strong>M/L — default</strong></td>
-<td><code>precision</code> · <code>gb300</code></td>
+<td><a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh"><code>precision</code></a> · <a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh"><code>gb300</code></a></td>
 </tr>
 <tr>
 <td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4">Qwen3.8-27B</a></strong> (<code>nvidia/Qwen3.8-27B-NVFP4</code>)</td>
 <td>NVFP4 (MTP head kept BF16)</td>
 <td><strong>S — alternative</strong></td>
-<td><code>gb10</code></td>
+<td><a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh"><code>gb10</code></a></td>
 </tr>
 <tr>
 <td><strong><a href="https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4">Qwen3.8-Flash-Next</a></strong> (<code>nvidia/Qwen3.8-Flash-Next-NVFP4</code>)</td>
 <td>NVFP4 (MTP ×3 + engram CPU offload)</td>
 <td><strong>M — alternative</strong></td>
-<td><code>precision</code></td>
+<td><a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh"><code>precision</code></a></td>
 </tr>
 <tr>
 <td><strong><a href="https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4">GLM-5.3-Flash</a></strong> (<code>RedHatAI/GLM-5.3-Flash-NVFP4</code>)</td>
 <td>NVFP4</td>
 <td><strong>L — alternative</strong></td>
-<td><code>gb300</code></td>
+<td><a href="https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh"><code>gb300</code></a></td>
 </tr>
 </tbody>
 </table>
