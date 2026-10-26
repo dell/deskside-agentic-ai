@@ -33,7 +33,7 @@ by `recipes/lib/health.sh`).
 The dashboard's **compare against** picker (top of the page) drives the
 cloud-equivalent spend and savings panels at published list prices for
 frontier models -- static assumption series in
-[`model-prices.yml`](model-prices.yml), captured 2026-10-20. To refresh
+[`model-prices.yml`](https://github.com/dell/deskside-agentic-ai/blob/main/monitoring/model-prices.yml), captured 2026-10-20. To refresh
 prices, edit that file and re-run any recipe (the monitoring stack re-renders
 its config at start); to compare against your contracted rate, pick
 **Custom (from deploy env)**. The remaining defaults are planning

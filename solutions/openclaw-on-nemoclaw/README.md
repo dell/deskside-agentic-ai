@@ -169,7 +169,7 @@ Tool-calling reference: <https://docs.vllm.ai/>. Ollama / NIM:
 | Precision T2 / T4 | `recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh` |
 | GB300 | `recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh` |
 
-Catalog: [`docs/recipes/`](../../docs/recipes/). Two-step quick start
+Catalog: [`docs/recipes/`](../../recipes/README.md). Two-step quick start
 (for a fleet, `scripts/landscape/deploy-solution.sh` runs both steps):
 
 ```bash
@@ -251,5 +251,5 @@ vary.
 - [Agentic Coding](../agentic-coding/) ·
   [Agentic Video Search & Summarization](../agentic-vss/) — companions sharing the Plane 1
   endpoint.
-- [`docs/recipes/`](../../docs/recipes/) ·
+- [`docs/recipes/`](../../recipes/README.md) ·
   [Dell Deskside Agentic AI Solutions](../../README.md) — catalog, repo overview.

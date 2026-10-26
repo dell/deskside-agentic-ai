@@ -25,7 +25,7 @@ Platforms: `gb10`, `precision`, `gb300` · Servers: `vllm`.
 ## Readiness contract, health checks, monitoring (all recipes)
 
 Every `docker-*.sh` now **builds, monitors and waits** before returning (shared code:
-[`lib/common.sh`](lib/common.sh), [`lib/monitoring.sh`](lib/monitoring.sh)):
+[`lib/common.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/lib/common.sh), [`lib/monitoring.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/lib/monitoring.sh)):
 
 1. pull image, replace the old container, `docker run -d --restart unless-stopped`;
 2. start/refresh the shared **tokenomics Prometheus + Grafana** (see [`../monitoring/`](../monitoring/README.md));
@@ -85,11 +85,11 @@ solution columns get added as other templates designate models.
 
 | Model | Quant | Agentic Coding | Recipes |
 |-------|-------|----------------|---------|
-| **[Nemotron 3.5 Lightning](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4) 30B-A3B** (`nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4`) | NVFP4 | **S — default** (measured fallback on M/L) | [`gb10`](gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`precision`](precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb300`](gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
-| **[Nemotron 3.5 Super VL](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4)** (`nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4`, ~62 GB) | NVFP4 | **M/L — default** | [`precision`](precision/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh) · [`gb300`](gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh) |
-| **[Qwen3.8-27B](https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4)** (`nvidia/Qwen3.8-27B-NVFP4`) | NVFP4 (MTP head kept BF16) | **S — alternative** | [`gb10`](gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) |
-| **[Qwen3.8-Flash-Next](https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4)** (`nvidia/Qwen3.8-Flash-Next-NVFP4`) | NVFP4 (MTP ×3 + engram CPU offload) | **M — alternative** | [`precision`](precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) |
-| **[GLM-5.3-Flash](https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4)** (`RedHatAI/GLM-5.3-Flash-NVFP4`) | NVFP4 | **L — alternative** | [`gb300`](gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) |
+| **[Nemotron 3.5 Lightning](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4) 30B-A3B** (`nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4`) | NVFP4 | **S — default** (measured fallback on M/L) | [`gb10`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`precision`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb300`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
+| **[Nemotron 3.5 Super VL](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4)** (`nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4`, ~62 GB) | NVFP4 | **M/L — default** | [`precision`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh) · [`gb300`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-super-vl-nvfp4.sh) |
+| **[Qwen3.8-27B](https://huggingface.co/nvidia/Qwen3.8-27B-NVFP4)** (`nvidia/Qwen3.8-27B-NVFP4`) | NVFP4 (MTP head kept BF16) | **S — alternative** | [`gb10`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) |
+| **[Qwen3.8-Flash-Next](https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4)** (`nvidia/Qwen3.8-Flash-Next-NVFP4`) | NVFP4 (MTP ×3 + engram CPU offload) | **M — alternative** | [`precision`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) |
+| **[GLM-5.3-Flash](https://huggingface.co/RedHatAI/GLM-5.3-Flash-NVFP4)** (`RedHatAI/GLM-5.3-Flash-NVFP4`) | NVFP4 | **L — alternative** | [`gb300`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) |
 
 There is **no Nemotron L-class designation right now** — 3.5 Super replaces
 3 Ultra — so Super VL, the M/L default, also serves the L tier; Lightning

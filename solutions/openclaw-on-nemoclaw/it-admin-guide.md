@@ -185,7 +185,7 @@ Measured per-tier agent envelopes (wall p50, Hermes-shaped harness):
 
 - [Solution overview](README.md) — sizing, benchmarks.
 - [Developer Deploy Guide](deploy-guide-dev.md) — developer quick-start.
-- [`docs/recipes/`](../../docs/recipes/) — serving recipe catalog ·
+- [`docs/recipes/`](../../recipes/README.md) — serving recipe catalog ·
   [S/M/L Sizing](../../docs/sizing.md) — tier framework.
 - [Hermes on NemoClaw](../hermes-on-nemoclaw/) — shipping Hermes agent
   on top of this runtime.

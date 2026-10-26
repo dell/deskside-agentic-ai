@@ -165,7 +165,7 @@ system, model, quant, and inference config — and what performance to expect?</
 </table>
 <p>Each sizing table cell carries a <strong>status</strong> — <em>measured</em>, <em>spot-check</em>, <em>doc-reported</em> (raw data not in the repo)
 or <em>retired-model</em>. The machine-readable record of every number, with provenance, is
-<code>tests/data/latest/sizing.yaml</code>.</p>
+<a href="https://github.com/dell/deskside-agentic-ai/blob/main/tests/data/latest/sizing.yaml"><code>tests/data/latest/sizing.yaml</code></a>.</p>
 <h2 id="model-fit-rule-weights-kv-cache-headroom">Model-fit rule (weights, KV cache, headroom)</h2>
 <p>Use the <strong>checkpoint size on disk</strong> when you have it; otherwise estimate weights as
 <code>params_total × bits/8</code> with <strong>bf16 = 16, fp8 ≈ 8.5, NVFP4 ≈ 4.5 bits</strong> (4-bit values + block scales; <em>not</em> a flat ÷4).

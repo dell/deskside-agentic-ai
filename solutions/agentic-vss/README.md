@@ -172,9 +172,9 @@ fine-tunes via `VLM_CUSTOM_WEIGHTS=<path>`. See
 
 | Tier | Standalone LLM serving (full-GPU configs baked) |
 |------|--------------------------------------------------|
-| **S** | [`gb10 · Lightning`](../../recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb10 · Qwen3.8-27B`](../../recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) |
-| **M** | [`precision · Lightning`](../../recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`precision · Qwen3.8-Flash-Next`](../../recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) |
-| **L** | [`gb300 · Lightning`](../../recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb300 · GLM-5.3-Flash`](../../recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) |
+| **S** | [`gb10 · Lightning`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb10 · Qwen3.8-27B`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-qwen3.8-27b-nvfp4.sh) |
+| **M** | [`precision · Lightning`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`precision · Qwen3.8-Flash-Next`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-qwen3.8-flash-next-nvfp4.sh) |
+| **L** | [`gb300 · Lightning`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) · [`gb300 · GLM-5.3-Flash`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-glm-5.3-flash-nvfp4.sh) |
 
 Inside the VSS hybrid stack the LLM is co-located with the VLM at `0.35`
 utilization — the inline command in [Developer Deploy Guide](deploy-guide-dev.md)

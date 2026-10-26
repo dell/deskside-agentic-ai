@@ -70,7 +70,7 @@ rollouts <strong>without SSH</strong> — launched from <a href="https://ubuntu.
 Landscape activity feed, repeatable from CI.</p>
 <p><strong>Companion docs:</strong> <a href="../it-admin-guide/">IT-Admin Guide</a> (single-node
 setup), <a href="../">Solution overview</a> (sizing + recipes),
-<code>scripts/landscape/</code> (the tooling).</p>
+<a href="https://github.com/dell/deskside-agentic-ai/tree/main/scripts/landscape"><code>scripts/landscape/</code></a> (the tooling).</p>
 </blockquote>
 <h2 id="how-the-pieces-fit">How the pieces fit</h2>
 <pre><code>control host                       enrolled device (per fleet member)
@@ -84,7 +84,7 @@ landscape_client.py  ──HTTPS────►  landscape-client
 <li><strong>Landscape picks <em>who</em></strong> (the fleet inventory), <em>the script says </em><em>how</em>**
   (it just runs this repo's recipe). One execution authority per box at a
   time — don't layer a second config manager onto the same ports/compose.</li>
-<li>The payloads in <code>scripts/landscape/</code> are plain
+<li>The payloads in <a href="https://github.com/dell/deskside-agentic-ai/tree/main/scripts/landscape"><code>scripts/landscape/</code></a> are plain
   bash; you can run the identical script by hand over SSH during bring-up —
   the converged state is observationally the same.</li>
 </ul>
@@ -131,7 +131,7 @@ landscape_client.py  ──HTTPS────►  landscape-client
 </tbody>
 </table>
 <h2 id="step-1-enable-remote-script-execution-once-per-device">Step 1 — Enable remote script execution (once per device)</h2>
-<p>Run <code>scripts/landscape/enable-script-execution.sh</code>
+<p>Run <a href="https://github.com/dell/deskside-agentic-ai/blob/main/scripts/landscape/enable-script-execution.sh"><code>scripts/landscape/enable-script-execution.sh</code></a>
 on the device with sudo (<code>&lt;your-account&gt;</code> = Landscape account name). Allow one
 client exchange (~4 min). Two traps, both in the script header:
 <code>--silent</code> is required without a TTY, and already-registered machines come

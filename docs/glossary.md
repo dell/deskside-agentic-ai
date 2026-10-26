@@ -37,7 +37,7 @@ Each entry says what the term is and why it matters when you size, deploy or ope
 ## Measurement
 | Term | Meaning | Why it matters |
 |------|---------|----------------|
-| **[AIPerf](https://github.com/ai-dynamo/aiperf) (`aiperf`)** | NVIDIA's open-source benchmarking tool for OpenAI-compatible inference endpoints. | Used for measurement and sizing characterization: it drives a fixed synthetic workload at a chosen concurrency and reports throughput and latency, so numbers are repeatable and comparable across platforms. See [`tests/`](../tests/README.md). |
+| **[AIPerf](https://github.com/ai-dynamo/aiperf) (`aiperf`)** | NVIDIA's open-source benchmarking tool for OpenAI-compatible inference endpoints. | Used for measurement and sizing characterization: it drives a fixed synthetic workload at a chosen concurrency and reports throughput and latency, so numbers are repeatable and comparable across platforms. See [`tests/`](https://github.com/dell/deskside-agentic-ai/blob/main/tests/README.md). |
 | **ISL / OSL** | Input / Output Sequence Length: prompt tokens in, tokens generated. | Sets the workload shape: short chat (200/200) and long-context agents (60k/1k) behave very differently, so every number is quoted with its shape. |
 | **Concurrency (C)** | Number of requests in flight at once. | The x-axis of a capacity ladder; developer counts are derived from it. |
 | **TTFT** | Time to first token. | The wait before anything appears; includes thinking tokens on reasoning models. |

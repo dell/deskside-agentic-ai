@@ -50,9 +50,9 @@ Pick the recipe matching your hardware:
 
 | Dell system | Recipe |
 |-------------|--------|
-| Dell Pro Precision with GB10 | [`recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
-| Dell Pro Precision 9 T2 / T4 / T6 (1× / 2× / 5× RTX PRO 6000) | [`recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
-| Dell Pro Precision with GB300 | [`recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](../../recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
+| Dell Pro Precision with GB10 | [`recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb10/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
+| Dell Pro Precision 9 T2 / T4 / T6 (1× / 2× / 5× RTX PRO 6000) | [`recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/precision/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
+| Dell Pro Precision with GB300 | [`recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh`](https://github.com/dell/deskside-agentic-ai/blob/main/recipes/gb300/vllm/docker-nemotron-3.5-lightning-nvfp4.sh) |
 
 Serve on port 8000:
 

@@ -24,7 +24,7 @@ persona.
 - **Cares about:** model choice, quantization, inference stack tuning, context
   length, throughput/latency, integration (OpenAI-compatible API, tools).
 - **Solution gives them:** per-tier / per-workload model recommendations
-  (Nemotron-family primary + measured alternatives — the [stack guide](stack/)
+  (Nemotron-family primary + measured alternatives — the [stack guide](stack.md)
   is the source of truth for tier-specific winners), [vLLM](https://github.com/vllm-project/vllm) configuration,
   reference code/config, and aiperf benchmarks.
 
