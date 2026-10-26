@@ -6,6 +6,7 @@
   if (!art) return;
   var hl = window.dsHighlight, langOf = window.dsHighlightLang;
   var BASE_PORT = 8000;   // every recipe serves on 8000, counting up when taken (DESKSIDE_BASE_PORT / --port override)
+  var BLOB = 'https://github.com/dell/deskside-agentic-ai/blob/main/';   // recipe files live in the repo, not the Pages tree
 
   var NOTES = {
     'nvidia/nemotron-3.5-lightning': 'Reasoning model (--reasoning-parser nemotron_v3), tools via qwen3_coder; keep max_tokens \u2265 512.',
@@ -170,7 +171,7 @@
     });
     var a = active();
     port.placeholder = String(BASE_PORT);
-    $('dsHint').innerHTML = 'Recipe: <a href="' + root + a.recipe + '">' + a.recipe + '</a> \u00b7 served id <code>' + a.id +
+    $('dsHint').innerHTML = 'Recipe: <a href="' + BLOB + a.recipe + '">' + a.recipe + '</a> \u00b7 served id <code>' + a.id +
       '</code> \u00b7 platform tier <b>' + activePlat().tier + '</b> \u00b7 model tier <b>' + a.tier + '</b> \u00b7 http://' + (host.value.trim() || 'localhost') + ':' + curPort() + '/v1 \u2014 ' + NOTES[a.id];
     renderMeasured();
     try {
